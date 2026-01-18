@@ -136,8 +136,8 @@ layers:
   - BSLH
   - {t: ▽, type: trans}
   - {t: SPACE, h: LSHFT}
-  - BACKSPACE
-  - DEL
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}

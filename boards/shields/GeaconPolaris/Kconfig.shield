@@ -1,0 +1,21 @@
+config SHIELD_Polaris_R_Base
+    def_bool $(shields_list_contains,Polaris_R_Base)
+
+config SHIELD_Polaris_R_TB
+    def_bool $(shields_list_contains,Polaris_R_TB)
+
+
+config SHIELD_Polaris_L_Base
+    def_bool $(shields_list_contains,Polaris_L_Base)
+
+config SHIELD_Polaris_L_ENC
+    def_bool $(shields_list_contains,Polaris_L_ENC)
+
+config SHIELD_Polaris_L_JOY
+    def_bool $(shields_list_contains,Polaris_L_JOY)
+
+config SHIELD_Polaris_L_TB
+    def_bool $(shields_list_contains,Polaris_L_TB)
+    
+config SHIELD_Polaris_L_TPD
+    def_bool $(shields_list_contains,Polaris_L_TPD)

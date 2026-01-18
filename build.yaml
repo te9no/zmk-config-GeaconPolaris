@@ -1,0 +1,54 @@
+---
+include:
+# Left Shields / Default - with AML
+  - board: seeeduino_xiao_ble
+    shield: Polaris_L_Base Polaris_L_TB rgbled_adapter nice_oled
+    snippet: Default zmk-usb-logging studio-rpc-usb-uart
+    artifact-name: Polaris_L_MODULE_TB
+
+  - board: seeeduino_xiao_ble
+    shield: Polaris_L_Base Polaris_L_JOY rgbled_adapter nice_oled
+    snippet: Default zmk-usb-logging studio-rpc-usb-uart
+    artifact-name: Polaris_L_MODULE_JOY
+
+  - board: seeeduino_xiao_ble
+    shield: Polaris_L_Base Polaris_L_ENC rgbled_adapter nice_oled
+    snippet: Default zmk-usb-logging studio-rpc-usb-uart
+    artifact-name: Polaris_L_MODULE_ENC
+
+  - board: seeeduino_xiao_ble
+    shield: Polaris_L_Base Polaris_L_TPD rgbled_adapter nice_oled
+    snippet: Default zmk-usb-logging studio-rpc-usb-uart
+    artifact-name: Polaris_L_MODULE_TPD
+
+# Right Shields
+  - board: seeeduino_xiao_ble
+    shield: Polaris_R_Base Polaris_R_TB rgbled_adapter
+    snippet: zmk-usb-logging studio-rpc-usb-uart
+    artifact-name: Polaris_R_MODULE_TB
+
+# Left Shields / noAML - without AML
+  - board: seeeduino_xiao_ble
+    shield: Polaris_L_Base Polaris_L_TB rgbled_adapter nice_oled
+    snippet: noAML zmk-usb-logging studio-rpc-usb-uart
+    artifact-name: Polaris_L_MODULE_TB_noAML
+
+  - board: seeeduino_xiao_ble
+    shield: Polaris_L_Base Polaris_L_JOY rgbled_adapter nice_oled
+    snippet: noAML zmk-usb-logging studio-rpc-usb-uart
+    artifact-name: Polaris_L_MODULE_JOY_noAML
+
+  - board: seeeduino_xiao_ble
+    shield: Polaris_L_Base Polaris_L_ENC rgbled_adapter nice_oled
+    snippet: noAML zmk-usb-logging studio-rpc-usb-uart
+    artifact-name: Polaris_L_MODULE_ENC_noAML
+
+  - board: seeeduino_xiao_ble
+    shield: Polaris_L_Base Polaris_L_TPD rgbled_adapter nice_oled
+    snippet: noAML zmk-usb-logging studio-rpc-usb-uart
+    artifact-name: Polaris_L_MODULE_TPD_noAML
+
+# Settings Reset
+  - board: seeeduino_xiao_ble
+    shield: settings_reset
+

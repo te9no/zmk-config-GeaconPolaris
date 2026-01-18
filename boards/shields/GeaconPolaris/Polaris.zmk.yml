@@ -1,0 +1,8 @@
+file_format: "1"
+id: GeaconPolaris
+name: GeaconPolaris
+type: shield
+url: https://github.com/te9no/zmk-config-Polaris
+requires: [seeeduino_xiao_ble]
+features:
+  - keys

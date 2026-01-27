@@ -29,7 +29,8 @@
 #define DEF 0
 #define FUNC 1
 #define NUM 2
-#define BT 3
+#define SNIPE 3
+#define BT 4
 
 / {
     keymap {
@@ -38,7 +39,7 @@
         default_layer {
             label = "Def";
             bindings = <
-&kp TAB       &kp Q     &kp W      &kp E     &kp R          &kp T                   &kp Y           &kp U         &kp I         &kp O     &kp P     &kp BACKSPACE
+&kp TAB       &kp Q     &kp W      &kp E     &kp R          &kp T                   &lt SNIPE Y     &kp U         &kp I         &kp O     &kp P     &kp BACKSPACE
 &lt BT ESC    &kp A     &kp S      &kp D     &kp F          &kp G                   &kp H           &kp J         &kp K         &kp L     &kp SEMI  &kp SQT
 &kp LSHFT     &kp Z     &kp X      &kp C     &kp V          &kp B                   &kp N           &kp M         &kp COMMA     &kp DOT   &kp UP
 &mt LCTL ESC  &kp LGUI  &kp LALT             &lt NUM SPACE  &lt FUNC SPACE          &lt FUNC SPACE  &lt NUM RALT  &lt NUM RCTL  &kp LEFT  &kp DOWN  &kp RIGHT
@@ -69,6 +70,19 @@
 &mt LSHFT SPACE  &kp BACKSPACE  &kp DEL    &trans    &trans     &trans             &trans     &kp FSLH   &kp SEMI  &kp SQT   &trans
 &trans           &kp ENTER  &kp ENTER      &kp ENTER  &kp ENTER          &trans     &trans     &trans    &trans    &trans    &trans
 &kp LEFT         &kp UP     &kp SPACE      &kp DOWN  &kp RIGHT                     &trans     &trans     &trans
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+        };
+
+        snipe_layer {
+            label = "Snipe";
+            bindings = <
+&trans      &trans        &trans        &trans        &trans        &trans                &trans  &trans  &trans  &trans  &trans  &trans
+&trans      &trans        &trans        &trans        &trans        &trans                &trans          &trans  &trans  &trans  &trans  &trans
+&trans      &trans        &trans        &trans        &trans        &trans                &trans          &trans  &trans  &trans  &trans
+&trans      &trans        &trans                      &trans        &trans                &trans          &trans  &trans  &trans  &trans  &trans
+&kp LEFT    &kp UP        &kp SPACE     &kp DOWN      &kp RIGHT                           &trans          &trans  &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;

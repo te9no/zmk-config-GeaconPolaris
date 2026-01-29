@@ -18,7 +18,7 @@ manifest:
     - name: zmk
       # remote: zmkfirmware
       remote: te9no
-      revision: main
+      revision: v0.3-branch
       import: app/west.yml
     - name: zmk-rgbled-widget
       remote: caksoylar
@@ -30,7 +30,8 @@ manifest:
       remote: badjeff
       revision: main
     - name: zmk-nice-oled
-      remote: mctechnology17
+      # remote: mctechnology17
+      remote: te9no
       revision: main
     - name: zmk-layout-shift
       remote: kot149

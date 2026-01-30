@@ -33,6 +33,20 @@
 #define BT 4
 
 / {
+    combos {
+        compatible = "zmk,combos";
+
+        COMBO_LANG1 {
+            bindings = <&kp LANGUAGE_1>;
+            key-positions = <1 2>;
+        };
+
+        COMBO_LANG2 {
+            bindings = <&kp LANG2>;
+            key-positions = <2 3>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -65,11 +79,11 @@
         num_layer {
             label = "Num";
             bindings = <
-&kp CAPS         &kp N1     &kp N2         &kp N3    &kp N4     &kp N5             &kp N6     &kp N7     &kp N8    &kp N9    &kp N0    &trans
-&trans           &trans     &trans         &trans    &trans     &trans             &kp MINUS  &kp EQUAL  &kp LBKT  &kp RBKT  &kp BSLH  &trans
+&kp CAPS         &kp N1         &kp N2     &kp N3    &kp N4     &kp N5             &kp N6     &kp N7     &kp N8    &kp N9    &kp N0    &trans
+&trans           &trans         &trans     &trans    &trans     &trans             &kp MINUS  &kp EQUAL  &kp LBKT  &kp RBKT  &kp BSLH  &trans
 &mt LSHFT SPACE  &kp BACKSPACE  &kp DEL    &trans    &trans     &trans             &trans     &kp FSLH   &kp SEMI  &kp SQT   &trans
-&trans           &kp ENTER  &kp ENTER      &kp ENTER  &kp ENTER          &trans     &trans     &trans    &trans    &trans    &trans
-&kp LEFT         &kp UP     &kp SPACE      &kp DOWN  &kp RIGHT                     &trans     &trans     &trans
+&trans           &kp ENTER      &kp ENTER            &kp ENTER  &kp ENTER          &trans     &trans     &trans    &trans    &trans    &trans
+&kp LEFT         &kp UP         &kp SPACE  &kp DOWN  &kp RIGHT                     &trans     &trans     &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
@@ -78,11 +92,11 @@
         snipe_layer {
             label = "Snipe";
             bindings = <
-&trans      &trans        &trans        &trans        &trans        &trans                &trans  &trans  &trans  &trans  &trans  &trans
-&trans      &trans        &trans        &trans        &trans        &trans                &trans          &trans  &trans  &trans  &trans  &trans
-&trans      &trans        &trans        &trans        &trans        &trans                &trans          &trans  &trans  &trans  &trans
-&trans      &trans        &trans                      &trans        &trans                &trans          &trans  &trans  &trans  &trans  &trans
-&kp LEFT    &kp UP        &kp SPACE     &kp DOWN      &kp RIGHT                           &trans          &trans  &trans
+&trans    &trans  &trans     &trans    &trans     &trans          &trans  &trans  &trans  &trans  &trans  &trans
+&trans    &trans  &trans     &trans    &trans     &trans          &trans  &trans  &trans  &trans  &trans  &trans
+&trans    &trans  &trans     &trans    &trans     &trans          &trans  &trans  &trans  &trans  &trans
+&trans    &trans  &trans               &trans     &trans          &trans  &trans  &trans  &trans  &trans  &trans
+&kp LEFT  &kp UP  &kp SPACE  &kp DOWN  &kp RIGHT                  &trans  &trans  &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;

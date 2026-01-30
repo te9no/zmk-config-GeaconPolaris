@@ -1,8 +1,13 @@
 # GeaconPolaris ZMK Config
-
-Neon-lit keystrokes for GeaconPolaris (seeeduino_xiao_ble).  
-左手はモジュール差し替え (TB/JOY/ENC/TPD)、右手は TB 固定。  
 現実とデジタルの境界で、入力を最適化するための設定群です。
+- 配列：狭ピッチGRIN風配列
+- 対応モジュール：MeKaBuモジュール
+　左手はモジュール差し替え可能 (TB/JOY/ENC/TPD)、右手は TB 固定。  
+- 電源：有線USB給電 / 単4電池駆動
+
+# Feature
+- 左手親指用5方向スイッチ
+- 右手人差し指トラックボール
 
 ## Signal Map
 - `config/Polaris.keymap`: キーマップ定義 (全レイヤーの中枢)
@@ -29,3 +34,5 @@ Def / Fnc / Num /BT
 
 ## License
 `LICENCE` を参照。
+
+![Keymap](https://github.com/te9no/zmk-config-GeaconPolaris/blob/main/keymap-drawer/Polaris.svg)

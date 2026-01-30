@@ -275,3 +275,8 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
+combos:
+- p: [1, 2]
+  k: LANGUAGE 1
+- p: [2, 3]
+  k: LANG2

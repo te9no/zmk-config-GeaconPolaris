@@ -4,6 +4,7 @@
 - 対応モジュール：MeKaBuモジュール
 　左手はモジュール差し替え可能 (TB/JOY/ENC/TPD)、右手は TB 固定。  
 - 電源：有線USB給電 / 単4電池駆動
+　電源周りの回路は[DYA DASH](https://github.com/cormoran/dya-dash-keyboard)を参考にさせていただきました。
 
 # Feature
 - 左手親指用5方向スイッチ

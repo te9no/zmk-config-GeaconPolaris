@@ -47,11 +47,11 @@ layers:
   - LEFT
   - DOWN
   - RIGHT
-  - LEFT
+  - '&alt_tab_hold'
   - UP
   - SPACE
   - DOWN
-  - RIGHT
+  - '&alt_tab_enter'
   - '&mkp MB1'
   - '&mkp MB3'
   - '&mkp MB2'
@@ -102,11 +102,11 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - LEFT
+  - '&alt_tab_hold'
   - UP
   - SPACE
   - DOWN
-  - RIGHT
+  - '&alt_tab_enter'
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -275,3 +275,8 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
+combos:
+- p: [1, 2]
+  k: LANGUAGE 1
+- p: [2, 3]
+  k: LANG2

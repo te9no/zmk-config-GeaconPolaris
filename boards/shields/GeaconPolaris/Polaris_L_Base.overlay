@@ -167,8 +167,19 @@
         ngpios = <16>;
         int-gpios = <&xiao_d 7 GPIO_ACTIVE_LOW>;
     };
+    
+    kscan0: kscan_composite {
+        compatible = "zmk,kscan-composite";
+        matrix {
+            kscan = <&kscan1>;
+        };
+        direct {
+            kscan = <&kscan2>;
+            row-offset = <8>;
+        };
+    };
 
-    kscan0: kscan_0 {
+    kscan1: kscan1 {
         compatible = "zmk,kscan-gpio-charlieplex";
         interrupt-gpios = <&xiao_d 6 (GPIO_ACTIVE_LOW)>;
         gpios
@@ -178,6 +189,14 @@
             , <&shifter 3 (GPIO_ACTIVE_LOW)>
             , <&shifter 4 (GPIO_ACTIVE_LOW)>
             , <&shifter 5 (GPIO_ACTIVE_LOW)>
+            ;
+    };
+    
+    kscan2: kscan2 {
+        compatible = "zmk,kscan-gpio-direct";
+        input-gpios
+            = <&shifter 6 (GPIO_ACTIVE_LOW)>
+            , <&shifter 7 (GPIO_ACTIVE_LOW)>
             ;
     };
 };

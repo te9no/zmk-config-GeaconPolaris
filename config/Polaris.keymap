@@ -31,6 +31,8 @@
 #define NUM 2
 #define SNIPE 3
 #define BT 4
+#define SCROLL 5
+#define SCROLLSNIPE 6
 
 / {
     combos {
@@ -58,6 +60,7 @@
 &kp LSHFT     &kp Z     &kp X      &kp C     &kp V          &kp B                   &kp N           &kp M         &kp COMMA     &kp DOT   &kp UP
 &mt LCTL ESC  &kp LGUI  &kp LALT             &lt NUM SPACE  &lt FUNC SPACE          &lt FUNC SPACE  &lt NUM RALT  &lt NUM RCTL  &kp LEFT  &kp DOWN  &kp RIGHT
 &kp LEFT      &kp UP    &kp SPACE  &kp DOWN  &kp RIGHT                              &mkp MB1        &mkp MB3      &mkp MB2
+&mo SCROLL    &mo SCROLLSNIPE
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
@@ -71,6 +74,7 @@
 &trans     &kp BACKSPACE  &kp DEL    &trans     &trans     &trans             &kp F11    &kp F12    &trans    &trans  &trans
 &trans     &trans         &kp LALT              &kp ENTER  &kp ENTER          &kp ENTER  &kp ENTER  &kp BKSP  &trans  &trans   &trans
 &kp LEFT   &kp UP         &kp SPACE  &kp DOWN   &kp RIGHT                     &trans     &trans     &trans
+&trans     &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
@@ -84,6 +88,7 @@
 &mt LSHFT SPACE  &kp BACKSPACE  &kp DEL    &trans    &trans     &trans             &trans     &kp FSLH   &kp SEMI  &kp SQT   &trans
 &trans           &kp ENTER      &kp ENTER            &kp ENTER  &kp ENTER          &trans     &trans     &trans    &trans    &trans    &trans
 &kp LEFT         &kp UP         &kp SPACE  &kp DOWN  &kp RIGHT                     &trans     &trans     &trans
+&trans     &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
@@ -97,6 +102,7 @@
 &trans    &trans  &trans     &trans    &trans     &trans          &trans  &trans  &trans  &trans  &trans
 &trans    &trans  &trans               &trans     &trans          &trans  &trans  &trans  &trans  &trans  &trans
 &kp LEFT  &kp UP  &kp SPACE  &kp DOWN  &kp RIGHT                  &trans  &trans  &trans
+&trans     &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
@@ -110,6 +116,35 @@
 &trans      &trans        &trans        &trans        &trans        &trans                &trans          &trans  &trans  &trans  &trans
 &trans      &trans        &trans                      &trans        &trans                &trans          &trans  &trans  &trans  &trans  &trans
 &kp LEFT    &kp UP        &kp SPACE     &kp DOWN      &kp RIGHT                           &trans          &trans  &trans
+&trans     &trans
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+        };
+
+        scroll_layer {
+            label = "SCROLL";
+            bindings = <
+&trans      &trans        &trans        &trans        &trans        &trans                &trans          &trans  &trans  &trans  &trans  &trans
+&trans      &trans        &trans        &trans        &trans        &trans                &trans          &trans  &trans  &trans  &trans  &trans
+&trans      &trans        &trans        &trans        &trans        &trans                &trans          &trans  &trans  &trans  &trans
+&trans      &trans        &trans                      &trans        &trans                &trans          &trans  &trans  &trans  &trans  &trans
+&kp LEFT    &kp UP        &kp SPACE     &kp DOWN      &kp RIGHT                           &trans          &trans  &trans
+&trans     &trans
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+        };
+
+        scrollsnipe_layer {
+            label = "SCROLLSNIPE";
+            bindings = <
+&trans      &trans        &trans        &trans        &trans        &trans                &trans          &trans  &trans  &trans  &trans  &trans
+&trans      &trans        &trans        &trans        &trans        &trans                &trans          &trans  &trans  &trans  &trans  &trans
+&trans      &trans        &trans        &trans        &trans        &trans                &trans          &trans  &trans  &trans  &trans
+&trans      &trans        &trans                      &trans        &trans                &trans          &trans  &trans  &trans  &trans  &trans
+&kp LEFT    &kp UP        &kp SPACE     &kp DOWN      &kp RIGHT                           &trans          &trans  &trans
+&trans     &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;

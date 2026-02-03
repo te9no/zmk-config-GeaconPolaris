@@ -232,11 +232,11 @@ path.combo { stroke: #7f7f7f; }
 </g>
 <g transform="translate(868, 85) rotate(-2.5)" class="key keypos-22">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap">SEMI</text>
+<text x="0" y="0" class="key tap">BSLH</text>
 </g>
 <g transform="translate(924, 85)" class="key keypos-23">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap">SQT</text>
+<text x="0" y="0" class="key tap">ENTER</text>
 </g>
 <g transform="translate(63, 141)" class="key keypos-24">
 <rect rx="6" ry="6" x="-61" y="-26" width="122" height="52" class="key"/>
@@ -374,6 +374,16 @@ path.combo { stroke: #7f7f7f; }
 <text x="0" y="0" class="key tap">
 <tspan x="0" dy="-0.6em">&amp;mkp</tspan><tspan x="0" dy="1.2em">MB2</tspan>
 </text>
+</g>
+<g class="combo combopos-0">
+<rect rx="6" ry="6" x="126" y="18" width="28" height="26" class="combo"/>
+<text x="140" y="31" class="combo tap">
+<tspan x="140" dy="-0.6em" style="font-size: 88%">LANGUAGE</tspan><tspan x="140" dy="1.2em" style="font-size: 88%">1</tspan>
+</text>
+</g>
+<g class="combo combopos-1">
+<rect rx="6" ry="6" x="182" y="24" width="28" height="26" class="combo"/>
+<text x="196" y="37" class="combo tap">LANG2</text>
 </g>
 </g>
 </g>
@@ -600,6 +610,16 @@ path.combo { stroke: #7f7f7f; }
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
 <text x="0" y="0" class="key trans tap">▽</text>
 </g>
+<g class="combo combopos-0">
+<rect rx="6" ry="6" x="126" y="18" width="28" height="26" class="combo"/>
+<text x="140" y="31" class="combo tap">
+<tspan x="140" dy="-0.6em" style="font-size: 88%">LANGUAGE</tspan><tspan x="140" dy="1.2em" style="font-size: 88%">1</tspan>
+</text>
+</g>
+<g class="combo combopos-1">
+<rect rx="6" ry="6" x="182" y="24" width="28" height="26" class="combo"/>
+<text x="196" y="37" class="combo tap">LANG2</text>
+</g>
 </g>
 </g>
 <g transform="translate(30, 645)" class="layer-Num">
@@ -822,6 +842,16 @@ path.combo { stroke: #7f7f7f; }
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
 <text x="0" y="0" class="key trans tap">▽</text>
 </g>
+<g class="combo combopos-0">
+<rect rx="6" ry="6" x="126" y="18" width="28" height="26" class="combo"/>
+<text x="140" y="31" class="combo tap">
+<tspan x="140" dy="-0.6em" style="font-size: 88%">LANGUAGE</tspan><tspan x="140" dy="1.2em" style="font-size: 88%">1</tspan>
+</text>
+</g>
+<g class="combo combopos-1">
+<rect rx="6" ry="6" x="182" y="24" width="28" height="26" class="combo"/>
+<text x="196" y="37" class="combo tap">LANG2</text>
+</g>
 </g>
 </g>
 <g transform="translate(30, 968)" class="layer-Snipe">
@@ -1041,6 +1071,16 @@ path.combo { stroke: #7f7f7f; }
 <g transform="translate(560, 169)" class="key trans keypos-53">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
 <text x="0" y="0" class="key trans tap">▽</text>
+</g>
+<g class="combo combopos-0">
+<rect rx="6" ry="6" x="126" y="18" width="28" height="26" class="combo"/>
+<text x="140" y="31" class="combo tap">
+<tspan x="140" dy="-0.6em" style="font-size: 88%">LANGUAGE</tspan><tspan x="140" dy="1.2em" style="font-size: 88%">1</tspan>
+</text>
+</g>
+<g class="combo combopos-1">
+<rect rx="6" ry="6" x="182" y="24" width="28" height="26" class="combo"/>
+<text x="196" y="37" class="combo tap">LANG2</text>
 </g>
 </g>
 </g>
@@ -1275,6 +1315,16 @@ path.combo { stroke: #7f7f7f; }
 <g transform="translate(560, 169)" class="key trans keypos-53">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
 <text x="0" y="0" class="key trans tap">▽</text>
+</g>
+<g class="combo combopos-0">
+<rect rx="6" ry="6" x="126" y="18" width="28" height="26" class="combo"/>
+<text x="140" y="31" class="combo tap">
+<tspan x="140" dy="-0.6em" style="font-size: 88%">LANGUAGE</tspan><tspan x="140" dy="1.2em" style="font-size: 88%">1</tspan>
+</text>
+</g>
+<g class="combo combopos-1">
+<rect rx="6" ry="6" x="182" y="24" width="28" height="26" class="combo"/>
+<text x="196" y="37" class="combo tap">LANG2</text>
 </g>
 </g>
 </g>

@@ -21,8 +21,9 @@ manifest:
       # remote: zmkfirmware
       # remote: te9no
       # revision: v0.3-branch
-      remote: cormoran
-      revision: v0.3+custom-studio-protocol
+      remote: te9no
+      # revision: v0.3+custom-studio-protocol
+      revision: v0.3-branch+dya
       import: app/west.yml
     - name: zmk-rgbled-widget
       remote: caksoylar
@@ -47,10 +48,10 @@ manifest:
       remote: petejohanson
       revision: main
     - name: zmk-module-runtime-input-processor
-      remote: cormoran
+      remote: te9no
       revision: main # or latest commit hash
     - name: zmk-module-battery-history
-      remote: cormoran
+      remote: te9no
       revision: main
   self:
     path: config

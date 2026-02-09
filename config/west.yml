@@ -29,7 +29,8 @@ manifest:
       remote: caksoylar
       revision: main
     - name: zmk-pmw3610-driver
-      remote: badjeff
+      # remote: badjeff
+      remote: cormoran
       revision: main
     - name: zmk-analog-input-driver
       remote: badjeff
@@ -53,6 +54,12 @@ manifest:
     - name: zmk-module-battery-history
       remote: te9no
       revision: main
+    - name: zmk-module-ble-management
+      remote: cormoran
+      revision: main # or latest commit hash
+    - name: zmk-module-settings-rpc
+      remote: cormoran
+      revision: main # or specific commit hash
   self:
     path: config
     

@@ -53,12 +53,11 @@
         
         layer0 {
             layers = <0>;
-            // input-processors = <&zip_xy_to_scroll_mapper>;
-            input-processors = <&zip_xy_to_scroll_mapper &scroll_runtime_input_processor>;
+            input-processors = <&zip_xy_to_scroll_mapper>;
         };
-        // layer1 {
-        //     layers = <1>;
-        //     input-processors = <&zip_xy_scaler 1 16>;
-        // };
+        layer1 {
+            layers = <1>;
+            input-processors = <&zip_xy_scaler 1 16>;
+        };
     };
 };

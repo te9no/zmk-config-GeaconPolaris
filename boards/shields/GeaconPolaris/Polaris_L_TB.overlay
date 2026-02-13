@@ -22,9 +22,11 @@
         compatible = "zmk,input-listener";
         device = <&trackball2>;
         status = "okay";
-        input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>, 
-                           <&zip_xy_scaler 1 16>, 
-                           <&zip_xy_to_scroll_mapper>;
+        // input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>, 
+        //                    <&zip_xy_scaler 1 16>, 
+        //                    <&zip_xy_to_scroll_mapper>;
+        input-processors = <&zip_xy_to_scroll_mapper &scroll_runtime_input_processor>;
+
     };
 };
 
@@ -38,7 +40,7 @@
 
     trackball2: trackball2@0 {
         status = "okay";
-        compatible = "pixart,pmw3610-alt";
+        compatible = "pixart,pmw3610";
         reg = <0>;
         spi-max-frequency = <2000000>;
         irq-gpios = <&xiao_d 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;

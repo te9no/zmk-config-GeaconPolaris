@@ -14,17 +14,20 @@ manifest:
       url-base: https://github.com/mctechnology17
     - name: petejohanson
       url-base: https://github.com/petejohanson
+    - name: cormoran
+      url-base: https://github.com/cormoran
   projects:
     - name: zmk
       # remote: zmkfirmware
       remote: te9no
-      revision: v0.3-branch
+      revision: v0.3-branch+dya
       import: app/west.yml
     - name: zmk-rgbled-widget
       remote: caksoylar
       revision: main
     - name: zmk-pmw3610-driver
-      remote: badjeff
+      # remote: badjeff
+      remote: cormoran
       revision: main
     - name: zmk-analog-input-driver
       remote: badjeff
@@ -41,6 +44,18 @@ manifest:
       revision: main
     - name: cirque-input-module
       remote: petejohanson
+      revision: main
+    - name: zmk-module-runtime-input-processor
+      remote: cormoran
+      revision: main
+    - name: zmk-module-battery-history
+      remote: cormoran
+      revision: main
+    - name: zmk-module-ble-management
+      remote: cormoran
+      revision: main
+    - name: zmk-module-settings-rpc
+      remote: cormoran
       revision: main
   self:
     path: config

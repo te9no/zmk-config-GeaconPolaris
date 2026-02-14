@@ -30,6 +30,12 @@
     };
 };
 
+&scroll_runtime_input_processor {
+        x-codes = <INPUT_REL_X>;
+        y-codes = <INPUT_REL_Y>;
+        xy-to-scroll-enabled;
+};
+
 &spi0 {
     status = "okay";
     compatible = "nordic,nrf-spim";

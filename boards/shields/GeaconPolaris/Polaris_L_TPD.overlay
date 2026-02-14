@@ -53,7 +53,7 @@
             //     &zip_xy_scaler 1 4
             //     &zip_xy_to_scroll_mapper
             // >;
-            input-processors = <&zip_xy_to_scroll_mapper &scroll_runtime_input_processor>;
+            input-processors = <&scroll_runtime_input_processor>;
         };
 
         // layer1 {

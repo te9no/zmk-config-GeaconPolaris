@@ -102,68 +102,6 @@
         };
     };
 
-   mouse_runtime_input_processor_r: mouse_runtime_input_processor_r {
-      compatible = "zmk,input-processor-runtime";
-      processor-label = "right";
-      temp-layer-enabled;
-      type = <INPUT_EV_REL>;
-      x-codes = <INPUT_REL_X>;
-      y-codes = <INPUT_REL_Y>;
-      track-remainders;
-      
-      // temp-layer-transparent-behavior = <&trans>;
-      // temp-layer-kp-behavior = <&kp>;
-      // temp-layer-keep-keycodes = <LEFT_CONTROL LEFT_SHIFT LEFT_ALT LEFT_GUI RIGHT_CONTROL RIGHT_SHIFT RIGHT_ALT RIGHT_GUI>;
-      
-      temp-layer-enabled;
-      // temp-layer = <8>;
-      
-      #input-processor-cells = <0>;
-   };
-
-   scroll_runtime_input_processor_r: scroll_runtime_input_processor_r {
-      compatible = "zmk,input-processor-runtime";
-      processor-label = "rightscroll";
-      type = <INPUT_EV_REL>;
-      // Instead of consuming REL_WHEEL, process REL_X, REL_Y and convert to scroll events
-      x-codes = <INPUT_REL_X>;
-      y-codes = <INPUT_REL_Y>;
-      xy-to-scroll-enabled;
-      track-remainders;
-      
-      scale-divisor = <60>;
-      // active layers = <BIT(9)>;
-      
-      // temp-layer-transparent-behavior = <&trans>;
-      // temp-layer-kp-behavior = <&kp>;
-      // temp-layer-keep-keycodes = <LEFT_CONTROL LEFT_SHIFT LEFT_ALT LEFT_GUI RIGHT_CONTROL RIGHT_SHIFT RIGHT_ALT RIGHT_GUI>;
-      
-      axis-snap-mode = <AXIS_SNAP_MODE_Y>;
-      axis-snap-threshold = <200>;
-      
-      #input-processor-cells = <0>;
-   };
-
-   &mouse_runtime_input_processor_l {
-      processor-label = "left";
-      temp-layer-enabled;
-      // temp-layer = <8>;
-   };
-
-   &scroll_runtime_input_processor_l {
-      processor-label = "leftscroll";
-      
-      // Instead of consuming REL_WHEEL, process REL_X, REL_Y and convert to scroll events
-      x-codes = <INPUT_REL_X>;
-      y-codes = <INPUT_REL_Y>;
-      xy-to-scroll-enabled;
-      
-      axis-snap-mode = <AXIS_SNAP_MODE_Y>;
-      axis-snap-threshold = <200>;
-      
-      xy-to-scroll-enabled;
-   };
-      
    aliases {
       led-red = &led0;
       led-green = &led1;

@@ -49,11 +49,13 @@
         device = <&trackball_split>;
             // input-processors = <&zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_X_INVERT)>,
             //                    <&zip_xy_scaler 2 3>;
-        input-processors = <&mouse_runtime_input_processor &scroll_runtime_input_processor>;
+        input-processors = <&zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_X_INVERT)>,
+                           <&mouse_runtime_input_processor &scroll_runtime_input_processor>;
 
         arrow {
             layers = <2>;
-            input-processors = <&mouse_runtime_input_processor>,
+            input-processors = <&zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_X_INVERT)>,
+                               <&mouse_runtime_input_processor>,
                                <&zip_keybind_keys>;
             process-next;
         };
@@ -65,7 +67,8 @@
 
         snipe {
             layers = <3>;
-            input-processors = <&mouse_runtime_input_processor &scroll_runtime_input_processor>,
+            input-processors = <&zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_X_INVERT)>,
+                               <&mouse_runtime_input_processor &scroll_runtime_input_processor>,
                                <&zip_xy_scaler 1 3>;
         };
     }; 

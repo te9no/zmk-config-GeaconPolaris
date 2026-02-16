@@ -56,7 +56,7 @@ layers:
   - '&mkp MB3'
   - '&mkp MB2'
   - SCROLL
-  - SCROLLSNIPE
+  - SSNIPE
   Fnc:
   - GRAVE
   - PG UP
@@ -342,7 +342,7 @@ layers:
   - {t: ▽, type: trans}
   - {type: held}
   - {t: ▽, type: trans}
-  SCROLLSNIPE:
+  SSNIPE:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}

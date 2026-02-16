@@ -1,3 +1,8 @@
+#include <input/processors.dtsi>
+#include <dt-bindings/zmk/input_transform.h>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+#include <input/processors/runtime-input-processor.dtsi>
+
 &pinctrl {
     spi0_default: spi0_default {
         group1 {
@@ -25,12 +30,42 @@
         // input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>, 
         //                    <&zip_xy_scaler 1 16>, 
         //                    <&zip_xy_to_scroll_mapper>;
-        input-processors = <&scroll_runtime_input_processor>,
+        input-processors = <&scroll_runtime_input_processor_l>,
                            <&zip_xy_to_scroll_mapper>;
+
+        scrollsnipe {
+            layers = <6>;
+            input-processors = <&scrollsnipe_runtime_input_processor_l>,
+                               <&zip_xy_to_scroll_mapper>;
+        };
     };
+    
+	scroll_runtime_input_processor_l: scroll_runtime_input_processor_l {
+		compatible = "zmk,input-processor-runtime";
+        processor-label = "ScrL";
+		type = <INPUT_EV_REL>;
+		track-remainders;
+		scale-divisor = <60>;
+		#input-processor-cells = <0>;
+	};   
+
+	scrollsnipe_runtime_input_processor_l: scrollsnipe_runtime_input_processor_l {
+		compatible = "zmk,input-processor-runtime";
+        processor-label = "SScrL";
+		type = <INPUT_EV_REL>;
+		track-remainders;
+		scale-divisor = <60>;
+		#input-processor-cells = <0>;
+	};
 };
 
-&scroll_runtime_input_processor {
+&scroll_runtime_input_processor_l {
+        x-codes = <INPUT_REL_X>;
+        y-codes = <INPUT_REL_Y>;
+        xy-to-scroll-enabled;
+};
+
+&scrollsnipe_runtime_input_processor_l {
         x-codes = <INPUT_REL_X>;
         y-codes = <INPUT_REL_Y>;
         xy-to-scroll-enabled;

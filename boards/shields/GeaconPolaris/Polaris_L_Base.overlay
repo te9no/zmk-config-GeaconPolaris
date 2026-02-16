@@ -11,16 +11,16 @@
 &pinctrl {    
     i2c1_default: i2c1_default {
         group1 {
-            psels = <NRF_PSEL(TWIM_SDA, 0, 28)>,
-                    <NRF_PSEL(TWIM_SCL, 0, 29)>;
+            psels = <NRF_PSEL(TWIM_SDA, 1, 14)>,
+                    <NRF_PSEL(TWIM_SCL, 1, 15)>;
             bias-pull-up;
         };
     };
       
     i2c1_sleep: i2c1_sleep {
         group1 {
-            psels = <NRF_PSEL(TWIM_SDA, 0, 28)>,
-                    <NRF_PSEL(TWIM_SCL, 0, 29)>;
+            psels = <NRF_PSEL(TWIM_SDA, 1, 14)>,
+                    <NRF_PSEL(TWIM_SCL, 1, 15)>;
             low-power-enable;
             bias-pull-up;
         };
@@ -51,16 +51,6 @@
         prechargep = <0x22>;
     };
     
-    shifter: mcp230xx@20 {
-        status = "okay";
-        compatible = "microchip,mcp230xx";
-        gpio-controller;
-        reg = <0x20>;
-        #gpio-cells = <2>;
-        ngpios = <16>;
-        int-gpios = <&xiao_d 7 GPIO_ACTIVE_LOW>;
-    };
-    
     kscan0: kscan_composite {
         compatible = "zmk,kscan-composite";
         matrix {
@@ -76,20 +66,20 @@
         compatible = "zmk,kscan-gpio-charlieplex";
         interrupt-gpios = <&xiao_d 6 (GPIO_ACTIVE_LOW)>;
         gpios
-            = <&shifter 0 (GPIO_ACTIVE_LOW)>
-            , <&shifter 1 (GPIO_ACTIVE_LOW)>
-            , <&shifter 2 (GPIO_ACTIVE_LOW)>
-            , <&shifter 3 (GPIO_ACTIVE_LOW)>
-            , <&shifter 4 (GPIO_ACTIVE_LOW)>
-            , <&shifter 5 (GPIO_ACTIVE_LOW)>
+            = <&gpio0  3 (GPIO_ACTIVE_LOW)>
+            , <&gpio0 28 (GPIO_ACTIVE_LOW)>
+            , <&gpio0 29 (GPIO_ACTIVE_LOW)>
+            , <&gpio0 15 (GPIO_ACTIVE_LOW)>
+            , <&gpio0 19 (GPIO_ACTIVE_LOW)>
+            , <&gpio1  1 (GPIO_ACTIVE_LOW)>
             ;
     };
     
     kscan2: kscan2 {
         compatible = "zmk,kscan-gpio-direct";
         input-gpios
-            = <&shifter 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&shifter 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            = <&gpio0 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&gpio0 31 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
             ;
     };
 };

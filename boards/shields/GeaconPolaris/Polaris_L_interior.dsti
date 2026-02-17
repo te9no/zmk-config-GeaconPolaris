@@ -100,3 +100,9 @@
 		#input-processor-cells = <0>;
 	};   
 };
+
+&scroll_runtime_input_processor_r {
+        x-codes = <INPUT_REL_X>;
+        y-codes = <INPUT_REL_Y>;
+        xy-to-scroll-enabled;
+};

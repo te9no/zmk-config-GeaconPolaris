@@ -30,13 +30,11 @@
         // input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>, 
         //                    <&zip_xy_scaler 1 16>, 
         //                    <&zip_xy_to_scroll_mapper>;
-        input-processors = <&scroll_runtime_input_processor_l>,
-                           <&zip_xy_to_scroll_mapper>;
+        input-processors = <&scroll_runtime_input_processor_l>;
 
         scrollsnipe {
             layers = <6>;
-            input-processors = <&scrollsnipe_runtime_input_processor_l>,
-                               <&zip_xy_to_scroll_mapper>;
+            input-processors = <&scrollsnipe_runtime_input_processor_l>;
         };
     };
     

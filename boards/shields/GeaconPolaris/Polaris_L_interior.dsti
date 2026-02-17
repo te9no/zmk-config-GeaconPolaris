@@ -47,6 +47,13 @@
         input-processors = <&zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_X_INVERT)>,
                            <&mouse_runtime_input_processor &scroll_runtime_input_processor>;
 
+        scroll {
+            layers = <1>;
+            input-processors = <&zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_X_INVERT)>,
+                               <&scroll_runtime_input_processor>;
+            process-next;
+        };
+
         arrow {
             layers = <2>;
             input-processors = <&zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_X_INVERT)>,

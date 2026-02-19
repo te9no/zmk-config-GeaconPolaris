@@ -16,6 +16,8 @@ manifest:
       url-base: https://github.com/petejohanson
     - name: cormoran
       url-base: https://github.com/cormoran
+    - name: efogdev
+      url-base: https://github.com/efogdev
   projects:
     - name: zmk
       # remote: zmkfirmware
@@ -27,7 +29,8 @@ manifest:
       revision: v0.3
     - name: zmk-pmw3610-driver
       # remote: badjeff
-      remote: cormoran
+      # remote: cormoran
+      remote: efogdev
       revision: main
     - name: zmk-analog-input-driver
       remote: badjeff

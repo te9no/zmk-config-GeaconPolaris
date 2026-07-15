@@ -1,0 +1,13 @@
+{
+  "repository": "te9no/zmk-config-GeaconPolaris",
+  "branch": "codex/polaris-lpps-zephyr-4.1",
+  "target": "all",
+  "status": "failing",
+  "raw_status": "failure",
+  "color": "#d73a49",
+  "sha": "bb8733967af3ea800b6335a17aea7ae435bdd0b0",
+  "run_id": "29422100012",
+  "run_number": "175",
+  "run_url": "https://github.com/te9no/zmk-config-GeaconPolaris/actions/runs/29422100012",
+  "generated_at": "2026-07-15T14:15:43Z"
+}

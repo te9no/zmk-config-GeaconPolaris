@@ -1,42 +1,47 @@
 ---
 include:
 # Left Shields
-  - board: seeeduino_xiao_ble
-    shield: Polaris_L_Base rgbled_adapter nice_oled
-    snippet: TB_L zmk-usb-logging studio-rpc-usb-uart
+  - board: xiao_ble
+    shield: Polaris_L_Base rgbled_adapter
+    snippet: LPPS zmk-usb-logging
+    artifact-name: Polaris_L_MODULE_LPPS
+
+  - board: xiao_ble
+    shield: Polaris_L_Base rgbled_adapter
+    snippet: TB_L Polaris_Studio zmk-usb-logging studio-rpc-usb-uart
     artifact-name: Polaris_L_MODULE_TB
 
-  - board: seeeduino_xiao_ble
-    shield: Polaris_L_Base rgbled_adapter nice_oled
-    snippet: JOY zmk-usb-logging studio-rpc-usb-uart
+  - board: xiao_ble
+    shield: Polaris_L_Base rgbled_adapter
+    snippet: JOY Polaris_Studio zmk-usb-logging studio-rpc-usb-uart
     artifact-name: Polaris_L_MODULE_JOY
 
-  - board: seeeduino_xiao_ble
-    shield: Polaris_L_Base rgbled_adapter nice_oled
-    snippet: ENC zmk-usb-logging studio-rpc-usb-uart
+  - board: xiao_ble
+    shield: Polaris_L_Base rgbled_adapter
+    snippet: ENC Polaris_Studio zmk-usb-logging studio-rpc-usb-uart
     artifact-name: Polaris_L_MODULE_ENC
 
-  - board: seeeduino_xiao_ble
-    shield: Polaris_L_Base rgbled_adapter nice_oled
-    snippet: TPD_L zmk-usb-logging studio-rpc-usb-uart
+  - board: xiao_ble
+    shield: Polaris_L_Base rgbled_adapter
+    snippet: TPD_L Polaris_Studio zmk-usb-logging studio-rpc-usb-uart
     artifact-name: Polaris_L_MODULE_TPD
 
 # Right Shields
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble
     shield: Polaris_R_Base rgbled_adapter
     snippet: TB_R zmk-usb-logging studio-rpc-usb-uart
     artifact-name: Polaris_R_MODULE_TB
 
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble
     shield: Polaris_R_Base rgbled_adapter
     snippet: TPD_R zmk-usb-logging studio-rpc-usb-uart
     artifact-name: Polaris_R_MODULE_TPD
 
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble
     shield: Polaris_R_Base rgbled_adapter
     snippet: IQS zmk-usb-logging studio-rpc-usb-uart
     artifact-name: Polaris_R_MODULE_IQS
 
 # Settings Reset
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble
     shield: settings_reset

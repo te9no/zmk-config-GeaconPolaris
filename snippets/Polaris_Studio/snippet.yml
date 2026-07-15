@@ -1,0 +1,3 @@
+name: Polaris_Studio
+append:
+  EXTRA_CONF_FILE: Polaris_Studio.conf

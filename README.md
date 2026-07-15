@@ -12,7 +12,7 @@ Polaris is the North Star of the Geacon lineage: a route marker for modular inpu
 
 ## Concept
 
-GeaconPolaris is a split ergonomic keyboard configuration for [ZMK Firmware](https://zmk.dev/), targeting `seeeduino_xiao_ble`.
+GeaconPolaris is a split ergonomic keyboard configuration for [ZMK Firmware](https://zmk.dev/), targeting `xiao_ble` on Zephyr 4.1.
 
 The design is centered on a simple premise: a keyboard can be more than a grid of switches. It can be a navigation instrument. The current firmware keeps that route explicit through base shields, module Snippets, a shared physical layout, and a keymap that treats pointing and scrolling as first-class operations.
 
@@ -23,12 +23,12 @@ This repository is therefore both:
 
 ## Features
 
-- **Split ergonomic ZMK configuration** for `seeeduino_xiao_ble`.
+- **Split ergonomic ZMK configuration** for `xiao_ble` on Zephyr 4.1.
 - **Base shield pair** under `boards/shields/GeaconPolaris/`: `Polaris_L_Base` and `Polaris_R_Base`.
-- **Module Snippets** under `snippets/`: `TB_L`, `JOY`, `ENC`, `TPD_L`, `TB_R`, `TPD_R`, and `IQS`.
+- **Module Snippets** under `snippets/`: `LPPS`, `TB_L`, `JOY`, `ENC`, `TPD_L`, `TB_R`, `TPD_R`, and `IQS`.
 - **Centralized pin definitions** in `boards/shields/GeaconPolaris/Polaris_pins.dtsi`.
 - **Shared physical layout definition** in `boards/shields/GeaconPolaris/Polaris.dtsi`, including `zmk,physical-layout` and custom module layout nodes.
-- **Left-side OLED** via `Polaris_L_Base.overlay` and `nice_oled` in the left build targets.
+- **Left-side OLED** via `Polaris_L_Base.overlay` and ZMK's Zephyr 4.1 status screen.
 - **LED aliases and GPIO LEDs** defined in `Polaris.dtsi`.
 - **Seven ZMK layers** defined in `config/Polaris.keymap`: `DEF`, `FUNC`, `NUM`, `SNIPE`, `BT`, `SCROLL`, and `SSNIPE`.
 - **Combos** for language switching: `COMBO_LANG1` and `COMBO_LANG2`.
@@ -49,10 +49,16 @@ The firmware now separates base hardware from module selection. The base shields
 
 | Module | Base shield | Snippet | Artifact |
 | --- | --- | --- | --- |
-| Trackball | `Polaris_L_Base rgbled_adapter nice_oled` | `TB_L zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_TB` |
-| Joystick | `Polaris_L_Base rgbled_adapter nice_oled` | `JOY zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_JOY` |
-| Rotary Encoder | `Polaris_L_Base rgbled_adapter nice_oled` | `ENC zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_ENC` |
-| Touchpad | `Polaris_L_Base rgbled_adapter nice_oled` | `TPD_L zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_TPD` |
+| LPPS pointing stick | `Polaris_L_Base rgbled_adapter` | `LPPS zmk-usb-logging` | `Polaris_L_MODULE_LPPS` |
+| Trackball | `Polaris_L_Base rgbled_adapter` | `TB_L Polaris_Studio zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_TB` |
+| Joystick | `Polaris_L_Base rgbled_adapter` | `JOY Polaris_Studio zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_JOY` |
+| Rotary Encoder | `Polaris_L_Base rgbled_adapter` | `ENC Polaris_Studio zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_ENC` |
+| Touchpad | `Polaris_L_Base rgbled_adapter` | `TPD_L Polaris_Studio zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_TPD` |
+
+The LPPS target uses an ADS1220 with 100 uA IDAC excitation, external reference,
+gain 4, and differential pairs AIN2/AIN3 (X) and AIN0/AIN1 (Y). It uses the
+base OLED configuration and omits Studio RPC to keep the Zephyr 4.1 build
+within RAM.
 
 ### Right-Hand Modules
 
@@ -142,28 +148,29 @@ The `target` workflow input is matched against artifact name, board, shield, and
 
 | Artifact | Board | Shields | Snippet |
 | --- | --- | --- | --- |
-| `Polaris_L_MODULE_TB` | `seeeduino_xiao_ble` | `Polaris_L_Base rgbled_adapter nice_oled` | `TB_L zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_L_MODULE_JOY` | `seeeduino_xiao_ble` | `Polaris_L_Base rgbled_adapter nice_oled` | `JOY zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_L_MODULE_ENC` | `seeeduino_xiao_ble` | `Polaris_L_Base rgbled_adapter nice_oled` | `ENC zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_L_MODULE_TPD` | `seeeduino_xiao_ble` | `Polaris_L_Base rgbled_adapter nice_oled` | `TPD_L zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_R_MODULE_TB` | `seeeduino_xiao_ble` | `Polaris_R_Base rgbled_adapter` | `TB_R zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_R_MODULE_TPD` | `seeeduino_xiao_ble` | `Polaris_R_Base rgbled_adapter` | `TPD_R zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_R_MODULE_IQS` | `seeeduino_xiao_ble` | `Polaris_R_Base rgbled_adapter` | `IQS zmk-usb-logging studio-rpc-usb-uart` |
-| settings reset | `seeeduino_xiao_ble` | `settings_reset` | none |
+| `Polaris_L_MODULE_LPPS` | `xiao_ble` | `Polaris_L_Base rgbled_adapter` | `LPPS zmk-usb-logging` |
+| `Polaris_L_MODULE_TB` | `xiao_ble` | `Polaris_L_Base rgbled_adapter` | `TB_L Polaris_Studio zmk-usb-logging studio-rpc-usb-uart` |
+| `Polaris_L_MODULE_JOY` | `xiao_ble` | `Polaris_L_Base rgbled_adapter` | `JOY Polaris_Studio zmk-usb-logging studio-rpc-usb-uart` |
+| `Polaris_L_MODULE_ENC` | `xiao_ble` | `Polaris_L_Base rgbled_adapter` | `ENC Polaris_Studio zmk-usb-logging studio-rpc-usb-uart` |
+| `Polaris_L_MODULE_TPD` | `xiao_ble` | `Polaris_L_Base rgbled_adapter` | `TPD_L Polaris_Studio zmk-usb-logging studio-rpc-usb-uart` |
+| `Polaris_R_MODULE_TB` | `xiao_ble` | `Polaris_R_Base rgbled_adapter` | `TB_R zmk-usb-logging studio-rpc-usb-uart` |
+| `Polaris_R_MODULE_TPD` | `xiao_ble` | `Polaris_R_Base rgbled_adapter` | `TPD_R zmk-usb-logging studio-rpc-usb-uart` |
+| `Polaris_R_MODULE_IQS` | `xiao_ble` | `Polaris_R_Base rgbled_adapter` | `IQS zmk-usb-logging studio-rpc-usb-uart` |
+| settings reset | `xiao_ble` | `settings_reset` | none |
 
 ### Local Build Example
 
 Use the same board, shield, and snippet combinations as `build.yaml`.
 
-Example: left-hand trackball module.
+Example: left-hand LPPS module.
 
 ```sh
 west build \
   -s zmk/app \
-  -b seeeduino_xiao_ble \
-  -S "TB_L zmk-usb-logging studio-rpc-usb-uart" \
+  -b xiao_ble \
+  -S "LPPS zmk-usb-logging" \
   -- \
-  -DSHIELD="Polaris_L_Base rgbled_adapter nice_oled" \
+  -DSHIELD="Polaris_L_Base rgbled_adapter" \
   -DZMK_CONFIG=/path/to/zmk-config-GeaconPolaris/config \
   -DZMK_EXTRA_MODULES=/path/to/zmk-config-GeaconPolaris
 ```
@@ -173,7 +180,7 @@ Example: right-hand IQS module.
 ```sh
 west build \
   -s zmk/app \
-  -b seeeduino_xiao_ble \
+  -b xiao_ble \
   -S "IQS zmk-usb-logging studio-rpc-usb-uart" \
   -- \
   -DSHIELD="Polaris_R_Base rgbled_adapter" \
@@ -286,18 +293,18 @@ Polaris は北極星です。Geacon 系譜の中で、どの方向へ進むの�
 
 ## コンセプト
 
-GeaconPolaris は `seeeduino_xiao_ble` を対象にした ZMK firmware configuration です。
+GeaconPolaris は Zephyr 4.1 の `xiao_ble` を対象にした ZMK firmware configuration です。
 
 ただし目的は「キーを並べること」だけではありません。分割キーボードの上に、複数のポインティングデバイスやセンサー入力をどう載せるか。そのとき keymap、layer、base shield、Snippet、build artifact をどう整理すれば、実験と実用を両立できるか。Polaris はそのための構成です。
 
 ## 特徴
 
-- `seeeduino_xiao_ble` 向けの ZMK 分割キーボード設定。
+- Zephyr 4.1 / `xiao_ble` 向けの ZMK 分割キーボード設定。
 - `boards/shields/GeaconPolaris/` に置かれた `Polaris_L_Base` / `Polaris_R_Base`。
-- `snippets/` に分離された入力モジュール: `TB_L`, `JOY`, `ENC`, `TPD_L`, `TB_R`, `TPD_R`, `IQS`。
+- `snippets/` に分離された入力モジュール: `LPPS`, `TB_L`, `JOY`, `ENC`, `TPD_L`, `TB_R`, `TPD_R`, `IQS`。
 - `boards/shields/GeaconPolaris/Polaris_pins.dtsi` による pin 定義の集約。
 - `boards/shields/GeaconPolaris/Polaris.dtsi` による shared physical layout と custom module layout。
-- 左手側 build target の `nice_oled` と `Polaris_L_Base.overlay` による OLED/I2C 設定。
+- `Polaris_L_Base.overlay` とZMKのZephyr 4.1標準画面による左手側OLED/I2C設定。
 - `Polaris.dtsi` に定義された LED alias / GPIO LED。
 - `config/Polaris.keymap` に定義された 7 layers: `DEF`, `FUNC`, `NUM`, `SNIPE`, `BT`, `SCROLL`, `SSNIPE`。
 - `COMBO_LANG1` / `COMBO_LANG2` による language switching combo。
@@ -316,10 +323,16 @@ Polaris の特徴は、左右の base と入力モジュールを分けて扱っ
 
 | モジュール | Base shield | Snippet | Artifact |
 | --- | --- | --- | --- |
-| Trackball | `Polaris_L_Base rgbled_adapter nice_oled` | `TB_L zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_TB` |
-| Joystick | `Polaris_L_Base rgbled_adapter nice_oled` | `JOY zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_JOY` |
-| Rotary Encoder | `Polaris_L_Base rgbled_adapter nice_oled` | `ENC zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_ENC` |
-| Touchpad | `Polaris_L_Base rgbled_adapter nice_oled` | `TPD_L zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_TPD` |
+| LPPS pointing stick | `Polaris_L_Base rgbled_adapter` | `LPPS zmk-usb-logging` | `Polaris_L_MODULE_LPPS` |
+| Trackball | `Polaris_L_Base rgbled_adapter` | `TB_L Polaris_Studio zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_TB` |
+| Joystick | `Polaris_L_Base rgbled_adapter` | `JOY Polaris_Studio zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_JOY` |
+| Rotary Encoder | `Polaris_L_Base rgbled_adapter` | `ENC Polaris_Studio zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_ENC` |
+| Touchpad | `Polaris_L_Base rgbled_adapter` | `TPD_L Polaris_Studio zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_TPD` |
+
+LPPS は ADS1220 の 100 uA IDAC、外部基準、gain 4 を使用し、X を
+AIN2/AIN3、Y を AIN0/AIN1 の差動入力として読み取ります。Zephyr 4.1
+でRAMを確保するため、このtargetではStudio RPCを使用せず、base側の
+OLED設定を使用します。
 
 ### 右手側モジュール
 
@@ -379,10 +392,11 @@ combo は以下の 2 つです。
 
 | Artifact | Shields | Snippet |
 | --- | --- | --- |
-| `Polaris_L_MODULE_TB` | `Polaris_L_Base rgbled_adapter nice_oled` | `TB_L zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_L_MODULE_JOY` | `Polaris_L_Base rgbled_adapter nice_oled` | `JOY zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_L_MODULE_ENC` | `Polaris_L_Base rgbled_adapter nice_oled` | `ENC zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_L_MODULE_TPD` | `Polaris_L_Base rgbled_adapter nice_oled` | `TPD_L zmk-usb-logging studio-rpc-usb-uart` |
+| `Polaris_L_MODULE_LPPS` | `Polaris_L_Base rgbled_adapter` | `LPPS zmk-usb-logging` |
+| `Polaris_L_MODULE_TB` | `Polaris_L_Base rgbled_adapter` | `TB_L Polaris_Studio zmk-usb-logging studio-rpc-usb-uart` |
+| `Polaris_L_MODULE_JOY` | `Polaris_L_Base rgbled_adapter` | `JOY Polaris_Studio zmk-usb-logging studio-rpc-usb-uart` |
+| `Polaris_L_MODULE_ENC` | `Polaris_L_Base rgbled_adapter` | `ENC Polaris_Studio zmk-usb-logging studio-rpc-usb-uart` |
+| `Polaris_L_MODULE_TPD` | `Polaris_L_Base rgbled_adapter` | `TPD_L Polaris_Studio zmk-usb-logging studio-rpc-usb-uart` |
 | `Polaris_R_MODULE_TB` | `Polaris_R_Base rgbled_adapter` | `TB_R zmk-usb-logging studio-rpc-usb-uart` |
 | `Polaris_R_MODULE_TPD` | `Polaris_R_Base rgbled_adapter` | `TPD_R zmk-usb-logging studio-rpc-usb-uart` |
 | `Polaris_R_MODULE_IQS` | `Polaris_R_Base rgbled_adapter` | `IQS zmk-usb-logging studio-rpc-usb-uart` |
@@ -392,10 +406,10 @@ combo は以下の 2 つです。
 ```sh
 west build \
   -s zmk/app \
-  -b seeeduino_xiao_ble \
-  -S "TB_L zmk-usb-logging studio-rpc-usb-uart" \
+  -b xiao_ble \
+  -S "LPPS zmk-usb-logging" \
   -- \
-  -DSHIELD="Polaris_L_Base rgbled_adapter nice_oled" \
+  -DSHIELD="Polaris_L_Base rgbled_adapter" \
   -DZMK_CONFIG=/path/to/zmk-config-GeaconPolaris/config \
   -DZMK_EXTRA_MODULES=/path/to/zmk-config-GeaconPolaris
 ```

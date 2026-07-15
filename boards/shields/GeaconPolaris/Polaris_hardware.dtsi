@@ -31,8 +31,8 @@
    };
 
    vbatt: vbatt {
+      compatible = "zmk,battery-voltage-divider";
       io-channels = BATTERY_CHANNEL;
-      power-gpios; // unset
       output-ohms = <470000>;
       full-ohms = <(1000000 + 470000)>;
       // For Ni-Mh 1U

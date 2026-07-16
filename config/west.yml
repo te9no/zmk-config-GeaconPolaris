@@ -58,7 +58,7 @@ manifest:
 
 # Trackpad
     - name: zmk-module-cirque-trackpad
-      revision: main
+      revision: 0a077b454db631c21f06a448433b13c2f00543eb
       url: https://github.com/te9no/zmk-module-cirque-trackpad
       path: modules/zmk-module-cirque-trackpad
     - name: zmk-driver-iqs9151-rpc

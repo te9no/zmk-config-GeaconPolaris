@@ -29,7 +29,7 @@
     clock-frequency = <100000>;
 
     glidepoint_R: glidepoint_R@2a {
-        compatible = "cirque,pinnacle";
+        compatible = "cirque,pinnacle-dya";
         reg = <0x2a>;
         status = "okay";
         dr-gpios = R_TPD_DR_GPIOS;

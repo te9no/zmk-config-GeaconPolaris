@@ -47,7 +47,7 @@
     clock-frequency = <100000>;
 
     glidepoint_L: glidepoint_L@2a {
-        compatible = "cirque,pinnacle";
+        compatible = "cirque,pinnacle-dya";
         reg = <0x2a>;
         status = "okay";
         dr-gpios = L_TPD_DR_GPIOS;

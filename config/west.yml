@@ -22,8 +22,8 @@ manifest:
 
 # ZMK Layout Shift
     - name: zmk-layout-shift
-      revision: 4d71f7cb743256ac619873dd44f510e9e9562739
-      url: https://github.com/kot149/zmk-layout-shift
+      revision: ead336ce980b79cafcb2b0232b9749941d5602dc
+      url: https://github.com/te9no/zmk-layout-shift
       path: modules/zmk-layout-shift
 
 #Custom input processors
@@ -34,7 +34,7 @@ manifest:
 
 # DYA Studio Runtime Processors
     - name: zmk-module-runtime-input-processor
-      revision: cdb889b7428b6242626848b88bd4c8fbcfa8c6cd
+      revision: e873b0ee910678826495eed96a8771d4420954c3
       url: https://github.com/te9no/zmk-module-runtime-input-processor
       path: modules/zmk-module-runtime-input-processor
     - name: zmk-behavior-runtime-sensor-rotate
@@ -63,7 +63,7 @@ manifest:
       path: modules/zmk-module-cirque-trackpad
     - name: zmk-driver-iqs9151-rpc
       remote: te9no
-      revision: 7db4dccc968cb85d242defea33495e4550ada715
+      revision: 8fd742b3d6f3e63ad1736c01841f204eab18376c
       path: modules/zmk-driver-iqs9151-rpc
     # - name: cirque-input-module
     #   revision: main
@@ -76,7 +76,7 @@ manifest:
       revision: 2684f22ee7e2168d4393f7e63676912210a796fc
       path: modules/zmk-analog-input-driver
     - name: zmk-module-analoginput-rpc
-      revision: e065461e907fa924c0029e1d4c94cec1d9093e17
+      revision: 635aef51634bb22f1b96b433a418dcce1f5a8021
       url: https://github.com/te9no/zmk-module-analoginput-rpc
       path: modules/zmk-module-analoginput-rpc
 

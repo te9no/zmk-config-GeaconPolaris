@@ -13,6 +13,7 @@
         original_key_press: original_key_press {
             compatible = "zmk,behavior-key-press";
             #binding-cells = <1>;
+            label = "KEY_PRESS";
         };
 
         // Override the existing &kp behavior to use our custom implementation
@@ -20,6 +21,7 @@
         kp: key_press {
             compatible = "zmk,behavior-layout-shift-key-press";
             #binding-cells = <1>;
+            label = "LAYOUT_SHIFT_KEY_PRESS";
         };
 
         rsr_vol: rsr_vol {
@@ -75,7 +77,7 @@
         compatible = "zmk,keymap";
 
         default_layer {
-            display-name = "Def";
+            label = "Def";
             bindings = <
 &kp TAB       &kp Q     &kp W      &kp E     &kp R          &kp T                   &lt SNIPE Y     &kp U         &kp I         &kp O     &kp P     &kp BACKSPACE
 &lt BT ESC    &kp A     &kp S      &kp D     &kp F          &kp G                   &kp H           &kp J         &kp K         &kp L     &kp BSLH  &kp ENTER
@@ -89,7 +91,7 @@
         };
 
         function_layer {
-            display-name = "Fnc";
+            label = "Fnc";
             bindings = <
 &kp GRAVE  &kp PG_UP      &kp UP     &kp PG_DN  &kp HOME   &trans             &kp F1     &kp F2     &kp F3    &kp F4  &kp F5   &trans
 &tog_ls    &kp LEFT       &kp DOWN   &kp RIGHT  &kp END    &trans             &kp F6     &kp F7     &kp F8    &kp F9  &kp F10  &trans
@@ -103,7 +105,7 @@
         };
 
         num_layer {
-            display-name = "Num";
+            label = "Num";
             bindings = <
 &kp CAPS         &kp N1         &kp N2     &kp N3    &kp N4     &kp N5             &kp N6     &kp N7     &kp N8    &kp N9    &kp N0    &trans
 &trans           &trans         &trans     &trans    &trans     &trans             &kp MINUS  &kp EQUAL  &kp LBKT  &kp RBKT  &kp BSLH  &trans
@@ -117,7 +119,7 @@
         };
 
         snipe_layer {
-            display-name = "Snipe";
+            label = "Snipe";
             bindings = <
 &trans    &trans  &trans     &trans    &trans     &trans          &trans  &trans  &trans  &trans  &trans  &trans
 &trans    &trans  &trans     &trans    &trans     &trans          &trans  &trans  &trans  &trans  &trans  &trans
@@ -131,7 +133,7 @@
         };
 
         bt_layer {
-            display-name = "BT";
+            label = "BT";
             bindings = <
 &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4          &bt BT_CLR_ALL  &trans  &trans  &trans  &trans  &trans
 &trans      &trans        &trans        &trans        &trans        &trans                &trans          &trans  &trans  &trans  &trans  &trans
@@ -145,7 +147,7 @@
         };
 
         scroll_layer {
-            display-name = "SCROLL";
+            label = "SCROLL";
             bindings = <
 &trans      &trans        &trans        &trans        &trans        &trans                &trans          &trans  &trans  &trans  &trans  &trans
 &trans      &trans        &trans        &trans        &trans        &trans                &trans          &trans  &trans  &trans  &trans  &trans
@@ -159,7 +161,7 @@
         };
 
         SSNIPE_layer {
-            display-name = "SSNIPE";
+            label = "SSNIPE";
             bindings = <
 &trans      &trans        &trans        &trans        &trans        &trans                &trans          &trans  &trans  &trans  &trans  &trans
 &trans      &trans        &trans        &trans        &trans        &trans                &trans          &trans  &trans  &trans  &trans  &trans

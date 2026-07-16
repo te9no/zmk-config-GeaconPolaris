@@ -22,8 +22,8 @@ manifest:
 
 # ZMK Layout Shift
     - name: zmk-layout-shift
-      revision: ead336ce980b79cafcb2b0232b9749941d5602dc
-      url: https://github.com/te9no/zmk-layout-shift
+      revision: 4d71f7cb743256ac619873dd44f510e9e9562739
+      url: https://github.com/kot149/zmk-layout-shift
       path: modules/zmk-layout-shift
 
 #Custom input processors

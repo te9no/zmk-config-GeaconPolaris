@@ -29,17 +29,17 @@ include:
 # Right Shields
   - board: xiao_ble
     shield: Polaris_R_Base rgbled_adapter
-    snippet: TB_R zmk-usb-logging studio-rpc-usb-uart
+    snippet: TB_R
     artifact-name: Polaris_R_MODULE_TB
 
   - board: xiao_ble
     shield: Polaris_R_Base rgbled_adapter
-    snippet: TPD_R zmk-usb-logging studio-rpc-usb-uart
+    snippet: TPD_R
     artifact-name: Polaris_R_MODULE_TPD
 
   - board: xiao_ble
     shield: Polaris_R_Base rgbled_adapter
-    snippet: IQS zmk-usb-logging studio-rpc-usb-uart
+    snippet: IQS
     artifact-name: Polaris_R_MODULE_IQS
 
 # Settings Reset

@@ -2,6 +2,10 @@
 #include "Polaris_L_interior.dtsi"
 #include <input/processors/runtime-input-processor.dtsi>
 
+&uicr {
+    nfct-pins-as-gpios;
+};
+
 / {
     chosen {
         zephyr,display = &oled;

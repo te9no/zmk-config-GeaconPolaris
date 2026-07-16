@@ -23,7 +23,7 @@ svg.physical-layout { font-family: ui-monospace, SFMono-Regular, Consolas, monos
 </style>
 <title>Polaris</title>
 <g class="layer layer-default_layer" transform="translate(0 0)">
-<text class="title" x="30" y="10">Def</text>
+<text class="title" x="30" y="10">default_layer</text>
 <text class="subtitle" x="30" y="28">56 bindings</text>
 <g class="module module-analog-stick modulepos-0" transform="translate(212 246.605) rotate(0 -182 -234)">
 <rect x="0" y="0" width="52" height="52" rx="10" ry="10"/>
@@ -291,7 +291,7 @@ svg.physical-layout { font-family: ui-monospace, SFMono-Regular, Consolas, monos
 </g>
 </g>
 <g class="layer layer-function_layer" transform="translate(0 396.605)">
-<text class="title" x="30" y="10">Fnc</text>
+<text class="title" x="30" y="10">function_layer</text>
 <text class="subtitle" x="30" y="28">56 bindings</text>
 <g class="module module-analog-stick modulepos-0" transform="translate(212 246.605) rotate(0 -182 -234)">
 <rect x="0" y="0" width="52" height="52" rx="10" ry="10"/>
@@ -548,7 +548,7 @@ svg.physical-layout { font-family: ui-monospace, SFMono-Regular, Consolas, monos
 </g>
 </g>
 <g class="layer layer-num_layer" transform="translate(0 793.21)">
-<text class="title" x="30" y="10">Num</text>
+<text class="title" x="30" y="10">num_layer</text>
 <text class="subtitle" x="30" y="28">56 bindings</text>
 <g class="module module-analog-stick modulepos-0" transform="translate(212 246.605) rotate(0 -182 -234)">
 <rect x="0" y="0" width="52" height="52" rx="10" ry="10"/>
@@ -806,7 +806,7 @@ svg.physical-layout { font-family: ui-monospace, SFMono-Regular, Consolas, monos
 </g>
 </g>
 <g class="layer layer-snipe_layer" transform="translate(0 1189.814)">
-<text class="title" x="30" y="10">Snipe</text>
+<text class="title" x="30" y="10">snipe_layer</text>
 <text class="subtitle" x="30" y="28">56 bindings</text>
 <g class="module module-analog-stick modulepos-0" transform="translate(212 246.605) rotate(0 -182 -234)">
 <rect x="0" y="0" width="52" height="52" rx="10" ry="10"/>
@@ -1063,7 +1063,7 @@ svg.physical-layout { font-family: ui-monospace, SFMono-Regular, Consolas, monos
 </g>
 </g>
 <g class="layer layer-bt_layer" transform="translate(0 1586.419)">
-<text class="title" x="30" y="10">BT</text>
+<text class="title" x="30" y="10">bt_layer</text>
 <text class="subtitle" x="30" y="28">56 bindings</text>
 <g class="module module-analog-stick modulepos-0" transform="translate(212 246.605) rotate(0 -182 -234)">
 <rect x="0" y="0" width="52" height="52" rx="10" ry="10"/>
@@ -1327,7 +1327,7 @@ svg.physical-layout { font-family: ui-monospace, SFMono-Regular, Consolas, monos
 </g>
 </g>
 <g class="layer layer-scroll_layer" transform="translate(0 1983.024)">
-<text class="title" x="30" y="10">SCROLL</text>
+<text class="title" x="30" y="10">scroll_layer</text>
 <text class="subtitle" x="30" y="28">56 bindings</text>
 <g class="module module-analog-stick modulepos-0" transform="translate(212 246.605) rotate(0 -182 -234)">
 <rect x="0" y="0" width="52" height="52" rx="10" ry="10"/>
@@ -1584,7 +1584,7 @@ svg.physical-layout { font-family: ui-monospace, SFMono-Regular, Consolas, monos
 </g>
 </g>
 <g class="layer layer-SSNIPE_layer" transform="translate(0 2379.629)">
-<text class="title" x="30" y="10">SSNIPE</text>
+<text class="title" x="30" y="10">SSNIPE_layer</text>
 <text class="subtitle" x="30" y="28">56 bindings</text>
 <g class="module module-analog-stick modulepos-0" transform="translate(212 246.605) rotate(0 -182 -234)">
 <rect x="0" y="0" width="52" height="52" rx="10" ry="10"/>

@@ -1,47 +1,47 @@
 ---
 include:
 # Left Shields
-  - board: xiao_ble
+  - board: xiao_ble//zmk
     shield: Polaris_L_Base rgbled_adapter
     snippet: LPPS zmk-usb-logging
     artifact-name: Polaris_L_MODULE_LPPS
 
-  - board: xiao_ble
+  - board: xiao_ble//zmk
     shield: Polaris_L_Base rgbled_adapter
     snippet: TB_L Polaris_Studio zmk-usb-logging studio-rpc-usb-uart
     artifact-name: Polaris_L_MODULE_TB
 
-  - board: xiao_ble
+  - board: xiao_ble//zmk
     shield: Polaris_L_Base rgbled_adapter
     snippet: JOY Polaris_Studio zmk-usb-logging studio-rpc-usb-uart
     artifact-name: Polaris_L_MODULE_JOY
 
-  - board: xiao_ble
+  - board: xiao_ble//zmk
     shield: Polaris_L_Base rgbled_adapter
     snippet: ENC Polaris_Studio zmk-usb-logging studio-rpc-usb-uart
     artifact-name: Polaris_L_MODULE_ENC
 
-  - board: xiao_ble
+  - board: xiao_ble//zmk
     shield: Polaris_L_Base rgbled_adapter
     snippet: TPD_L Polaris_Studio zmk-usb-logging studio-rpc-usb-uart
     artifact-name: Polaris_L_MODULE_TPD
 
 # Right Shields
-  - board: xiao_ble
+  - board: xiao_ble//zmk
     shield: Polaris_R_Base rgbled_adapter
     snippet: TB_R
     artifact-name: Polaris_R_MODULE_TB
 
-  - board: xiao_ble
+  - board: xiao_ble//zmk
     shield: Polaris_R_Base rgbled_adapter
     snippet: TPD_R
     artifact-name: Polaris_R_MODULE_TPD
 
-  - board: xiao_ble
+  - board: xiao_ble//zmk
     shield: Polaris_R_Base rgbled_adapter
     snippet: IQS
     artifact-name: Polaris_R_MODULE_IQS
 
 # Settings Reset
-  - board: xiao_ble
+  - board: xiao_ble//zmk
     shield: settings_reset

@@ -6,6 +6,11 @@
     nfct-pins-as-gpios;
 };
 
+/* Polaris repurposes the XIAO SPI pins for the module bus and OLED. */
+&xiao_spi {
+    status = "disabled";
+};
+
 / {
     chosen {
         zephyr,display = &oled;
@@ -59,11 +64,10 @@
 
 &i2c1 {
     status = "okay";
-    compatible = "nordic,nrf-twi";
     pinctrl-0 = <&i2c1_default>;
     pinctrl-1 = <&i2c1_sleep>;
     pinctrl-names = "default", "sleep";
-    clock-frequency = <I2C_BITRATE_FAST>; 
+    clock-frequency = <I2C_BITRATE_STANDARD>;
     
     oled: ssd1306@3c {
         compatible = "solomon,ssd1306fb";

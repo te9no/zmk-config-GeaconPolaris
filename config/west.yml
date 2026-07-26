@@ -86,14 +86,16 @@ manifest:
       url: https://github.com/te9no/ads1220-zephyr-module
       path: modules/ads1220-zephyr-module
 
+# CDC ACM 1200-baud UF2 bootloader trigger
+    - name: zmk-feature-cdc-acm-bootloader-trigger
+      revision: 3570fa76ed9356afb48cceecd14c05d980a7c788
+      url: https://github.com/te9no/zmk-feature-cdc-acm-bootloader-trigger
+      path: modules/zmk-feature-cdc-acm-bootloader-trigger
+
 # ZMK fix for Analog input driver
     - name: zmk-module-battery-nrf-vddh-oversampling
       revision: 33dd6897070e4622c94432e8f282360d76d6b1d9
       url: https://github.com/te9no/zmk-module-battery-nrf-vddh-oversampling
       path: modules/zmk-module-battery-nrf-vddh-oversampling
-    # - name: zmk-feature-cdc-acm-bootloader-trigger
-    #   revision: main
-    #   url: https://github.com/cormoran/zmk-feature-cdc-acm-bootloader-trigger
-    #   path: modules/zmk-feature-cdc-acm-bootloader-trigger
   self:
     path: config

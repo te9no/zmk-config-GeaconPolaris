@@ -1,28 +1,19 @@
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/spi/spi.h>
+#include <common/nordic/nrf52840_uf2_boot_mode.dtsi>
 #include <zephyr/dt-bindings/gpio/gpio_ads1220.h>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 
-&pinctrl {
-    spi0_default: spi0_default {
-        group1 {
-            psels = <LPPS_SPI_SCK>,
-                    <LPPS_SPI_MOSI>,
-                    <LPPS_SPI_MISO>;
-        };
-    };
-
-    spi0_sleep: spi0_sleep {
-        group1 {
-            psels = <LPPS_SPI_SCK>,
-                    <LPPS_SPI_MOSI>,
-                    <LPPS_SPI_MISO>;
-            low-power-enable;
-        };
-    };
+&oled {
+    zephyr,deferred-init;
 };
 
 / {
+    bootloader_trigger: bootloader_trigger {
+        compatible = "zmk,cdc-acm-bootloader-trigger";
+        cdc-port = <&snippet_zmk_usb_logging_uart>;
+    };
+
     gpio_ads1220: gpio_ads1220 {
         compatible = "ti,ads1220-gpio";
         status = "okay";
@@ -47,12 +38,12 @@
         axis-x {
             status = "okay";
             io-channels = <&adc_ads1220 0>;
-            in-min = <(0 - 12000)>;
-            in-max = <(0 + 12000)>;
+            in-min = <(0 - 8000)>;
+            in-max = <(0 + 8000)>;
             in-calib-cycle = <100>;
             in-deadzone = <600>;
-            out-min = <(-10)>;
-            out-max = <10>;
+            out-min = <(-20)>;
+            out-max = <20>;
             skip-change-comparator;
             zephyr,axis-type = <INPUT_EV_REL>;
             zephyr,axis = <INPUT_REL_X>;
@@ -61,12 +52,12 @@
         axis-y {
             status = "okay";
             io-channels = <&adc_ads1220 1>;
-            in-min = <(0 - 12000)>;
-            in-max = <(0 + 12000)>;
+            in-min = <(0 - 8000)>;
+            in-max = <(0 + 8000)>;
             in-calib-cycle = <100>;
             in-deadzone = <600>;
-            out-min = <(-10)>;
-            out-max = <10>;
+            out-min = <(-20)>;
+            out-max = <20>;
             skip-change-comparator;
             zephyr,axis-type = <INPUT_EV_REL>;
             zephyr,axis = <INPUT_REL_Y>;
@@ -74,49 +65,57 @@
     };
 };
 
-&spi0 {
-    status = "okay";
-    compatible = "nordic,nrf-spim";
-    pinctrl-0 = <&spi0_default>;
-    pinctrl-1 = <&spi0_sleep>;
-    pinctrl-names = "default", "sleep";
+&xiao_spi {
+    status = "disabled";
+};
 
-    adc_ads1220: adc_ads1220@0 {
-        compatible = "ti,ads1220";
+/ {
+    /* The ADS1220 CS pin is tied low on the LPPS module. */
+    lpps_spi: lpps_spi {
+        compatible = "zephyr,spi-bitbang";
         status = "okay";
-        spi-max-frequency = <1000000>;
-        reg = <0>;
-        idac-ua = <100>;
-        pga-bypass;
-        #io-channel-cells = <1>;
         #address-cells = <1>;
         #size-cells = <0>;
+        clk-gpios = LPPS_SPI_SCK_GPIOS;
+        mosi-gpios = LPPS_SPI_MOSI_GPIOS;
+        miso-gpios = LPPS_SPI_MISO_GPIOS;
 
-        /* Timed polling is used because DRDY is unreliable during startup. */
-        // drdy-gpios = LPPS_DRDY_GPIOS;
-
-        /* X uses AIN2/AIN3, with AIN2 tied to the bridge midpoint. */
-        adc_ads1220_ch0: channel@0 {
+        adc_ads1220: adc_ads1220@0 {
+            compatible = "ti,ads1220";
+            status = "okay";
+            spi-max-frequency = <250000>;
             reg = <0>;
-            zephyr,resolution = <24>;
-            zephyr,gain = "ADC_GAIN_4";
-            zephyr,reference = "ADC_REF_EXTERNAL0";
-            zephyr,acquisition-time = <330>;
-            zephyr,input-positive = <2>;
-            zephyr,input-negative = <3>;
-            zephyr,current-source-pin = [05 00];
-        };
+            idac-ua = <100>;
+            pga-bypass;
+            #io-channel-cells = <1>;
+            #address-cells = <1>;
+            #size-cells = <0>;
 
-        /* Y uses AIN0/AIN1, with AIN1 tied to the bridge midpoint. */
-        adc_ads1220_ch1: channel@1 {
-            reg = <1>;
-            zephyr,resolution = <24>;
-            zephyr,gain = "ADC_GAIN_4";
-            zephyr,reference = "ADC_REF_EXTERNAL0";
-            zephyr,acquisition-time = <330>;
-            zephyr,input-positive = <0>;
-            zephyr,input-negative = <1>;
-            zephyr,current-source-pin = [05 00];
+            /* Timed polling avoids relying on DRDY during startup. */
+
+            /* X uses AIN2/AIN3, with AIN2 tied to the bridge midpoint. */
+            adc_ads1220_ch0: channel@0 {
+                reg = <0>;
+                zephyr,resolution = <24>;
+                zephyr,gain = "ADC_GAIN_4";
+                zephyr,reference = "ADC_REF_EXTERNAL0";
+                zephyr,acquisition-time = <330>;
+                zephyr,input-positive = <2>;
+                zephyr,input-negative = <3>;
+                zephyr,current-source-pin = [05 00];
+            };
+
+            /* Y uses AIN0/AIN1, with AIN1 tied to the bridge midpoint. */
+            adc_ads1220_ch1: channel@1 {
+                reg = <1>;
+                zephyr,resolution = <24>;
+                zephyr,gain = "ADC_GAIN_4";
+                zephyr,reference = "ADC_REF_EXTERNAL0";
+                zephyr,acquisition-time = <330>;
+                zephyr,input-positive = <0>;
+                zephyr,input-negative = <1>;
+                zephyr,current-source-pin = [05 00];
+            };
         };
     };
 };

@@ -72,8 +72,10 @@ The keymap lives in [`config/Polaris.keymap`](config/Polaris.keymap).
 
 ### BLE OTA update
 
-Polaris can reboot either XIAO BLE half into the Adafruit nRF52 bootloader's
-Bluetooth DFU mode. The behavior is intentionally placed on the `BT` layer:
+Polaris uses the external
+[`zmk-feature-blueboot`](https://github.com/te9no/zmk-feature-blueboot) module
+to reboot either XIAO BLE half into the Adafruit nRF52 bootloader's Bluetooth
+DFU mode. The behavior is intentionally placed on the `BT` layer:
 
 - Hold the `BT/Esc` layer-tap key and press the physical `A` position to reboot
   the left half into BLE DFU.
@@ -88,16 +90,17 @@ Install the packaging tool and convert a generated UF2:
 
 ```sh
 python -m pip install adafruit-nrfutil
-python scripts/package_ble_ota.py path/to/Polaris.uf2
+python modules/zmk-feature-blueboot/scripts/blueboot.py path/to/Polaris.uf2
 ```
 
-This produces `Polaris-ble-ota.zip`, which can be transferred with a
+This produces `Polaris-blueboot.zip`, which can be transferred with a
 Nordic-compatible BLE DFU client. Update the left and right halves separately.
 The USB UF2 remains the recovery path if an OTA transfer is interrupted.
 
 #### BLE OTAファームウェア更新
 
-最初の1回は、このbehaviorを含むUF2をUSBで左右それぞれに書き込みます。
+Polarisは外部モジュール `zmk-feature-blueboot` を利用します。最初の1回は、
+このbehaviorを含むUF2をUSBで左右それぞれに書き込みます。
 以後は `BT/Esc` を押しながら、左側を更新するときは `A` 位置、右側を更新
 するときは `Enter` 位置を押すと、対象側だけがBLE DFUモードへ再起動します。
 

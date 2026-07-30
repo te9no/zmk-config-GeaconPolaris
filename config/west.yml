@@ -102,5 +102,11 @@ manifest:
       revision: 3570fa76ed9356afb48cceecd14c05d980a7c788
       url: https://github.com/te9no/zmk-feature-cdc-acm-bootloader-trigger
       path: modules/zmk-feature-cdc-acm-bootloader-trigger
+
+# BLE OTA bootloader trigger
+    - name: zmk-feature-blueboot
+      remote: te9no
+      revision: 6ea51618f7f476834e7a956851b4c95462120835
+      path: modules/zmk-feature-blueboot
   self:
     path: config

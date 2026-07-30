@@ -4,6 +4,7 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
+#include <behaviors/blueboot.dtsi>
 #include "layout_shift.dtsi"
 
 / {
@@ -30,11 +31,6 @@
             tap-ms = <5>;
             cw-binding = <&kp C_VOL_UP>;
             ccw-binding = <&kp C_VOL_DN>;
-        };
-
-        ble_ota: bleota {
-            compatible = "zmk,behavior-adafruit-ble-ota";
-            #binding-cells = <0>;
         };
 
         // mouse scroll
@@ -141,7 +137,7 @@
             label = "BT";
             bindings = <
 &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4          &bt BT_CLR_ALL  &trans  &trans  &trans  &trans  &trans
-&trans      &ble_ota      &trans        &trans        &trans        &trans                &trans          &trans  &trans  &trans  &trans  &ble_ota
+&trans      &blueboot     &trans        &trans        &trans        &trans                &trans          &trans  &trans  &trans  &trans  &blueboot
 &trans      &trans        &trans        &trans        &trans        &trans                &trans          &trans  &trans  &trans  &trans
 &trans      &trans        &trans                      &trans        &trans                &trans          &trans  &trans  &trans  &trans  &trans
 &kp LEFT    &kp UP        &kp SPACE     &kp DOWN      &kp RIGHT                           &trans          &trans  &trans

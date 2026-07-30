@@ -1139,9 +1139,9 @@ svg.physical-layout { font-family: ui-monospace, SFMono-Regular, Consolas, monos
 <rect x="0" y="0" width="91" height="52" rx="6" ry="6"/>
 <text class="tap" x="45.5" y="26">TRANS</text>
 </g>
-<g class="key keypos-13 transparent" transform="translate(121 117.125) rotate(2.5 26 26)">
+<g class="key keypos-13 " transform="translate(121 117.125) rotate(2.5 26 26)">
 <rect x="0" y="0" width="52" height="52" rx="6" ry="6"/>
-<text class="tap" x="26" y="26">TRANS</text>
+<text class="tap" x="26" y="26">ble_ota</text>
 </g>
 <g class="key keypos-14 transparent" transform="translate(173.52 121.805) rotate(7.5 26 26)">
 <rect x="0" y="0" width="52" height="52" rx="6" ry="6"/>
@@ -1179,9 +1179,9 @@ svg.physical-layout { font-family: ui-monospace, SFMono-Regular, Consolas, monos
 <rect x="0" y="0" width="52" height="52" rx="6" ry="6"/>
 <text class="tap" x="26" y="26">TRANS</text>
 </g>
-<g class="key keypos-23 transparent" transform="translate(862 116.605) rotate(0 -611 -104)">
+<g class="key keypos-23 " transform="translate(862 116.605) rotate(0 -611 -104)">
 <rect x="0" y="0" width="52" height="52" rx="6" ry="6"/>
-<text class="tap" x="26" y="26">TRANS</text>
+<text class="tap" x="26" y="26">ble_ota</text>
 </g>
 <g class="key keypos-24 transparent" transform="translate(30 168.605) rotate(0 0 -156)">
 <rect x="0" y="0" width="117" height="52" rx="6" ry="6"/>

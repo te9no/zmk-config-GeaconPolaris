@@ -1,0 +1,5 @@
+description: Reboot an Adafruit nRF52 bootloader into BLE OTA mode
+
+compatible: "zmk,behavior-adafruit-ble-ota"
+
+include: zero_param.yaml

@@ -12,7 +12,7 @@ manifest:
     - name: zmk
       # remote: zmkfirmware
       remote: te9no
-      revision: 7fd6a70261963be9bc0cb4102e6bad339e115c39
+      revision: v0.3-branch+dya
       import: app/west.yml
 
 # ZMK RGB LED Widget
@@ -29,17 +29,17 @@ manifest:
 
 #Custom input processors
     - name: zmk-input-processor-keybind
-      revision: 10ad463f2e3c7a7dfb4b7cffd6bddd0e9e8b5bae
+      revision: main
       url: https://github.com/te9no/zmk-input-processor-keybind
       path: modules/zmk-input-processor-keybind
 
 # DYA Studio Runtime Processors
     - name: zmk-module-runtime-input-processor
-      revision: zmk-v0.3.0.0
-      url: https://github.com/cormoran/zmk-module-runtime-input-processor
+      revision: main
+      url: https://github.com/te9no/zmk-module-runtime-input-processor
       path: modules/zmk-module-runtime-input-processor
     - name: zmk-behavior-runtime-sensor-rotate
-      revision: 8b1125ed676c1f5e14145d217984f33d0ebdcef4
+      revision: main
       url: https://github.com/cormoran/zmk-behavior-runtime-sensor-rotate
       path: modules/zmk-behavior-runtime-sensor-rotate
     - name: zmk-module-ble-management
@@ -47,7 +47,7 @@ manifest:
       url: https://github.com/cormoran/zmk-module-ble-management
       path: modules/zmk-module-ble-management
     - name: zmk-module-settings-rpc
-      revision: 78f86df9e6c5edaf57bef3ccbd7f360cfdf49291
+      revision: main
       url: https://github.com/cormoran/zmk-module-settings-rpc
       path: modules/zmk-module-settings-rpc
 
@@ -71,7 +71,7 @@ manifest:
       path: modules/zmk-module-cirque-trackpad
     - name: zmk-driver-iqs9151-rpc
       remote: te9no
-      revision: 7db4dccc968cb85d242defea33495e4550ada715
+      revision: main
       path: modules/zmk-driver-iqs9151-rpc
     # - name: cirque-input-module
     #   revision: main
@@ -89,7 +89,7 @@ manifest:
       revision: 2684f22ee7e2168d4393f7e63676912210a796fc
       path: modules/zmk-analog-input-driver
     - name: zmk-module-analoginput-rpc
-      revision: e065461e907fa924c0029e1d4c94cec1d9093e17
+      revision: main
       url: https://github.com/te9no/zmk-module-analoginput-rpc
       path: modules/zmk-module-analoginput-rpc
 
@@ -99,7 +99,7 @@ manifest:
       url: https://github.com/te9no/zmk-module-battery-nrf-vddh-oversampling
       path: modules/zmk-module-battery-nrf-vddh-oversampling
     - name: zmk-feature-cdc-acm-bootloader-trigger
-      revision: 3570fa76ed9356afb48cceecd14c05d980a7c788
+      revision: main
       url: https://github.com/te9no/zmk-feature-cdc-acm-bootloader-trigger
       path: modules/zmk-feature-cdc-acm-bootloader-trigger
   self:

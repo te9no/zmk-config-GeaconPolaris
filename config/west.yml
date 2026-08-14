@@ -10,90 +10,98 @@ manifest:
       url-base: https://github.com/ShiniNet
   projects:
     - name: zmk
-      remote: cormoran
-      revision: main+dya
+      remote: te9no
+      revision: afe241df80b05c3f4e0cc95ada7584d24422a893
       import: app/west.yml
 
 # ZMK RGB LED Widget
     - name: zmk-rgbled-widget
       url: https://github.com/caksoylar/zmk-rgbled-widget
-      revision: main
+      revision: e6b467792a1dabef8cfa5c9fd26bfefc9c16662b
       path: modules/zmk-rgbled-widget
 
 # ZMK Layout Shift
     - name: zmk-layout-shift
-      revision: v1
+      revision: 4d71f7cb743256ac619873dd44f510e9e9562739
       url: https://github.com/kot149/zmk-layout-shift
       path: modules/zmk-layout-shift
 
 # Custom input processors
     - name: zmk-input-processor-keybind
-      revision: main
+      revision: 10ad463f2e3c7a7dfb4b7cffd6bddd0e9e8b5bae
       url: https://github.com/te9no/zmk-input-processor-keybind
       path: modules/zmk-input-processor-keybind
 
 # DYA Studio Runtime Processors
     - name: zmk-module-runtime-input-processor
-      revision: main
-      url: https://github.com/cormoran/zmk-module-runtime-input-processor
+      revision: 72387b5212264d26d704dbc43c765f6485470a77
+      url: https://github.com/te9no/zmk-module-runtime-input-processor
       path: modules/zmk-module-runtime-input-processor
     - name: zmk-behavior-runtime-sensor-rotate
-      revision: main
+      revision: 8b1125ed676c1f5e14145d217984f33d0ebdcef4
       url: https://github.com/cormoran/zmk-behavior-runtime-sensor-rotate
       path: modules/zmk-behavior-runtime-sensor-rotate
     - name: zmk-module-ble-management
-      revision: main
+      revision: 57738cc4fc6ba80e82a7ac57741a0339cb186cd4
       url: https://github.com/cormoran/zmk-module-ble-management
       path: modules/zmk-module-ble-management
     - name: zmk-module-settings-rpc
-      revision: main
-      url: https://github.com/cormoran/zmk-module-settings-rpc
+      revision: 083a299dd8d31c275809c5a249b12486be24a7d2
+      url: https://github.com/te9no/zmk-module-settings-rpc
       path: modules/zmk-module-settings-rpc
     - name: zmk-feature-runtime-combo
       remote: cormoran
-      revision: main
+      revision: d9490e7b5d41c516221d131241009e81740efcee
       path: modules/zmk-feature-runtime-combo
-      import: true
+      import:
+        name-blocklist:
+          - zmk-feature-custom-settings
     - name: zmk-feature-runtime-macro
       remote: cormoran
-      revision: main
+      revision: 38530962eb7061b60efcb98e84585cfb1f0cb6de
       path: modules/zmk-feature-runtime-macro
-      import: true
+      import:
+        name-blocklist:
+          - zmk-feature-custom-settings
+    - name: zmk-feature-custom-settings
+      remote: cormoran
+      revision: c6a7fef3a3be3d3ace5de9a4b0628c6418cd1f3f
+      path: zmk-feature-custom-settings
     - name: zmk-feature-device-info
       remote: cormoran
-      revision: main
+      revision: 8cedd2dd9f04e19ea5a17b94914dd47a09d8db11
       path: modules/zmk-feature-device-info
     - name: zmk-feature-watchdog
       remote: cormoran
-      revision: main
+      revision: 84ad14c6c3645dc40b23f45d08ab45418655f912
       path: modules/zmk-feature-watchdog
     - name: zmk-feature-kscan-diagnostics
       remote: cormoran
-      revision: main
+      revision: 1432f7fe0cfe903cd7d3c9931ae6bd6f2e1f328e
       path: modules/zmk-feature-kscan-diagnostics
     - name: zmk-module-devtool
       remote: cormoran
-      revision: main
+      revision: 9938a2c73c06d6e65ba2c0b68c9aa044a467eafc
       path: modules/zmk-module-devtool
     - name: zmk-driver-pmw3610-with-custom-studio-rpc
       remote: cormoran
-      revision: main
+      revision: 5c34ea0eec246a1c986111417cd779b53144629a
       path: modules/zmk-driver-pmw3610-with-custom-studio-rpc
     - name: zmk-nice-oled
       remote: te9no
-      revision: zmk-0.4-polaris
+      revision: 49e2111c4401947f8d21833b3ab237b42382a155
       path: modules/zmk-nice-oled
 
 # Trackpad
 # Zephyr 4.1 provides the cirque,pinnacle input driver used by TPD snippets.
     - name: zmk-driver-iqs9151-rpc
       remote: te9no
-      revision: main
+      revision: 6d703bd5a89b75036cefbd13c86a54af3046476e
       path: modules/zmk-driver-iqs9151-rpc
 
 # Analog input
     - name: ads1220-zephyr-module
-      revision: 1b5d9c9a835377a8345cadfc9dd78080a17015e0
+      revision: b79ad03aa5eefea2425e837e017270fb917d9cb7
       url: https://github.com/te9no/ads1220-zephyr-module
       path: modules/ads1220-zephyr-module
 
@@ -102,7 +110,7 @@ manifest:
       revision: 2684f22ee7e2168d4393f7e63676912210a796fc
       path: modules/zmk-analog-input-driver
     - name: zmk-module-analoginput-rpc
-      revision: main
+      revision: e065461e907fa924c0029e1d4c94cec1d9093e17
       url: https://github.com/te9no/zmk-module-analoginput-rpc
       path: modules/zmk-module-analoginput-rpc
 
@@ -112,7 +120,7 @@ manifest:
       url: https://github.com/te9no/zmk-module-battery-nrf-vddh-oversampling
       path: modules/zmk-module-battery-nrf-vddh-oversampling
     - name: zmk-feature-cdc-acm-bootloader-trigger
-      revision: main
+      revision: 1850754d269aab9ba73e4639371bfe59a4130e65
       url: https://github.com/te9no/zmk-feature-cdc-acm-bootloader-trigger
       path: modules/zmk-feature-cdc-acm-bootloader-trigger
   self:

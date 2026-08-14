@@ -3,45 +3,46 @@ include:
 # Left Shields
   - board: xiao_ble//zmk
     shield: Polaris_L_Base rgbled_adapter nice_oled
-    snippet: LPPS studio-rpc-usb-uart
+    snippet: LPPS studio-rpc-usb-uart cdc-boot
     artifact-name: Polaris_L_MODULE_LPPS
 
   - board: xiao_ble//zmk
     shield: Polaris_L_Base rgbled_adapter nice_oled
-    snippet: TB_L studio-rpc-usb-uart
+    snippet: TB_L studio-rpc-usb-uart cdc-boot
     artifact-name: Polaris_L_MODULE_TB
 
   - board: xiao_ble//zmk
     shield: Polaris_L_Base rgbled_adapter nice_oled
-    snippet: JOY battery-voltage-divider-oversampling studio-rpc-usb-uart
+    snippet: JOY battery-voltage-divider-oversampling studio-rpc-usb-uart cdc-boot
     artifact-name: Polaris_L_MODULE_JOY
 
   - board: xiao_ble//zmk
     shield: Polaris_L_Base rgbled_adapter nice_oled
-    snippet: ENC studio-rpc-usb-uart
+    snippet: ENC studio-rpc-usb-uart cdc-boot
     artifact-name: Polaris_L_MODULE_ENC
 
   - board: xiao_ble//zmk
     shield: Polaris_L_Base rgbled_adapter nice_oled
-    snippet: TPD_L studio-rpc-usb-uart
+    snippet: TPD_L studio-rpc-usb-uart cdc-boot
     artifact-name: Polaris_L_MODULE_TPD
 
 # Right Shields
   - board: xiao_ble//zmk
     shield: Polaris_R_Base rgbled_adapter
-    snippet: TB_R studio-rpc-usb-uart
+    snippet: TB_R
     artifact-name: Polaris_R_MODULE_TB
 
   - board: xiao_ble//zmk
     shield: Polaris_R_Base rgbled_adapter
-    snippet: TPD_R studio-rpc-usb-uart
+    snippet: TPD_R
     artifact-name: Polaris_R_MODULE_TPD
 
   - board: xiao_ble//zmk
     shield: Polaris_R_Base rgbled_adapter
-    snippet: IQS studio-rpc-usb-uart
+    snippet: IQS
     artifact-name: Polaris_R_MODULE_IQS
 
 # Settings Reset
   - board: xiao_ble//zmk
     shield: settings_reset
+    snippet: no-usb

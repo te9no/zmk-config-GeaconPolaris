@@ -34,8 +34,6 @@
             in-max = <(0 + 8000)>;
             in-calib-cycle = <100>;
             in-deadzone = <1000>;
-            auto-center;
-            auto-center-divisor = <64>;
             out-min = <(-10)>;
             out-max = <10>;
             invert-output;
@@ -51,8 +49,6 @@
             in-max = <(0 + 8000)>;
             in-calib-cycle = <100>;
             in-deadzone = <1000>;
-            auto-center;
-            auto-center-divisor = <64>;
             out-min = <(-10)>;
             out-max = <10>;
             skip-change-comparator;

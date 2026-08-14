@@ -1,47 +1,47 @@
 ---
 include:
 # Left Shields
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: Polaris_L_Base rgbled_adapter nice_oled
-    snippet: LPPS zmk-usb-logging
+    snippet: LPPS studio-rpc-usb-uart
     artifact-name: Polaris_L_MODULE_LPPS
 
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: Polaris_L_Base rgbled_adapter nice_oled
-    snippet: TB_L zmk-usb-logging studio-rpc-usb-uart
+    snippet: TB_L studio-rpc-usb-uart
     artifact-name: Polaris_L_MODULE_TB
 
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: Polaris_L_Base rgbled_adapter nice_oled
-    snippet: JOY battery-voltage-divider-oversampling zmk-usb-logging studio-rpc-usb-uart
+    snippet: JOY battery-voltage-divider-oversampling studio-rpc-usb-uart
     artifact-name: Polaris_L_MODULE_JOY
 
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: Polaris_L_Base rgbled_adapter nice_oled
-    snippet: ENC zmk-usb-logging studio-rpc-usb-uart
+    snippet: ENC studio-rpc-usb-uart
     artifact-name: Polaris_L_MODULE_ENC
 
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: Polaris_L_Base rgbled_adapter nice_oled
-    snippet: TPD_L zmk-usb-logging studio-rpc-usb-uart
+    snippet: TPD_L studio-rpc-usb-uart
     artifact-name: Polaris_L_MODULE_TPD
 
 # Right Shields
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: Polaris_R_Base rgbled_adapter
-    snippet: TB_R zmk-usb-logging studio-rpc-usb-uart
+    snippet: TB_R studio-rpc-usb-uart
     artifact-name: Polaris_R_MODULE_TB
 
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: Polaris_R_Base rgbled_adapter
-    snippet: TPD_R zmk-usb-logging studio-rpc-usb-uart
+    snippet: TPD_R studio-rpc-usb-uart
     artifact-name: Polaris_R_MODULE_TPD
 
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: Polaris_R_Base rgbled_adapter
-    snippet: IQS zmk-usb-logging studio-rpc-usb-uart
+    snippet: IQS studio-rpc-usb-uart
     artifact-name: Polaris_R_MODULE_IQS
 
 # Settings Reset
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: settings_reset

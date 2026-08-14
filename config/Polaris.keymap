@@ -1,6 +1,7 @@
 // #include <layout_shift.dtsi>
 
 #include <behaviors.dtsi>
+#include <behaviors/runtime_macro.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
@@ -59,17 +60,21 @@
 #define SSNIPE 6
 
 / {
-    combos {
-        compatible = "zmk,combos";
+    runtime_combo_defaults {
+        compatible = "cormoran,runtime-combo-defaults";
 
         COMBO_LANG1 {
+            slot = <0>;
             bindings = <&kp LANGUAGE_1>;
             key-positions = <1 2>;
+            display-name = "LANG1";
         };
 
         COMBO_LANG2 {
+            slot = <1>;
             bindings = <&kp LANG2>;
             key-positions = <2 3>;
+            display-name = "LANG2";
         };
     };
 

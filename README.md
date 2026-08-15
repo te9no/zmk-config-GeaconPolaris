@@ -2,457 +2,344 @@
 
 [![Build Health](badges/build-health/zmk-config-GeaconPolaris/main/build-health.svg)](https://github.com/te9no/zmk-config-GeaconPolaris/actions/workflows/build.yml?query=branch%3Amain)
 
-**GeaconPolaris is not merely a keyboard firmware repository.**
+**GeaconPolaris is not merely a keyboard. It is a split navigation instrument.**
 
-It is a ZMK-powered split ergonomic input device, built around the idea that typing, pointing, scrolling, navigating, and experimenting with input hardware should live in the same constellation.
+Built on [ZMK Firmware](https://zmk.dev/), Polaris brings typing, pointing,
+scrolling, and hardware experimentation into one modular ergonomic device.
+Stable left and right base shields form the platform. Trackballs, touchpads,
+encoders, analog controls, and an IQS9151 module define the route from there.
 
-Polaris is the North Star of the Geacon lineage: a route marker for modular input, a working keyboard, and a platform for trying trackballs, touchpads, rotary encoders, joystick-style controls, and sensor-driven interaction without treating them as afterthoughts.
+Polaris is the North Star of the Geacon lineage: a practical keyboard, a
+platform for experimenting with pointing devices, and a record of how those
+experiments become maintainable firmware.
 
 ![Physical keymap preview](keymap-svg/Polaris.svg)
 
-## Concept
-
-GeaconPolaris is a split ergonomic keyboard configuration for [ZMK Firmware](https://zmk.dev/), targeting `seeeduino_xiao_ble`.
-
-The design is centered on a simple premise: a keyboard can be more than a grid of switches. It can be a navigation instrument. The current firmware keeps that route explicit through base shields, module Snippets, a shared physical layout, and a keymap that treats pointing and scrolling as first-class operations.
-
-This repository is therefore both:
-
-- a usable ZMK user config for building Polaris firmware;
-- a record of an input-device experiment at the edge of keyboard, pointer, and controller.
-
 ## Features
 
-- **Split ergonomic ZMK configuration** for `seeeduino_xiao_ble`.
-- **Base shield pair** under `boards/shields/GeaconPolaris/`: `Polaris_L_Base` and `Polaris_R_Base`.
-- **Module Snippets** under `snippets/`: `TB_L`, `JOY`, `ENC`, `TPD_L`, `TB_R`, `TPD_R`, and `IQS`.
-- **Centralized pin definitions** in `boards/shields/GeaconPolaris/Polaris_pins.dtsi`.
-- **Shared physical layout definition** in `boards/shields/GeaconPolaris/Polaris.dtsi`, including `zmk,physical-layout` and custom module layout nodes.
-- **Left-side OLED** via `Polaris_L_Base.overlay` and `nice_oled` in the left build targets.
-- **LED aliases and GPIO LEDs** defined in `Polaris.dtsi`.
-- **Seven ZMK layers** defined in `config/Polaris.keymap`: `DEF`, `FUNC`, `NUM`, `SNIPE`, `BT`, `SCROLL`, and `SSNIPE`.
-- **Combos** for language switching: `COMBO_LANG1` and `COMBO_LANG2`.
-- **Runtime sensor rotate behaviors** for scrolling and volume-style sensor bindings.
-- **layout-shift key press behavior** via `layout_shift.dtsi` and `zmk,behavior-layout-shift-key-press`.
-- **Generated visual previews**:
-  - `keymap-svg/Polaris.svg`: physical-layout-based keymap SVG with combo overlays.
-  - `keymap-drawer/Polaris.svg`: keymap-drawer output.
-- **Custom GitHub Actions builds** that compose a matrix from `build.yaml`, cache west/ccache, upload successful firmware artifacts, and optionally commit firmware files back to `firmware/<safe-branch-name>/`.
+- ZMK split keyboard targeting `xiao_ble//zmk`.
+- Stable `Polaris_L_Base` and `Polaris_R_Base` shields.
+- Input hardware selected with function-oriented ZMK Snippets.
+- Five left-side routes: LPPS, trackball, joystick, encoder, and touchpad.
+- Three right-side routes: trackball, touchpad, and IQS9151.
+- Seven layers: `DEF`, `FUNC`, `NUM`, `SNIPE`, `BT`, `SCROLL`, and `SSNIPE`.
+- Runtime combo and macro support for DYA Studio.
+- Device information, watchdog, key-switch, PMW3610, and stack-usage diagnostics.
+- Portrait OLED with both battery levels, layer, Bluetooth profile and status.
+- Local and GitHub Actions builds driven by the same `build.yaml`.
 
 ## Modular Input System
 
-Polaris is designed as a modular input platform, not just as a typing board.
+The base shields describe the keyboard. Snippets describe the module attached
+to each side. This separates shared matrix, power, display, and split
+configuration from module-specific buses and input listeners.
 
-The firmware now separates base hardware from module selection. The base shields stay stable; module overlays move through Snippets. This matches the way the device is used: choose a route, build that route, flash the matching half.
+### Left-Hand Builds
 
-### Left-Hand Modules
+All left builds use `Polaris_L_Base rgbled_adapter nice_oled`.
 
-| Module | Base shield | Snippet | Artifact |
-| --- | --- | --- | --- |
-| Trackball | `Polaris_L_Base rgbled_adapter nice_oled` | `TB_L zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_TB` |
-| Joystick | `Polaris_L_Base rgbled_adapter nice_oled` | `JOY zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_JOY` |
-| Rotary Encoder | `Polaris_L_Base rgbled_adapter nice_oled` | `ENC zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_ENC` |
-| Touchpad | `Polaris_L_Base rgbled_adapter nice_oled` | `TPD_L zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_TPD` |
+| Module | Snippets | Artifact |
+| --- | --- | --- |
+| LPPS analog stick | `LPPS studio-rpc-usb-uart cdc-boot` | `Polaris_L_MODULE_LPPS` |
+| Trackball | `TB_L studio-rpc-usb-uart cdc-boot` | `Polaris_L_MODULE_TB` |
+| Joystick | `JOY battery-voltage-divider-oversampling studio-rpc-usb-uart cdc-boot` | `Polaris_L_MODULE_JOY` |
+| Rotary encoder | `ENC studio-rpc-usb-uart cdc-boot` | `Polaris_L_MODULE_ENC` |
+| Touchpad | `TPD_L studio-rpc-usb-uart cdc-boot` | `Polaris_L_MODULE_TPD` |
 
-### Right-Hand Modules
+### Right-Hand Builds
 
-| Module | Base shield | Snippet | Artifact |
-| --- | --- | --- | --- |
-| Trackball | `Polaris_R_Base rgbled_adapter` | `TB_R zmk-usb-logging studio-rpc-usb-uart` | `Polaris_R_MODULE_TB` |
-| Touchpad | `Polaris_R_Base rgbled_adapter` | `TPD_R zmk-usb-logging studio-rpc-usb-uart` | `Polaris_R_MODULE_TPD` |
-| IQS | `Polaris_R_Base rgbled_adapter` | `IQS zmk-usb-logging studio-rpc-usb-uart` | `Polaris_R_MODULE_IQS` |
+All right builds use `Polaris_R_Base rgbled_adapter`.
 
-`TB_L` / `TB_R` and `TPD_L` / `TPD_R` are intentionally separate. Their Devicetree nodes and split-input wiring differ by side, so the route is clearer and safer when represented as separate Snippets rather than Kconfig-gated branches inside one overlay.
+| Module | Snippets | Artifact |
+| --- | --- | --- |
+| Trackball | `TB_R` | `Polaris_R_MODULE_TB` |
+| Touchpad | `TPD_R` | `Polaris_R_MODULE_TPD` |
+| IQS9151 | `IQS` | `Polaris_R_MODULE_IQS` |
+| IQS9151 diagnostics | `IQS zmk-usb-logging iqs-debug` | `Polaris_R_MODULE_IQS_DEBUG` |
 
-TODO: Document the physical attachment mechanism and whether modules are hot-swappable at the hardware level.
+The `_DEBUG` artifact is for diagnosis only. Use
+`Polaris_R_MODULE_IQS` for normal operation.
+
+`TB_L` / `TB_R` and `TPD_L` / `TPD_R` are deliberately separate. Their
+local and split-input routes differ by side, and making that distinction
+visible is safer than hiding it behind conditional Devicetree fragments.
+
+> The physical replacement procedure and hot-swap safety still require
+> dedicated hardware documentation. Do not assume modules are hot-swappable.
 
 ## Keymap
 
-The keymap lives in [`config/Polaris.keymap`](config/Polaris.keymap).
+The source of truth is [`config/Polaris.keymap`](config/Polaris.keymap).
 
-Layer constants are defined as:
-
-| Constant | Value | Layer node | Label |
-| --- | ---: | --- | --- |
-| `DEF` | `0` | `default_layer` | `Def` |
-| `FUNC` | `1` | `function_layer` | `Fnc` |
-| `NUM` | `2` | `num_layer` | `Num` |
-| `SNIPE` | `3` | `snipe_layer` | `Snipe` |
-| `BT` | `4` | `bt_layer` | `BT` |
-| `SCROLL` | `5` | `scroll_layer` | `SCROLL` |
-| `SSNIPE` | `6` | `SSNIPE_layer` | `SSNIPE` |
-
-### Layer Notes
-
-- **`DEF` / `default_layer`**: the main typing layer. It includes layer-tap access to `BT`, `NUM`, `FUNC`, and `SNIPE`, mouse buttons on the right-hand side, and momentary access to `SCROLL` / `SSNIPE`.
-- **`FUNC` / `function_layer`**: navigation, function keys, and layout-shift toggle via `&tog_ls`.
-- **`NUM` / `num_layer`**: number row, symbols, enter/backspace/delete, and navigation keys.
-- **`SNIPE` / `snipe_layer`**: a precision-oriented layer with mostly transparent bindings and navigation controls.
-- **`BT` / `bt_layer`**: Bluetooth clear/select bindings, including `BT_CLR`, `BT_SEL 0` through `BT_SEL 4`, and `BT_CLR_ALL`.
-- **`SCROLL` / `scroll_layer`**: scroll-oriented layer using sensor bindings.
-- **`SSNIPE` / `SSNIPE_layer`**: a second precision/scroll-related layer using the same sensor-binding style.
-
-### Combos
-
-Two combos are currently defined:
-
-| Combo | Binding | Key positions |
+| Constant | Layer | Purpose |
 | --- | --- | --- |
-| `COMBO_LANG1` | `&kp LANGUAGE_1` | `<1 2>` |
-| `COMBO_LANG2` | `&kp LANG2` | `<2 3>` |
+| `DEF` | `default_layer` | Main typing and access to other layers |
+| `FUNC` | `function_layer` | Function keys, navigation, and layout shift |
+| `NUM` | `num_layer` | Numbers, symbols, and editing/navigation keys |
+| `SNIPE` | `snipe_layer` | Precision-oriented pointer controls |
+| `BT` | `bt_layer` | Bluetooth profile selection and clearing |
+| `SCROLL` | `scroll_layer` | Scroll-oriented sensor bindings |
+| `SSNIPE` | `SSNIPE_layer` | Precision scroll/sensor bindings |
 
-The physical-layout SVG preview draws these combos as overlays connecting their `key-positions`, so the keymap is visible as geometry, not just text.
+The keymap also defines language-switching combos and runtime sensor-rotate
+behaviors. The generated SVG includes combo geometry.
 
-### Behaviors and Sensors
+## DYA Studio and Diagnostics
 
-`config/Polaris.keymap` defines and uses several non-trivial behaviors:
+The ZMK 0.4-based DYA Studio stack is pinned in
+[`config/west.yml`](config/west.yml). The firmware includes support for:
 
-- `original_key_press`: keeps the original `zmk,behavior-key-press` available.
-- `kp`: overrides key press through `zmk,behavior-layout-shift-key-press`.
-- `rsr_msch`: runtime sensor rotate behavior for vertical scroll bindings.
-- `rsr_mscv`: runtime sensor rotate behavior for horizontal scroll bindings.
-- `rsr_vol`: runtime sensor rotate behavior for volume-style bindings.
+- runtime combos and macros;
+- device and build information;
+- watchdog and freeze history;
+- key-switch diagnostics;
+- PMW3610 diagnostics with split relay support;
+- thread stack-usage diagnostics;
+- runtime input-processor and module-specific RPC settings.
 
-TODO: Explain the intended user-facing behavior of `layout_shift.dtsi` in more detail.
+The normal firmware keeps these diagnostics available so a device can explain
+its state without requiring a private debug build. Verbose IQS serial logging
+remains isolated in `Polaris_R_MODULE_IQS_DEBUG`.
+
+## OLED
+
+The left-side SSD1306 is physically mounted in portrait orientation. The
+`nice_oled` module displays:
+
+- central battery level;
+- peripheral battery level;
+- active layer;
+- Bluetooth profile number and connection-state icon;
+- a small animated cat in the remaining area.
 
 ## Build
 
-Firmware builds are defined by [`build.yaml`](build.yaml) and executed by [`.github/workflows/build.yml`](.github/workflows/build.yml).
+[`build.yaml`](build.yaml) is the build matrix used locally and in CI.
 
-This repository does not currently call ZMK's stock reusable build workflow directly. Instead, it uses a repository-local workflow that:
+### Local Build
 
-- reads `build.yaml` with `.github/scripts/compose-build-matrix.rb`;
-- filters targets by the optional `workflow_dispatch` `target` regex;
-- prepares a west workspace before matrix builds;
-- restores west module caches;
-- restores and saves ccache;
-- builds matrix entries with `max-parallel: 4`;
-- uploads each successful firmware as an artifact;
-- downloads successful artifacts in the `publish` job;
-- optionally commits firmware files back to `firmware/<safe-branch-name>/`.
-
-It runs on:
-
-- manual `workflow_dispatch`;
-- pushes that change `config/**`, `boards/**`, `snippets/**`, `build.yaml`, `zephyr/module.yml`, or the build workflow/scripts.
-
-The `target` workflow input is matched against artifact name, board, shield, and snippet. Use `all` to build every target.
-
-### Build Matrix
-
-| Artifact | Board | Shields | Snippet |
-| --- | --- | --- | --- |
-| `Polaris_L_MODULE_TB` | `seeeduino_xiao_ble` | `Polaris_L_Base rgbled_adapter nice_oled` | `TB_L zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_L_MODULE_JOY` | `seeeduino_xiao_ble` | `Polaris_L_Base rgbled_adapter nice_oled` | `JOY zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_L_MODULE_ENC` | `seeeduino_xiao_ble` | `Polaris_L_Base rgbled_adapter nice_oled` | `ENC zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_L_MODULE_TPD` | `seeeduino_xiao_ble` | `Polaris_L_Base rgbled_adapter nice_oled` | `TPD_L zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_R_MODULE_TB` | `seeeduino_xiao_ble` | `Polaris_R_Base rgbled_adapter` | `TB_R zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_R_MODULE_TPD` | `seeeduino_xiao_ble` | `Polaris_R_Base rgbled_adapter` | `TPD_R zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_R_MODULE_IQS` | `seeeduino_xiao_ble` | `Polaris_R_Base rgbled_adapter` | `IQS zmk-usb-logging studio-rpc-usb-uart` |
-| settings reset | `seeeduino_xiao_ble` | `settings_reset` | none |
-
-### Local Build Example
-
-Use the same board, shield, and snippet combinations as `build.yaml`.
-
-Example: left-hand trackball module.
+From `zmk-workspace`, initialize this config and use `just.sh`:
 
 ```sh
-west build \
-  -s zmk/app \
-  -b seeeduino_xiao_ble \
-  -S "TB_L zmk-usb-logging studio-rpc-usb-uart" \
-  -- \
-  -DSHIELD="Polaris_L_Base rgbled_adapter nice_oled" \
-  -DZMK_CONFIG=/path/to/zmk-config-GeaconPolaris/config \
-  -DZMK_EXTRA_MODULES=/path/to/zmk-config-GeaconPolaris
+./just.sh init config/zmk-config-GeaconPolaris
+./just.sh build all
 ```
 
-Example: right-hand IQS module.
+Build one target by artifact name:
 
 ```sh
-west build \
-  -s zmk/app \
-  -b seeeduino_xiao_ble \
-  -S "IQS zmk-usb-logging studio-rpc-usb-uart" \
-  -- \
-  -DSHIELD="Polaris_R_Base rgbled_adapter" \
-  -DZMK_CONFIG=/path/to/zmk-config-GeaconPolaris/config \
-  -DZMK_EXTRA_MODULES=/path/to/zmk-config-GeaconPolaris
+./just.sh build Polaris_R_MODULE_IQS
 ```
 
-TODO: Document the exact local west setup expected for this repository, including module dependencies from `config/west.yml`.
+Local output is written under `.build/<artifact-name>/zephyr/`.
 
-## Keymap SVG Workflow
+### GitHub Actions and Firmware
 
-The keymap SVG is generated by [`.github/workflows/draw-keymap.yml`](.github/workflows/draw-keymap.yml).
+[`.github/workflows/build.yml`](.github/workflows/build.yml) calls
+`te9no/zmk-workspace/.github/workflows/build-zmk-firmware.yml@main`. It
+creates the matrix, restores west/ccache data, builds up to four targets in
+parallel, uploads artifacts, publishes UF2 files, and updates the health badge.
 
-This workflow calls a reusable workflow from `te9no/zmk-workspace`:
+It runs on relevant pushes, manual dispatch, and daily at 05:00 JST. Manual
+runs accept a target regex; use `all` for every target.
 
-```yaml
-jobs:
-  draw-keymap-svg:
-    uses: te9no/zmk-workspace/.github/workflows/draw-keymap-svg.yml@main
-    permissions:
-      contents: write
-    with:
-      commit_message: "[Draw keymap-svg] ${{ github.event.head_commit.message || 'manual run' }}"
-      amend_commit: false
-      keymap_patterns: "config/*.keymap"
-      output_folder: "keymap-svg"
-      destination: "both"
-      artifact_name: "keymap-svg"
-```
+Firmware is available in two places:
 
-It runs on:
+1. The merged downloadable artifact on each successful Actions run.
+2. Committed UF2 files under `firmware/<repository>/<sanitized-branch>/`.
 
-- manual `workflow_dispatch`;
-- pushes that change keymap, layout, JSON, keymap-drawer config, or the workflow file.
-
-The output is written to [`keymap-svg/Polaris.svg`](keymap-svg/Polaris.svg) and uploaded as an artifact.
+For example, `codex/polaris-latest-dya-studio` is published to
+`firmware/zmk-config-GeaconPolaris/codex-polaris-latest-dya-studio/`. Slash
+characters in branch names become hyphens. The current public `main` output is
+in [`firmware/zmk-config-GeaconPolaris/main/`](firmware/zmk-config-GeaconPolaris/main/).
 
 ## Repository Structure
 
 | Path | Purpose |
 | --- | --- |
-| `config/Polaris.keymap` | ZMK keymap, layers, combos, and behavior definitions. |
-| `config/Polaris.json` | Layout JSON used by drawing tools. |
-| `config/west.yml` | West manifest for ZMK/modules used by this config. |
-| `boards/shields/GeaconPolaris/Polaris.dtsi` | Shared physical layout, matrix transform, custom module layout nodes, aliases, LEDs, sensors, and battery node. |
-| `boards/shields/GeaconPolaris/Polaris_pins.dtsi` | Centralized pin assignment table. |
-| `boards/shields/GeaconPolaris/Polaris_L_Base.overlay` | Left-hand base shield overlay, including kscan and OLED/I2C setup. |
-| `boards/shields/GeaconPolaris/Polaris_R_Base.overlay` | Right-hand base shield overlay and transform offset. |
-| `boards/shields/GeaconPolaris/Polaris_L_Base.conf` | Left-hand base Kconfig. |
-| `boards/shields/GeaconPolaris/Polaris_R_Base.conf` | Right-hand base Kconfig. |
-| `snippets/ENC/` | Rotary encoder module Snippet. |
-| `snippets/JOY/` | Joystick module Snippet. |
-| `snippets/TB_L/` | Left-hand trackball module Snippet. |
-| `snippets/TB_R/` | Right-hand trackball module Snippet. |
-| `snippets/TPD_L/` | Left-hand touchpad module Snippet. |
-| `snippets/TPD_R/` | Right-hand touchpad module Snippet. |
-| `snippets/IQS/` | Right-hand IQS module Snippet. |
-| `build.yaml` | ZMK build matrix. |
-| `.github/scripts/compose-build-matrix.rb` | Build matrix composer for GitHub Actions. |
-| `.github/workflows/build.yml` | Firmware build, artifact upload, and firmware publish workflow. |
-| `.github/workflows/draw-keymap.yml` | Physical-layout keymap SVG workflow. |
-| `keymap-svg/Polaris.svg` | Generated physical-layout SVG preview. |
-| `keymap-drawer/` | keymap-drawer config and output. |
-| `firmware/` | Firmware files committed by the build workflow when enabled. |
+| `config/Polaris.keymap` | Layers, combos, and behavior bindings |
+| `config/west.yml` | Pinned ZMK and module revisions |
+| `boards/shields/GeaconPolaris/Polaris.dtsi` | Shared include entry point |
+| `boards/shields/GeaconPolaris/Polaris_hardware.dtsi` | Shared hardware nodes |
+| `boards/shields/GeaconPolaris/Polaris_layout.dtsi` | Physical layout and matrix transform |
+| `boards/shields/GeaconPolaris/Polaris_modules.dtsi` | Studio module metadata |
+| `boards/shields/GeaconPolaris/Polaris_pins.dtsi` | Centralized pin assignments |
+| `boards/shields/GeaconPolaris/Polaris_L_Base.overlay` | Left base, matrix, OLED, and I2C |
+| `boards/shields/GeaconPolaris/Polaris_R_Base.overlay` | Right base and split offset |
+| `snippets/` | Module, logging, reset, and bootloader Snippets |
+| `keymap-svg/Polaris.svg` | Generated physical-layout keymap |
+| `build.yaml` | Firmware build matrix |
+| `firmware/` | CI firmware grouped by repository and branch |
 
-## Notes / Philosophy
+## Philosophy
 
-Polaris is named like a direction, not a product SKU.
+A conventional keyboard config asks which key sends which code. Polaris asks a
+larger question: how many forms of input can a split ergonomic device support
+without turning its firmware into an opaque collection of special cases?
 
-A normal keyboard config answers: which key sends which code? GeaconPolaris asks a broader question: how many forms of input can a split ergonomic device hold before it stops being a keyboard and becomes a navigation surface?
+The answer is implementation: stable base shields, explicit module Snippets,
+centralized pin definitions, pinned dependencies, visible build routes,
+diagnostics, and generated documentation. The mythology works only because the
+code carries it.
 
-The answer here is intentionally practical. The idea is not hidden in prose; it is expressed as base shields, module Snippets, build artifacts, keymap layers, combos, centralized pin definitions, and generated SVGs. The myth is allowed only because the implementation is there to carry it.
+## Documentation TODO
 
-This is the Geacon lineage pointing north: toward a keyboard that can type, point, scroll, switch modes, and still be built from inspectable ZMK configuration.
-
-## TODO
-
-- Document hardware photos, assembly notes, and module installation procedure.
-- Clarify whether the modules are electrically hot-swappable or simply build-time/module variants.
-- Expand `layout_shift.dtsi` explanation with examples.
-- Document each pointing module's runtime behavior from the user's perspective.
-- Add flashing instructions for each generated artifact.
-- Confirm power configuration and battery expectations in hardware terms.
-- Add screenshots or rendered images for each module variant if available.
-
-## Fact-Check Notes
-
-The following points should be verified against hardware documentation or the author's notes before being presented as final claims:
-
-- Physical attachment and swapping mechanism for the modules.
-- Exact sensor hardware used by the `IQS` Snippet.
-- Battery type, runtime, and charging/power path assumptions.
-- Whether `nice_oled` is present for all left-hand builds or only specific hardware assemblies.
-- Exact intended user semantics of `SNIPE`, `SCROLL`, and `SSNIPE` beyond their current keymap bindings.
-- Meaning and expected workflow for `layout_shift.dtsi`.
+- Physical module mounting and replacement procedure.
+- Electrical hot-swap safety.
+- Battery, charging, and expected runtime details.
+- User-facing examples for `layout_shift.dtsi` and each precision layer.
+- Hardware photographs for each module route.
 
 ## License
 
-See [`LICENCE`](LICENCE) for license details.
+See [`LICENSE`](LICENSE).
 
 ---
 
 # GeaconPolaris 日本語版
 
-**GeaconPolaris は、単なる ZMK の設定リポジトリではありません。**
+**GeaconPolaris は、単なるキーボードではありません。分割された航法装置です。**
 
-これは ZMK ベースの分割エルゴノミクス入力装置です。キー入力、ポインティング、スクロール、レイヤー切替、センサー入力を、ひとつの分割デバイスの中で扱うための実験場でもあります。
+ZMK を土台に、文字入力、ポインティング、スクロール、入力モジュールの
+実験を、ひとつの分割エルゴノミクスデバイスにまとめています。左右の
+base shield を安定した土台とし、その上にトラックボール、タッチパッド、
+エンコーダー、アナログ入力、IQS9151 を Snippet として重ねます。
 
-Polaris は北極星です。Geacon 系譜の中で、どの方向へ進むのかを示す目印です。トラックボール、ジョイスティック、ロータリーエンコーダー、タッチパッド、IQS 系の入力モジュールを、ただの付属品ではなく、入力装置の中心的な要素として扱います。
-
-## コンセプト
-
-GeaconPolaris は `seeeduino_xiao_ble` を対象にした ZMK firmware configuration です。
-
-ただし目的は「キーを並べること」だけではありません。分割キーボードの上に、複数のポインティングデバイスやセンサー入力をどう載せるか。そのとき keymap、layer、base shield、Snippet、build artifact をどう整理すれば、実験と実用を両立できるか。Polaris はそのための構成です。
+Polaris は Geacon 系譜の北極星です。実用できるキーボードであり、入力
+デバイスの実験場であり、実験を保守可能な firmware に変えるための到達点
+でもあります。
 
 ## 特徴
 
-- `seeeduino_xiao_ble` 向けの ZMK 分割キーボード設定。
-- `boards/shields/GeaconPolaris/` に置かれた `Polaris_L_Base` / `Polaris_R_Base`。
-- `snippets/` に分離された入力モジュール: `TB_L`, `JOY`, `ENC`, `TPD_L`, `TB_R`, `TPD_R`, `IQS`。
-- `boards/shields/GeaconPolaris/Polaris_pins.dtsi` による pin 定義の集約。
-- `boards/shields/GeaconPolaris/Polaris.dtsi` による shared physical layout と custom module layout。
-- 左手側 build target の `nice_oled` と `Polaris_L_Base.overlay` による OLED/I2C 設定。
-- `Polaris.dtsi` に定義された LED alias / GPIO LED。
-- `config/Polaris.keymap` に定義された 7 layers: `DEF`, `FUNC`, `NUM`, `SNIPE`, `BT`, `SCROLL`, `SSNIPE`。
-- `COMBO_LANG1` / `COMBO_LANG2` による language switching combo。
-- `runtime-sensor-rotate` 系 behavior によるスクロール/センサー入力。
-- `layout_shift.dtsi` と `zmk,behavior-layout-shift-key-press` による layout shift 対応。
-- `keymap-svg/Polaris.svg` による physical-layout ベースの SVG 表示。combo も線で表示されます。
-- `build.yaml` を読み込む独自 GitHub Actions workflow による matrix build、west cache、ccache、artifact upload、firmware publish。
+- `xiao_ble//zmk` を対象にした ZMK 分割キーボード。
+- `Polaris_L_Base` / `Polaris_R_Base` を共通の土台として使用。
+- 入力モジュールを機能単位の Snippet として分離。
+- 左側は LPPS、トラックボール、ジョイスティック、エンコーダー、
+  タッチパッドに対応。
+- 右側はトラックボール、タッチパッド、IQS9151 に対応。
+- `DEF`, `FUNC`, `NUM`, `SNIPE`, `BT`, `SCROLL`, `SSNIPE` の 7 レイヤー。
+- DYA Studio の runtime combo / macro と各種診断機能に対応。
+- 左側の縦置き OLED に左右バッテリー、レイヤー、Bluetooth profile と
+  接続状態、アニメーションを表示。
 
-## モジュール入力システム
+## モジュール構成
 
-Polaris の特徴は、左右の base と入力モジュールを分けて扱っている点です。
+### 左側
 
-以前のようにモジュールごとの shield を増やすのではなく、現在は `Polaris_L_Base` / `Polaris_R_Base` を土台にして、入力モジュールを Snippet として重ねます。これにより、base の役割と入力モジュールの役割が分離されます。
+| モジュール | Snippet | Artifact |
+| --- | --- | --- |
+| LPPS アナログスティック | `LPPS studio-rpc-usb-uart cdc-boot` | `Polaris_L_MODULE_LPPS` |
+| トラックボール | `TB_L studio-rpc-usb-uart cdc-boot` | `Polaris_L_MODULE_TB` |
+| ジョイスティック | `JOY battery-voltage-divider-oversampling studio-rpc-usb-uart cdc-boot` | `Polaris_L_MODULE_JOY` |
+| ロータリーエンコーダー | `ENC studio-rpc-usb-uart cdc-boot` | `Polaris_L_MODULE_ENC` |
+| タッチパッド | `TPD_L studio-rpc-usb-uart cdc-boot` | `Polaris_L_MODULE_TPD` |
 
-### 左手側モジュール
+左側はすべて `Polaris_L_Base rgbled_adapter nice_oled` を使用します。
 
-| モジュール | Base shield | Snippet | Artifact |
-| --- | --- | --- | --- |
-| Trackball | `Polaris_L_Base rgbled_adapter nice_oled` | `TB_L zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_TB` |
-| Joystick | `Polaris_L_Base rgbled_adapter nice_oled` | `JOY zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_JOY` |
-| Rotary Encoder | `Polaris_L_Base rgbled_adapter nice_oled` | `ENC zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_ENC` |
-| Touchpad | `Polaris_L_Base rgbled_adapter nice_oled` | `TPD_L zmk-usb-logging studio-rpc-usb-uart` | `Polaris_L_MODULE_TPD` |
+### 右側
 
-### 右手側モジュール
+| モジュール | Snippet | Artifact |
+| --- | --- | --- |
+| トラックボール | `TB_R` | `Polaris_R_MODULE_TB` |
+| タッチパッド | `TPD_R` | `Polaris_R_MODULE_TPD` |
+| IQS9151 | `IQS` | `Polaris_R_MODULE_IQS` |
+| IQS9151 診断版 | `IQS zmk-usb-logging iqs-debug` | `Polaris_R_MODULE_IQS_DEBUG` |
 
-| モジュール | Base shield | Snippet | Artifact |
-| --- | --- | --- | --- |
-| Trackball | `Polaris_R_Base rgbled_adapter` | `TB_R zmk-usb-logging studio-rpc-usb-uart` | `Polaris_R_MODULE_TB` |
-| Touchpad | `Polaris_R_Base rgbled_adapter` | `TPD_R zmk-usb-logging studio-rpc-usb-uart` | `Polaris_R_MODULE_TPD` |
-| IQS | `Polaris_R_Base rgbled_adapter` | `IQS zmk-usb-logging studio-rpc-usb-uart` | `Polaris_R_MODULE_IQS` |
+右側はすべて `Polaris_R_Base rgbled_adapter` を使用します。通常利用では
+`Polaris_R_MODULE_IQS` を選び、詳細ログが必要な場合だけ `_DEBUG` を
+使用してください。
 
-`TB_L` / `TB_R` と `TPD_L` / `TPD_R` は左右で Devicetree の内容が異なるため、左右別 Snippet として分けています。Kconfig 条件分岐で隠すよりも、build route として見える方が安全です。
-
-TODO: モジュールの物理的な交換方法、通電中の交換可否、固定方法は別途確認が必要です。
+左右の TB / TPD Snippet は意図的に分けています。Devicetree と split-input
+の経路が左右で異なるため、条件分岐の中に隠すより build route として
+見える方が安全だからです。
 
 ## キーマップ
 
-キーマップは [`config/Polaris.keymap`](config/Polaris.keymap) です。
+キーマップの正本は [`config/Polaris.keymap`](config/Polaris.keymap) です。
 
-| 定数 | 値 | layer node | label |
-| --- | ---: | --- | --- |
-| `DEF` | `0` | `default_layer` | `Def` |
-| `FUNC` | `1` | `function_layer` | `Fnc` |
-| `NUM` | `2` | `num_layer` | `Num` |
-| `SNIPE` | `3` | `snipe_layer` | `Snipe` |
-| `BT` | `4` | `bt_layer` | `BT` |
-| `SCROLL` | `5` | `scroll_layer` | `SCROLL` |
-| `SSNIPE` | `6` | `SSNIPE_layer` | `SSNIPE` |
-
-`DEF` は通常入力の中心です。`FUNC` / `NUM` / `BT` / `SNIPE` への layer-tap や、`SCROLL` / `SSNIPE` への momentary access が置かれています。
-
-`FUNC` は function key と navigation、`NUM` は数字と記号、`BT` は Bluetooth profile 操作です。`SNIPE`、`SCROLL`、`SSNIPE` はポインティングやスクロールのための layer として扱われています。
-
-combo は以下の 2 つです。
-
-| Combo | Binding | key-positions |
+| 定数 | レイヤー | 役割 |
 | --- | --- | --- |
-| `COMBO_LANG1` | `&kp LANGUAGE_1` | `<1 2>` |
-| `COMBO_LANG2` | `&kp LANG2` | `<2 3>` |
+| `DEF` | `default_layer` | 通常入力と各レイヤーへの入口 |
+| `FUNC` | `function_layer` | Function key、navigation、layout shift |
+| `NUM` | `num_layer` | 数字、記号、編集・移動キー |
+| `SNIPE` | `snipe_layer` | 精密なポインター操作 |
+| `BT` | `bt_layer` | Bluetooth profile の選択・消去 |
+| `SCROLL` | `scroll_layer` | スクロール用 sensor binding |
+| `SSNIPE` | `SSNIPE_layer` | 精密スクロール用 sensor binding |
+
+言語切替 combo と runtime sensor rotate behavior もここで定義しています。
+
+## DYA Studio と診断
+
+[`config/west.yml`](config/west.yml) には ZMK 0.4 系の DYA Studio 構成を
+commit SHA で固定しています。firmware は次の診断機能を含みます。
+
+- device/build information;
+- watchdog と freeze history;
+- key-switch diagnostics;
+- split relay を含む PMW3610 diagnostics;
+- thread stack usage;
+- runtime input processor とモジュール固有 RPC。
+
+IQS の詳細 serial log だけは負荷を分離するため `_DEBUG` artifact に
+限定しています。
+
+## OLED
+
+左側の SSD1306 は物理的に縦向きです。表示内容は次のとおりです。
+
+- Central と Peripheral のバッテリー残量。
+- 現在のレイヤー。
+- Bluetooth profile 番号と接続状態アイコン。
+- 空き領域の小さな猫アニメーション。
 
 ## ビルド
 
-ビルド設定は [`build.yaml`](build.yaml)、GitHub Actions は [`.github/workflows/build.yml`](.github/workflows/build.yml) です。
-
-この workflow は ZMK の stock reusable workflow を直接呼ぶ形ではなく、リポジトリ内の `.github/scripts/compose-build-matrix.rb` で `build.yaml` を読み、matrix build を組み立てます。
-
-主な処理は以下です。
-
-- `workflow_dispatch` の `target` 入力で build target を絞り込む。
-- `prepare-west` job で west workspace を準備する。
-- west modules を cache する。
-- ccache を使う。
-- build matrix を `max-parallel: 4` で実行する。
-- 成功した firmware を artifact として upload する。
-- `publish` job で成功 artifact をまとめる。
-- `commit_firmware` が有効な場合、`firmware/<safe-branch-name>/` に firmware を commit する。
-
-主な artifact は以下です。
-
-| Artifact | Shields | Snippet |
-| --- | --- | --- |
-| `Polaris_L_MODULE_TB` | `Polaris_L_Base rgbled_adapter nice_oled` | `TB_L zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_L_MODULE_JOY` | `Polaris_L_Base rgbled_adapter nice_oled` | `JOY zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_L_MODULE_ENC` | `Polaris_L_Base rgbled_adapter nice_oled` | `ENC zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_L_MODULE_TPD` | `Polaris_L_Base rgbled_adapter nice_oled` | `TPD_L zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_R_MODULE_TB` | `Polaris_R_Base rgbled_adapter` | `TB_R zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_R_MODULE_TPD` | `Polaris_R_Base rgbled_adapter` | `TPD_R zmk-usb-logging studio-rpc-usb-uart` |
-| `Polaris_R_MODULE_IQS` | `Polaris_R_Base rgbled_adapter` | `IQS zmk-usb-logging studio-rpc-usb-uart` |
-
-ローカルビルド例:
+`zmk-workspace` から `just.sh` を使用します。
 
 ```sh
-west build \
-  -s zmk/app \
-  -b seeeduino_xiao_ble \
-  -S "TB_L zmk-usb-logging studio-rpc-usb-uart" \
-  -- \
-  -DSHIELD="Polaris_L_Base rgbled_adapter nice_oled" \
-  -DZMK_CONFIG=/path/to/zmk-config-GeaconPolaris/config \
-  -DZMK_EXTRA_MODULES=/path/to/zmk-config-GeaconPolaris
+./just.sh init config/zmk-config-GeaconPolaris
+./just.sh build all
 ```
 
-## SVG 生成
+個別ビルドは artifact 名を指定します。
 
-[`.github/workflows/draw-keymap.yml`](.github/workflows/draw-keymap.yml) は `te9no/zmk-workspace` 側の reusable workflow を呼び、`keymap-svg/Polaris.svg` を生成します。
-
-```yaml
-uses: te9no/zmk-workspace/.github/workflows/draw-keymap-svg.yml@main
+```sh
+./just.sh build Polaris_R_MODULE_IQS
 ```
 
-この SVG は `zmk,physical-layout` と `config/Polaris.keymap` から生成され、combo の `key-positions` も overlay として表示します。
+GitHub Actions は対象ファイルの push、手動実行、毎日 05:00 JST に動作し、
+最大 4 並列で build します。
 
-## リポジトリ構成
+firmware の入手方法は 2 通りあります。
 
-| Path | 内容 |
-| --- | --- |
-| `config/Polaris.keymap` | keymap、layer、combo、behavior 定義。 |
-| `config/Polaris.json` | 描画ツール用 layout JSON。 |
-| `config/west.yml` | ZMK/modules の west manifest。 |
-| `boards/shields/GeaconPolaris/Polaris.dtsi` | physical layout、matrix transform、custom module layout、LED、sensor、battery node。 |
-| `boards/shields/GeaconPolaris/Polaris_pins.dtsi` | pin 定義の集約。 |
-| `boards/shields/GeaconPolaris/Polaris_L_Base.overlay` | 左手側 base shield overlay。kscan と OLED/I2C 設定を含む。 |
-| `boards/shields/GeaconPolaris/Polaris_R_Base.overlay` | 右手側 base shield overlay。transform offset を含む。 |
-| `snippets/ENC/` | rotary encoder module Snippet。 |
-| `snippets/JOY/` | joystick module Snippet。 |
-| `snippets/TB_L/` | 左手側 trackball module Snippet。 |
-| `snippets/TB_R/` | 右手側 trackball module Snippet。 |
-| `snippets/TPD_L/` | 左手側 touchpad module Snippet。 |
-| `snippets/TPD_R/` | 右手側 touchpad module Snippet。 |
-| `snippets/IQS/` | 右手側 IQS module Snippet。 |
-| `build.yaml` | ZMK build matrix。 |
-| `.github/scripts/compose-build-matrix.rb` | GitHub Actions 用 build matrix 生成スクリプト。 |
-| `.github/workflows/build.yml` | firmware build / artifact upload / publish workflow。 |
-| `.github/workflows/draw-keymap.yml` | keymap SVG workflow。 |
-| `keymap-svg/Polaris.svg` | physical-layout ベースの SVG preview。 |
-| `keymap-drawer/` | keymap-drawer 設定と出力。 |
-| `firmware/` | workflow によって commit される firmware 出力。 |
+1. 成功した Actions run から統合 artifact をダウンロードする。
+2. `firmware/<repository>/<sanitized-branch>/` の UF2 を使う。
 
-## 設計メモ
+`codex/polaris-latest-dya-studio` の成果物は
+`firmware/zmk-config-GeaconPolaris/codex-polaris-latest-dya-studio/` に
+置かれます。branch 名の `/` は `-` に変換されます。`main` の成果物は
+[`firmware/zmk-config-GeaconPolaris/main/`](firmware/zmk-config-GeaconPolaris/main/)
+です。
 
-Polaris は、キーボードを「キーだけの装置」として閉じません。
+## 設計思想
 
-分割入力装置は、文字入力のためのものでもあり、ポインタを動かすものでもあり、スクロールするものでもあり、状態を切り替えるものでもあります。GeaconPolaris は、その全部を ZMK の設定として見える形に落とし込もうとしています。
+一般的な keyboard config は「どのキーがどの code を送るか」を扱います。
+Polaris が扱うのは、分割入力装置がどれだけ異なる入力形態を受け入れながら、
+firmware を特殊処理の塊にせず保てるか、という問題です。
 
-思想はあります。ただし、思想だけではなく、base shield、Snippet、keymap、build matrix、pin 定義、SVG として実装で確認できるようにしています。
+答えは実装として残しています。安定した base shield、明示的な Snippet、
+集約した pin 定義、固定した依存 revision、見える build route、診断機能、
+生成ドキュメントです。世界観は、実装が支える範囲にだけ置いています。
 
-## TODO / 確認事項
+## 未整備のドキュメント
 
-- モジュールの物理的な交換方式を記述する。
-- `IQS` Snippet の具体的なセンサー/入力デバイスを確認する。
-- 電源、電池、充電、稼働時間に関する記述を確認する。
-- `layout_shift.dtsi` の具体的な使い方を例付きで説明する。
-- `SNIPE`, `SCROLL`, `SSNIPE` の意図をユーザー視点で補足する。
-- 各 artifact の flash 手順を追加する。
+- モジュールの物理的な取り付け・交換手順。
+- 通電中の交換可否。
+- バッテリー、充電、想定稼働時間。
+- `layout_shift.dtsi` と各 precision layer の利用例。
+- 各モジュール構成の写真。
 
 ## License
 
-[`LICENCE`](LICENCE) を参照してください。
+[`LICENSE`](LICENSE) を参照してください。

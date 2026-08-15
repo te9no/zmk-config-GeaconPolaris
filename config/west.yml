@@ -89,14 +89,14 @@ manifest:
       path: modules/zmk-driver-pmw3610-with-custom-studio-rpc
     - name: zmk-nice-oled
       remote: te9no
-      revision: 49e2111c4401947f8d21833b3ab237b42382a155
+      revision: b5b55231e1d676b5bb8bc7a31f9042d0f16bed73
       path: modules/zmk-nice-oled
 
 # Trackpad
 # Zephyr 4.1 provides the cirque,pinnacle input driver used by TPD snippets.
     - name: zmk-driver-iqs9151-rpc
       remote: te9no
-      revision: 6d703bd5a89b75036cefbd13c86a54af3046476e
+      revision: 71a17555cc721b017e9b6895daad2a3d85f39efc
       path: modules/zmk-driver-iqs9151-rpc
 
 # Analog input

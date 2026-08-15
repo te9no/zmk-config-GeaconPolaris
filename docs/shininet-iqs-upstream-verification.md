@@ -17,13 +17,17 @@
   なく、標準の IRQ 経路で動作します。
 - `CONFIG_INPUT_IQS9151_FLIP_Y` を削除しました。本家が公開する向き設定は
   rotation のみです。
-- 実機確認後、検証初版で追加していた ZMK 側の Y 反転 processor を削除
-  しました。本家ドライバの座標方向をそのまま使うことで、ポインターの
-  上下方向だけを検証初版から反転します。スクロール方向は変更しません。
+- 右 Peripheral の IQS snippet ではなく、split input を受信する左 Central の
+  `Polaris_L_interior.dtsi` にある `iqs_listener` へ Y 反転を追加しました。
+  `zip_xy_transform` は `REL_X` / `REL_Y` だけを対象とするため、ポインターの
+  上下方向だけを反転し、`REL_WHEEL` / `REL_HWHEEL` のスクロール方向は
+  変更しません。通常時と low-speed layer の両方に同じ変換を適用します。
 - `CONFIG_INPUT_IQS9151_CURSOR_INERTIA_ENABLE=y` とし、1本指のカーソル移動に
   本家ドライバの慣性処理を有効化しました。
 - `iqs-debug` は `CONFIG_INPUT_IQS9151_LOG_LEVEL=4` だけを有効にします。
   fork 固有の `CONFIG_INPUT_IQS9151_DIAGNOSTIC_LOG` は使用しません。
+- 左 Central の `CONFIG_INPUT_IQS9151_STUDIO_RPC` も削除しました。本家には
+  該当 Kconfig がなく、残すと Central build が Kconfig warning で停止します。
 
 ## 制約
 
@@ -34,17 +38,26 @@
 
 ## ビルド結果
 
-次の3 targetを `just.sh` と pristine buildで確認しました。
+`build.yaml` の全10 targetを `just.sh` と pristine buildで確認しました。
 
-| Target | 結果 | Flash | RAM |
-| --- | --- | ---: | ---: |
-| `Polaris_R_MODULE_IQS` | 成功 | 230,748 B (28.60%) | 70,484 B (26.89%) |
-| `Polaris_R_MODULE_IQS_DEBUG` | 成功 | 274,932 B (34.07%) | 82,644 B (31.53%) |
-| `Polaris_R_MODULE_TB` | 成功 | 237,860 B (29.48%) | 68,692 B (26.20%) |
+| Target | 結果 | UF2 size |
+| --- | --- | ---: |
+| `Polaris_L_MODULE_LPPS` | 成功 | 993,792 B |
+| `Polaris_L_MODULE_TB` | 成功 | 1,011,200 B |
+| `Polaris_L_MODULE_JOY` | 成功 | 989,696 B |
+| `Polaris_L_MODULE_ENC` | 成功 | 976,896 B |
+| `Polaris_L_MODULE_TPD` | 成功 | 979,968 B |
+| `Polaris_R_MODULE_TB` | 成功 | 476,160 B |
+| `Polaris_R_MODULE_TPD` | 成功 | 455,680 B |
+| `Polaris_R_MODULE_IQS` | 成功 | 461,824 B |
+| `Polaris_R_MODULE_IQS_DEBUG` | 成功 | 549,888 B |
+| `settings_reset` | 成功 | 112,128 B |
 
 通常版と診断版では、本家 path の `drivers/input/iqs9151.c` が実際に
-コンパイルされていることも確認しています。TB buildは、本家moduleを
-manifestへ載せた状態で非IQS targetに副作用がないことを確認するために
+コンパイルされていることも確認しています。左5 targetでは、生成された
+DeviceTreeの通常時とlow-speed layerの両方に、X/Y反転を表す
+`zip_xy_transform 0x6` が含まれることを確認しました。非IQS targetは、
+本家moduleをmanifestへ載せた状態で副作用がないことを確認するために
 実行しました。
 
 ## 実機確認項目

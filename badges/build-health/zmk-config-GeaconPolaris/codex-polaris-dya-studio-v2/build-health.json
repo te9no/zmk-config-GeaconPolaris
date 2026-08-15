@@ -1,0 +1,13 @@
+{
+  "repository": "te9no/zmk-config-GeaconPolaris",
+  "branch": "codex/polaris-dya-studio-v2",
+  "target": "all",
+  "status": "passing",
+  "raw_status": "success",
+  "color": "#2ea44f",
+  "sha": "b95a554c545b9a24fe3ca0fcb24981e261e4a20a",
+  "run_id": "31862263623",
+  "run_number": "236",
+  "run_url": "https://github.com/te9no/zmk-config-GeaconPolaris/actions/runs/31862263623",
+  "generated_at": "2026-08-15T03:48:07Z"
+}

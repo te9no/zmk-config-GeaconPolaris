@@ -34,6 +34,7 @@
             in-max = <(0 + 8000)>;
             in-calib-cycle = <100>;
             in-deadzone = <1000>;
+            in-outlier-threshold = <32000>;
             out-min = <(-10)>;
             out-max = <10>;
             invert-output;
@@ -49,6 +50,7 @@
             in-max = <(0 + 8000)>;
             in-calib-cycle = <100>;
             in-deadzone = <1000>;
+            in-outlier-threshold = <32000>;
             out-min = <(-10)>;
             out-max = <10>;
             skip-change-comparator;

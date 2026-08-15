@@ -101,7 +101,7 @@ manifest:
 
 # Analog input
     - name: ads1220-zephyr-module
-      revision: b79ad03aa5eefea2425e837e017270fb917d9cb7
+      revision: a6f156fa605c9fac93b7a81889134c674dcc8e2c
       url: https://github.com/te9no/ads1220-zephyr-module
       path: modules/ads1220-zephyr-module
 

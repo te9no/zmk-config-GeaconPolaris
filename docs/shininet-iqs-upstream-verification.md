@@ -17,9 +17,11 @@
   なく、標準の IRQ 経路で動作します。
 - `CONFIG_INPUT_IQS9151_FLIP_Y` を削除しました。本家が公開する向き設定は
   rotation のみです。
-- Y軸だけを反転するため、IQS listener に ZMK 標準の `zip_xy_transform` と
-  `INPUT_TRANSFORM_Y_INVERT` を追加しました。本家ドライバ自体は変更して
-  いません。
+- 実機確認後、検証初版で追加していた ZMK 側の Y 反転 processor を削除
+  しました。本家ドライバの座標方向をそのまま使うことで、ポインターの
+  上下方向だけを検証初版から反転します。スクロール方向は変更しません。
+- `CONFIG_INPUT_IQS9151_CURSOR_INERTIA_ENABLE=y` とし、1本指のカーソル移動に
+  本家ドライバの慣性処理を有効化しました。
 - `iqs-debug` は `CONFIG_INPUT_IQS9151_LOG_LEVEL=4` だけを有効にします。
   fork 固有の `CONFIG_INPUT_IQS9151_DIAGNOSTIC_LOG` は使用しません。
 
@@ -36,8 +38,8 @@
 
 | Target | 結果 | Flash | RAM |
 | --- | --- | ---: | ---: |
-| `Polaris_R_MODULE_IQS` | 成功 | 230,796 B (28.60%) | 70,484 B (26.89%) |
-| `Polaris_R_MODULE_IQS_DEBUG` | 成功 | 274,884 B (34.07%) | 82,644 B (31.53%) |
+| `Polaris_R_MODULE_IQS` | 成功 | 230,748 B (28.60%) | 70,484 B (26.89%) |
+| `Polaris_R_MODULE_IQS_DEBUG` | 成功 | 274,932 B (34.07%) | 82,644 B (31.53%) |
 | `Polaris_R_MODULE_TB` | 成功 | 237,860 B (29.48%) | 68,692 B (26.20%) |
 
 通常版と診断版では、本家 path の `drivers/input/iqs9151.c` が実際に
@@ -47,9 +49,11 @@ manifestへ載せた状態で非IQS targetに副作用がないことを確認�
 
 ## 実機確認項目
 
+- 本家版では fork 版よりポインター移動が明確に滑らかになることを確認済み。
 - IQS9151 が I2C error や RDY timeout なしで初期化される。
-- 1本指操作で X/Y が期待する方向へ動く。
+- 1本指操作で X/Y が期待する方向へ動き、上下方向だけが検証初版から反転する。
+- 指を離した後のカーソル慣性が期待どおり動作し、過剰移動しない。
 - 1本、2本、3本指 gesture が期待するeventを生成する。
-- 2本指scrollと慣性が動作し、freezeしない。
+- 2本指scrollの方向が変わらず、慣性が動作してfreezeしない。
 - cold boot後に右PeripheralがCentralへ再接続する。
 - IQS固有の DYA Studio WebUIが利用不可であることを確認する。

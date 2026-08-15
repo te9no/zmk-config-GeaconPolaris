@@ -42,6 +42,11 @@ include:
     snippet: IQS
     artifact-name: Polaris_R_MODULE_IQS
 
+  - board: xiao_ble//zmk
+    shield: Polaris_R_Base rgbled_adapter
+    snippet: IQS zmk-usb-logging iqs-debug
+    artifact-name: Polaris_R_MODULE_IQS_DEBUG
+
 # Settings Reset
   - board: xiao_ble//zmk
     shield: settings_reset

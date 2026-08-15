@@ -2,6 +2,14 @@
 
 [![Build Health](badges/build-health/zmk-config-GeaconPolaris/main/build-health.svg)](https://github.com/te9no/zmk-config-GeaconPolaris/actions/workflows/build.yml?query=branch%3Amain)
 
+> [!IMPORTANT]
+> `codex/verify-shininet-iqs-driver` is an upstream-driver verification branch.
+> It uses `ShiniNet/zmk-driver-iqs9151` v1.0.0 without the custom IQS DYA
+> Studio RPC. See [`docs/shininet-iqs-upstream-verification.md`](docs/shininet-iqs-upstream-verification.md).
+>
+> このブランチは ShiniNet 本家 IQS9151 ドライバの検証専用です。IQS固有の
+> DYA Studio WebUIは利用できません。
+
 **GeaconPolaris is not merely a keyboard. It is a split navigation instrument.**
 
 Built on [ZMK Firmware](https://zmk.dev/), Polaris brings typing, pointing,

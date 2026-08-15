@@ -94,10 +94,10 @@ manifest:
 
 # Trackpad
 # Zephyr 4.1 provides the cirque,pinnacle input driver used by TPD snippets.
-    - name: zmk-driver-iqs9151-rpc
-      remote: te9no
-      revision: 71a17555cc721b017e9b6895daad2a3d85f39efc
-      path: modules/zmk-driver-iqs9151-rpc
+    - name: zmk-driver-iqs9151-upstream
+      url: https://github.com/ShiniNet/zmk-driver-iqs9151
+      revision: 08a6fd19c5aa5ae7f11daf371b5a391cd8596783
+      path: modules/zmk-driver-iqs9151-upstream
 
 # Analog input
     - name: ads1220-zephyr-module

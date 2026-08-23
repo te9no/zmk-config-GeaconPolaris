@@ -89,7 +89,7 @@ manifest:
       path: modules/zmk-driver-pmw3610-with-custom-studio-rpc
     - name: zmk-nice-oled
       remote: te9no
-      revision: b5b55231e1d676b5bb8bc7a31f9042d0f16bed73
+      revision: c511d7f64ba0f186051943d027333d247ad8e206
       path: modules/zmk-nice-oled
 
 # Trackpad

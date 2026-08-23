@@ -10,8 +10,8 @@ manifest:
       url-base: https://github.com/ShiniNet
   projects:
     - name: zmk
-      remote: te9no
-      revision: afe241df80b05c3f4e0cc95ada7584d24422a893
+      remote: cormoran
+      revision: e5c9b6915b56801193e359dd9bad4a167ce0d1b8
       import: app/west.yml
 
 # ZMK RGB LED Widget
@@ -89,7 +89,7 @@ manifest:
       path: modules/zmk-driver-pmw3610-with-custom-studio-rpc
     - name: zmk-nice-oled
       remote: te9no
-      revision: b5b55231e1d676b5bb8bc7a31f9042d0f16bed73
+      revision: c511d7f64ba0f186051943d027333d247ad8e206
       path: modules/zmk-nice-oled
 
 # Trackpad

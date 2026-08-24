@@ -1,0 +1,16 @@
+/ {
+    bootloader_trigger: bootloader_trigger {
+        compatible = "zmk,cdc-acm-bootloader-trigger";
+        cdc-port = <&snippet_zmk_usb_logging_uart>;
+    };
+};
+
+/*
+ * The xiao_ble//zmk board qualifier adds a board CDC function. The right-hand
+ * targets use the dedicated zmk-usb-logging CDC for both logs and the 1200-baud
+ * trigger, so disable the unused board CDC to preserve the nRF52840 endpoint
+ * budget. Left-hand Studio builds do not include this snippet.
+ */
+&board_cdc_acm_uart {
+    status = "disabled";
+};

@@ -24,8 +24,8 @@
   変更しません。通常時と low-speed layer の両方に同じ変換を適用します。
 - `CONFIG_INPUT_IQS9151_CURSOR_INERTIA_ENABLE=y` とし、1本指のカーソル移動に
   本家ドライバの慣性処理を有効化しました。
-- `iqs-debug` は `CONFIG_INPUT_IQS9151_LOG_LEVEL=4` だけを有効にします。
-  fork 固有の `CONFIG_INPUT_IQS9151_DIAGNOSTIC_LOG` は使用しません。
+- 右側の通常artifactはすべて `zmk-usb-logging` と `cdc-debug-boot` を使用し、
+  CDC Debugと1200 baud boot triggerを同じCDC UARTへ統一します。
 - 左 Central の `CONFIG_INPUT_IQS9151_STUDIO_RPC` も削除しました。本家には
   該当 Kconfig がなく、残すと Central build が Kconfig warning で停止します。
 
@@ -38,23 +38,22 @@
 
 ## ビルド結果
 
-`build.yaml` の全10 targetを `just.sh` と pristine buildで確認しました。
+`build.yaml` の全9 targetを `just.sh` と pristine buildで確認します。
 
 | Target | 結果 | UF2 size |
 | --- | --- | ---: |
-| `Polaris_L_MODULE_LPPS` | 成功 | 993,792 B |
-| `Polaris_L_MODULE_TB` | 成功 | 1,011,200 B |
-| `Polaris_L_MODULE_JOY` | 成功 | 989,696 B |
-| `Polaris_L_MODULE_ENC` | 成功 | 976,896 B |
-| `Polaris_L_MODULE_TPD` | 成功 | 979,968 B |
-| `Polaris_R_MODULE_TB` | 成功 | 476,160 B |
-| `Polaris_R_MODULE_TPD` | 成功 | 455,680 B |
-| `Polaris_R_MODULE_IQS` | 成功 | 461,824 B |
-| `Polaris_R_MODULE_IQS_DEBUG` | 成功 | 549,888 B |
+| `Polaris_L_MODULE_LPPS` | 成功 | 1,004,032 B |
+| `Polaris_L_MODULE_TB` | 成功 | 1,021,440 B |
+| `Polaris_L_MODULE_JOY` | 成功 | 999,936 B |
+| `Polaris_L_MODULE_ENC` | 成功 | 986,624 B |
+| `Polaris_L_MODULE_TPD` | 成功 | 990,208 B |
+| `Polaris_R_MODULE_TB` | 成功 | 620,032 B |
+| `Polaris_R_MODULE_TPD` | 成功 | 581,632 B |
+| `Polaris_R_MODULE_IQS` | 成功 | 586,240 B |
 | `settings_reset` | 成功 | 112,128 B |
 
-通常版と診断版では、本家 path の `drivers/input/iqs9151.c` が実際に
-コンパイルされていることも確認しています。左5 targetでは、生成された
+IQS通常版では、本家 path の `drivers/input/iqs9151.c` が実際に
+コンパイルされていることも確認しました。左5 targetでは、生成された
 DeviceTreeの通常時とlow-speed layerの両方に、X/Y反転を表す
 `zip_xy_transform 0x6` が含まれることを確認しました。非IQS targetは、
 本家moduleをmanifestへ載せた状態で副作用がないことを確認するために

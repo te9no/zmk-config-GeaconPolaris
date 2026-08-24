@@ -62,7 +62,9 @@ DeviceTreeの通常時とlow-speed layerの両方に、X/Y反転を表す
 ## 実機確認項目
 
 - 本家版では fork 版よりポインター移動が明確に滑らかになることを確認済み。
-- IQS9151 が I2C error や RDY timeout なしで初期化される。
+- IQS9151 が I2C error なしで初期化される。MCU だけが再起動した場合、
+  本家ドライバは software reset 前の非致命な RDY 待ちを timeout することが
+  あるため、通常artifactではIQSログをerror以上に限定する。
 - 1本指操作で X/Y が期待する方向へ動き、上下方向だけが検証初版から反転する。
 - 指を離した後のカーソル慣性が期待どおり動作し、過剰移動しない。
 - 1本、2本、3本指 gesture が期待するeventを生成する。

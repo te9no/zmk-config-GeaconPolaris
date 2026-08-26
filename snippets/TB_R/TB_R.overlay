@@ -4,6 +4,37 @@
 #include <input/processors/runtime-input-processor.dtsi>
 
 / {
+    pmw3610_spi: spi-three-wire {
+        compatible = "te9no,spi-three-wire-gpio";
+        status = "okay";
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        sck-gpios = P1_13_GPIOS(GPIO_ACTIVE_HIGH);
+        sdio-gpios = P0_05_GPIOS(GPIO_ACTIVE_HIGH);
+        cs-gpios = TB_CS_GPIOS;
+
+        turnaround-delay-us = <4>;
+        select-delay-us = <1>;
+        deselect-delay-us = <4>;
+        recovery-delay-us = <30>;
+
+        trackball: pd@0 {
+            status = "okay";
+            compatible = "cormoran,pmw3610";
+            reg = <0>;
+            spi-max-frequency = <1500000>;
+            irq-gpios = TB_IRQ_GPIOS;
+            cpi = <800>;
+            evt-type = <INPUT_EV_REL>;
+            x-input-code = <INPUT_REL_X>;
+            y-input-code = <INPUT_REL_Y>;
+            force-awake;
+            disable-burst-read;
+            settings-id = "righttb";
+        };
+    };
+
     split_inputs {
         #address-cells = <1>;
         #size-cells = <0>;
@@ -23,47 +54,6 @@
     };
 };
 
-&pinctrl {
-    spi0_default: spi0_default {
-        group1 {
-            psels = <TB_SPI_SCK>,
-                    <TB_SPI_MOSI>,
-                    <TB_SPI_MISO>;
-        };
-    };
-
-    spi0_sleep: spi0_sleep {
-        group1 {
-            psels = <TB_SPI_SCK>,
-                    <TB_SPI_MOSI>,
-                    <TB_SPI_MISO>;
-            low-power-enable;
-        };
-    };
-};
-
 &spi0 {
-    status = "okay";
-    compatible = "nordic,nrf-spim";
-    pinctrl-0 = <&spi0_default>;
-    pinctrl-1 = <&spi0_sleep>;
-    pinctrl-names = "default", "sleep";
-    cs-gpios = TB_CS_GPIOS;
-
-    trackball: pd@0 {
-        status = "okay";
-        compatible = "cormoran,pmw3610";
-        reg = <0>;
-        spi-max-frequency = <1500000>;
-        irq-gpios = TB_IRQ_GPIOS;
-        cpi = <800>;
-        evt-type = <INPUT_EV_REL>;
-        x-input-code = <INPUT_REL_X>;
-        y-input-code = <INPUT_REL_Y>;
-        force-awake;
-        three-wire-sdio;
-        sck-gpios = P1_13_GPIOS(GPIO_ACTIVE_HIGH);
-        sdio-gpios = P0_05_GPIOS(GPIO_ACTIVE_HIGH);
-        settings-id = "righttb";
-    };
+    status = "disabled";
 };

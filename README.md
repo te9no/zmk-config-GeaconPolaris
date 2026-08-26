@@ -60,13 +60,13 @@ All right builds use `Polaris_R_Base rgbled_adapter`.
 
 | Module | Snippets | Artifact |
 | --- | --- | --- |
-| Trackball | `TB_R` | `Polaris_R_MODULE_TB` |
-| Touchpad | `TPD_R` | `Polaris_R_MODULE_TPD` |
-| IQS9151 | `IQS` | `Polaris_R_MODULE_IQS` |
-| IQS9151 diagnostics | `IQS zmk-usb-logging iqs-debug` | `Polaris_R_MODULE_IQS_DEBUG` |
+| Trackball | `TB_R zmk-usb-logging cdc-debug-boot` | `Polaris_R_MODULE_TB` |
+| Touchpad | `TPD_R zmk-usb-logging cdc-debug-boot` | `Polaris_R_MODULE_TPD` |
+| IQS9151 | `IQS zmk-usb-logging cdc-debug-boot` | `Polaris_R_MODULE_IQS` |
 
-The `_DEBUG` artifact is for diagnosis only. Use
-`Polaris_R_MODULE_IQS` for normal operation.
+All normal right-hand artifacts expose CDC Debug and use that same CDC UART for
+the 1200-baud bootloader trigger. No extra diagnostic artifact or USB CDC
+endpoint is required.
 
 `TB_L` / `TB_R` and `TPD_L` / `TPD_R` are deliberately separate. Their
 local and split-input routes differ by side, and making that distinction
@@ -106,8 +106,8 @@ The ZMK 0.4-based DYA Studio stack is pinned in
 - runtime input-processor and module-specific RPC settings.
 
 The normal firmware keeps these diagnostics available so a device can explain
-its state without requiring a private debug build. Verbose IQS serial logging
-remains isolated in `Polaris_R_MODULE_IQS_DEBUG`.
+its state without requiring a private debug build. All right-hand artifacts
+also expose CDC Debug and the 1200-baud bootloader trigger.
 
 ## OLED
 
@@ -248,14 +248,13 @@ Polaris は Geacon 系譜の北極星です。実用できるキーボードで�
 
 | モジュール | Snippet | Artifact |
 | --- | --- | --- |
-| トラックボール | `TB_R` | `Polaris_R_MODULE_TB` |
-| タッチパッド | `TPD_R` | `Polaris_R_MODULE_TPD` |
-| IQS9151 | `IQS` | `Polaris_R_MODULE_IQS` |
-| IQS9151 診断版 | `IQS zmk-usb-logging iqs-debug` | `Polaris_R_MODULE_IQS_DEBUG` |
+| トラックボール | `TB_R zmk-usb-logging cdc-debug-boot` | `Polaris_R_MODULE_TB` |
+| タッチパッド | `TPD_R zmk-usb-logging cdc-debug-boot` | `Polaris_R_MODULE_TPD` |
+| IQS9151 | `IQS zmk-usb-logging cdc-debug-boot` | `Polaris_R_MODULE_IQS` |
 
-右側はすべて `Polaris_R_Base rgbled_adapter` を使用します。通常利用では
-`Polaris_R_MODULE_IQS` を選び、詳細ログが必要な場合だけ `_DEBUG` を
-使用してください。
+右側はすべて `Polaris_R_Base rgbled_adapter` を使用します。通常artifactは
+すべてCDC Debugを公開し、同じCDC UARTを1200 baud boot triggerにも使用する
+ため、専用の診断artifactや追加USB CDC endpointは不要です。
 
 左右の TB / TPD Snippet は意図的に分けています。Devicetree と split-input
 の経路が左右で異なるため、条件分岐の中に隠すより build route として

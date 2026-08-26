@@ -29,23 +29,18 @@ include:
 # Right Shields
   - board: xiao_ble//zmk
     shield: Polaris_R_Base rgbled_adapter
-    snippet: TB_R
+    snippet: TB_R zmk-usb-logging cdc-debug-boot
     artifact-name: Polaris_R_MODULE_TB
 
   - board: xiao_ble//zmk
     shield: Polaris_R_Base rgbled_adapter
-    snippet: TPD_R
+    snippet: TPD_R zmk-usb-logging cdc-debug-boot
     artifact-name: Polaris_R_MODULE_TPD
 
   - board: xiao_ble//zmk
     shield: Polaris_R_Base rgbled_adapter
-    snippet: IQS
+    snippet: IQS zmk-usb-logging cdc-debug-boot
     artifact-name: Polaris_R_MODULE_IQS
-
-  - board: xiao_ble//zmk
-    shield: Polaris_R_Base rgbled_adapter
-    snippet: IQS zmk-usb-logging iqs-debug
-    artifact-name: Polaris_R_MODULE_IQS_DEBUG
 
 # Settings Reset
   - board: xiao_ble//zmk

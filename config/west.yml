@@ -84,8 +84,8 @@ manifest:
       revision: 9938a2c73c06d6e65ba2c0b68c9aa044a467eafc
       path: modules/zmk-module-devtool
     - name: zmk-driver-pmw3610-with-custom-studio-rpc
-      remote: cormoran
-      revision: 5c34ea0eec246a1c986111417cd779b53144629a
+      remote: te9no
+      revision: 6be42a0db64b931c3186d014061ffe9a004b1692
       path: modules/zmk-driver-pmw3610-with-custom-studio-rpc
     - name: zmk-nice-oled
       remote: te9no

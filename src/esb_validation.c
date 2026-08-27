@@ -8,6 +8,7 @@
 
 LOG_MODULE_REGISTER(polaris_esb_validation, LOG_LEVEL_INF);
 
+#if IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
 static atomic_t remote_position_events;
 static atomic_t remote_battery_events;
 static atomic_val_t last_reported_position_events;
@@ -47,3 +48,32 @@ static int observe_remote_events(const zmk_event_t *event) {
 ZMK_LISTENER(polaris_esb_validation, observe_remote_events);
 ZMK_SUBSCRIPTION(polaris_esb_validation, zmk_position_state_changed);
 ZMK_SUBSCRIPTION(polaris_esb_validation, zmk_peripheral_battery_state_changed);
+#endif
+
+#if IS_ENABLED(CONFIG_ZMK_SPLIT_RELAY_EVENT)
+static atomic_t received_relay_events;
+static atomic_val_t last_reported_relay_events;
+
+static void report_relay_count(struct k_work *work) {
+    atomic_val_t count = atomic_get(&received_relay_events);
+    if (count != last_reported_relay_events) {
+        /* Reassembled events only. Never log RPC data, names, or setting values. */
+        LOG_INF("ESB relay_events=%ld received", (long)count);
+        last_reported_relay_events = count;
+    }
+}
+
+static K_WORK_DELAYABLE_DEFINE(relay_report_work, report_relay_count);
+
+static int observe_relay_events(const zmk_event_t *event) {
+    const struct zmk_relay_event_received *relay = as_zmk_relay_event_received(event);
+    if (relay && relay->source == 0) {
+        atomic_inc(&received_relay_events);
+        k_work_schedule(&relay_report_work, K_SECONDS(5));
+    }
+    return ZMK_EV_EVENT_BUBBLE;
+}
+
+ZMK_LISTENER(polaris_esb_relay_validation, observe_relay_events);
+ZMK_SUBSCRIPTION(polaris_esb_relay_validation, zmk_relay_event_received);
+#endif

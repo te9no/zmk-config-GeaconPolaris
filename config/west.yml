@@ -12,7 +12,7 @@ manifest:
     # ESB-only experiment. Pin the maintained fork and NCS compatibility dependencies.
     - name: zmk-feature-split-esb
       url: https://github.com/te9no/zmk-feature-split-esb
-      revision: 58c8f912dae87b8197c4d6229e3f2df8cc52daaf
+      revision: 656477caa56d8909ac78e024cbd943caa6aaa7d7
       clone-depth: 1
     - name: sdk-nrf
       url: https://github.com/badjeff/sdk-nrf

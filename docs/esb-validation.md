@@ -36,9 +36,17 @@ The right PMW3610 previously returned PID `0x00`/OBS `0xff` with both new and ol
 BLE firmware; this is a separate unresolved sensor/power/wiring investigation.
 Key-position and battery events can test ESB even if PMW initialization fails.
 
-## Maintained ESB fork (2026-08-27)
+## DYA Studio relay candidate
 
-The trial now pins
+The new candidate enables bidirectional Cormoran relay over the maintained ESB
+fork, including right-side PMW3610 diagnostics and custom settings. See
+[relay configuration, evidence and acceptance checklist](esb-relay-validation.md).
+It remains unflashed and is not merged into any stable/maintenance branch.
+BLE coexistence and live-link discovery are not added by relay support.
+
+## Initial maintained ESB fork (2026-08-27, historical)
+
+The initial maintained-fork candidate pinned
 [`te9no/zmk-feature-split-esb@58c8f91`](https://github.com/te9no/zmk-feature-split-esb/commit/58c8f912dae87b8197c4d6229e3f2df8cc52daaf).
 It fixes packet/retry identity, preserves retry ordering, exits incomplete-frame
 receive loops, accepts valid small commands with type/length validation, and
@@ -46,7 +54,7 @@ propagates radio initialization errors. The fork's 87 host regression cases pass
 with ASan/UBSan; all four baseline defects are detected by the same suite.
 Those tests do not validate RF, real interrupt concurrency or MPSL timeslots.
 
-Only the ESB module URL/revision changes in this firmware candidate. ZMK/NCS,
+Only the ESB module URL/revision changed in that initial candidate. ZMK/NCS,
 hardware pins, CDC logging and INFO privacy cap remain as before. This adoption
 does not flash the connected keyboard: the previous `72801a6` pair remains its
 last recorded installed firmware. Its right PMW initialization failure remains
@@ -61,7 +69,7 @@ results separate in the [Fleet trial ledger](https://te9no.github.io/zmk-shield-
 | Dependency | Revision |
 | --- | --- |
 | `cormoran/zmk` (unchanged) | `e5c9b6915b56801193e359dd9bad4a167ce0d1b8` |
-| `te9no/zmk-feature-split-esb` | `58c8f912dae87b8197c4d6229e3f2df8cc52daaf` |
+| `te9no/zmk-feature-split-esb` | `656477caa56d8909ac78e024cbd943caa6aaa7d7` (experimental relay branch) |
 | `badjeff/sdk-nrf`, `v3.1-branch+zmk-fixes` | `9b3d2623fdcd9c0fd0284f860beea924568c9826` |
 | `nrfconnect/sdk-nrfxlib`, `v3.1-branch` | `dfadf17305d8f000eda9aa74a5b9ff1c5647a23e` |
 
@@ -84,9 +92,10 @@ The ESB payload remains 48 bytes and queue sizes are bounded for nRF52840 RAM.
 | BLE host/split and BLE management | Disabled; this ZMK 0.4 ESB setup cannot share the BLE controller. The old BT layer bindings become transparent except existing arrow keys. |
 | Bongo Cat | Standard built-in OLED on the left; the pinned Bongo module calls BLE APIs unconditionally. USB and battery widgets remain. |
 | RGB LED peripheral battery cycling | Self battery only; the module's peripheral mode uses a BLE-only count macro. Core peripheral battery fetching/proxy remains enabled. |
-| Cormoran split relay / remote PMW Studio RPC | Disabled; ESB does not implement relay/heartbeat message variants or fragmentation. Raising payload size alone is not compatible. |
-| `settings-rpc` module | Disabled; its activity-report source uses relay macros unconditionally even when split relay is off. |
-| Local Studio, JOY runtime controls, macro/combo | Retained on the USB central; build verified, UI/hardware still requires a test. No remote sensor diagnostic result is promised. |
+| Cormoran split relay / remote PMW Studio RPC | Enabled with the relay-capable ESB fork and matching peers. Remote diagnostics still require hardware acceptance; see the relay checklist. |
+| `settings-rpc` module | Enabled with split relay. No BLE controller is required by this pinned module. |
+| Local Studio, JOY runtime controls, macro/combo | Retained on the USB central; UI/hardware still requires a test of this new candidate. |
+| Watchdog remote diagnostics / live-link discovery | Not added by this candidate. The ESB shields still omit watchdog providers, and the existing connection status is not a liveness signal. |
 | JOY ADC/oversampling, PMW GPIO 3-wire, XIAO pin release, NiMH battery definition | Kept from the source base; not changed to make ESB work. |
 
 ## Build and evidence

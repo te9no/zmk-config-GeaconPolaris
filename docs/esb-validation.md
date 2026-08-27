@@ -23,7 +23,12 @@ with CRC32, without encryption, authentication, or replay protection. The unique
 Polaris radio addresses prevent accidental default-address collisions; they are
 not a security boundary. Use only harmless test keys, never passwords or other
 sensitive input. This is a functional trial, not a latency benchmark or production
-wireless configuration. Debug logging changes timing; no 1 ms result is claimed.
+wireless configuration. Logging changes timing; no 1 ms result is claimed.
+The trial now sets `CONFIG_LOG_MAX_LEVEL=3` (INFO) to compile out all DBG logging,
+including key-value logs: USB logging otherwise makes the numeric ZMK log level 4
+even with `CONFIG_ZMK_LOG_LEVEL_INF=y`. Aggregate event counts, battery reports,
+and PMW initialization messages remain available at INFO. The initial `ea2ca2c`
+build lacked this global cap and is superseded for input testing.
 
 Both halves must use these matching trial artifacts. Reverting means flashing the
 matching normal BLE pair. Persistent settings are not erased by these artifacts.
@@ -84,18 +89,20 @@ Initial setup uses the same wrapper with `init work/polaris-esb` in place of
 metadata may not resolve from within the container.
 
 Pristine trial build: **2/2 successful**, log directory
-`.zmk-workspace/profiles/polaris-esb-validation/logs/build-parallel-20260827-060946/`.
+`.zmk-workspace/profiles/polaris-esb-validation/logs/build-parallel-20260827-061826/`.
 Initial failure and the BLE compatibility smoke are retained separately in
 `build-esb-attempt1.log` and `build-ble-joy-smoke.log`.
 Generated DTS, `.config`, ELF and UF2 are in that profile's `build/<artifact>/zephyr/`.
 Copied UF2 output is
 `firmware/zmk-config-GeaconPolaris/codex-zmk-0.4-esb-validation/`.
-The profile's `logs/check-esb.py` passes **97 assertions** against the two
+The profile's `logs/check-esb.py` passes **112 assertions** against the two
 generated DTS/configurations, pinned manifest, two-target matrix and copied UF2.
-Its result is saved in `logs/esb-audit-summary.txt`. UF2 SHA256 values:
+This includes `LOG_MAX_LEVEL=3`, `LOG_OVERRIDE_LEVEL=0`, absent DBG key/mouse
+format strings in `zmk.bin`, and retained INFO count/battery/PMW init strings.
+Its result is saved in `logs/esb-audit-infocap-summary.txt`. UF2 SHA256 values:
 
-- Left: `d244521a474abeb0382d62b117f71eacee923b4892d8753051957328860139f7`
-- Right: `d27a440b208834cb5c3761684d109df71e7376d81aa78a0dcb191d88de0d1b80`
+- Left: `1466087130461fbc14152dc3537beb4c55cba56a22a79922caf791d644c5d74a`
+- Right: `05256070eb1d51db21ac9ce863fbb6d2c12f86a5d28fd5be098889460eae07e8`
 
 No flash or hardware acceptance is implied by a successful build.
 

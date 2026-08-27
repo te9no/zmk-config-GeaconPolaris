@@ -3,12 +3,13 @@
 [![Build Health](badges/build-health/zmk-config-GeaconPolaris/main/build-health.svg)](https://github.com/te9no/zmk-config-GeaconPolaris/actions/workflows/build.yml?query=branch%3Amain)
 
 > [!IMPORTANT]
-> `codex/verify-shininet-iqs-driver` is an upstream-driver verification branch.
-> It uses `ShiniNet/zmk-driver-iqs9151` v1.0.0 without the custom IQS DYA
-> Studio RPC. See [`docs/shininet-iqs-upstream-verification.md`](docs/shininet-iqs-upstream-verification.md).
+> `codex/zmk-0.4-esb-validation` is an opt-in ESB experiment, not a release.
+> Use only `Polaris_L_JOY_ESB_USB` and `Polaris_R_TB_ESB` on this branch.
+> The ESB radio link is **not encrypted or authenticated: do not type secrets**.
+> BLE and remote Studio sensor RPC are unavailable; the left uses the standard OLED.
+> [Trial instructions, build evidence and limitations](docs/esb-validation.md).
 >
-> このブランチは ShiniNet 本家 IQS9151 ドライバの検証専用です。IQS固有の
-> DYA Studio WebUIは利用できません。
+> ESB専用試験ブランチです。通常のBLE版は元のブランチ／profileでビルドしてください。
 
 **GeaconPolaris is not merely a keyboard. It is a split navigation instrument.**
 

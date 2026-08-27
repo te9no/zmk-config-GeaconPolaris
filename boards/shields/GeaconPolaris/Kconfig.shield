@@ -3,3 +3,9 @@ config SHIELD_Polaris_R_Base
 
 config SHIELD_Polaris_L_Base
     def_bool $(shields_list_contains,Polaris_L_Base)
+
+config SHIELD_Polaris_L_ESB
+    def_bool $(shields_list_contains,Polaris_L_ESB)
+
+config SHIELD_Polaris_R_ESB
+    def_bool $(shields_list_contains,Polaris_R_ESB)

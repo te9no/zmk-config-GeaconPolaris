@@ -9,6 +9,21 @@ manifest:
     - name: ShiniNet
       url-base: https://github.com/ShiniNet
   projects:
+    # ESB-only experiment. Pin the module and the NCS compatibility dependencies.
+    - name: zmk-feature-split-esb
+      url: https://github.com/badjeff/zmk-feature-split-esb
+      revision: 314c7cbaf4a74e1add1d6ffc8249de3e29965b8c
+      clone-depth: 1
+    - name: sdk-nrf
+      url: https://github.com/badjeff/sdk-nrf
+      revision: 9b3d2623fdcd9c0fd0284f860beea924568c9826
+      path: nrf
+      clone-depth: 1
+    - name: nrfxlib
+      url: https://github.com/nrfconnect/sdk-nrfxlib
+      revision: dfadf17305d8f000eda9aa74a5b9ff1c5647a23e
+      path: nrfxlib
+      clone-depth: 1
     - name: zmk
       remote: cormoran
       revision: e5c9b6915b56801193e359dd9bad4a167ce0d1b8

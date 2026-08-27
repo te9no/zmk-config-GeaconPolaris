@@ -1,7 +1,7 @@
 config ZMK_SPLIT
     default y
 
-if SHIELD_Polaris_L_Base
+if SHIELD_Polaris_L_Base || SHIELD_Polaris_L_ESB
     config ZMK_KEYBOARD_NAME
         default "GeaconPolaris"
 

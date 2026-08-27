@@ -44,7 +44,9 @@
         status = "okay";
         compatible = "zmk,input-listener";
         device = <&anin0>;
-        input-processors = <&scroll_runtime_input_processor_l>;
+        input-processors = <&zip_xy_transform
+                            (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_Y_INVERT)>,
+                           <&scroll_runtime_input_processor_l>;
     };
 
     scroll_runtime_input_processor_l: scroll_runtime_input_processor_l {

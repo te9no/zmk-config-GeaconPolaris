@@ -36,12 +36,32 @@ The right PMW3610 previously returned PID `0x00`/OBS `0xff` with both new and ol
 BLE firmware; this is a separate unresolved sensor/power/wiring investigation.
 Key-position and battery events can test ESB even if PMW initialization fails.
 
+## Maintained ESB fork (2026-08-27)
+
+The trial now pins
+[`te9no/zmk-feature-split-esb@58c8f91`](https://github.com/te9no/zmk-feature-split-esb/commit/58c8f912dae87b8197c4d6229e3f2df8cc52daaf).
+It fixes packet/retry identity, preserves retry ordering, exits incomplete-frame
+receive loops, accepts valid small commands with type/length validation, and
+propagates radio initialization errors. The fork's 87 host regression cases pass
+with ASan/UBSan; all four baseline defects are detected by the same suite.
+Those tests do not validate RF, real interrupt concurrency or MPSL timeslots.
+
+Only the ESB module URL/revision changes in this firmware candidate. ZMK/NCS,
+hardware pins, CDC logging and INFO privacy cap remain as before. This adoption
+does not flash the connected keyboard: the previous `72801a6` pair remains its
+last recorded installed firmware. Its right PMW initialization failure remains
+an independent unresolved hardware gate. No stable-branch merge is implied.
+
+Before building, run the existing wrapper command below with `update` instead
+of `build-fast ...` to fetch the pinned fork. Keep generated-build and hardware
+results separate in the [Fleet trial ledger](https://te9no.github.io/zmk-shield-fleet/).
+
 ## Pinned dependencies
 
 | Dependency | Revision |
 | --- | --- |
 | `cormoran/zmk` (unchanged) | `e5c9b6915b56801193e359dd9bad4a167ce0d1b8` |
-| `badjeff/zmk-feature-split-esb` | `314c7cbaf4a74e1add1d6ffc8249de3e29965b8c` |
+| `te9no/zmk-feature-split-esb` | `58c8f912dae87b8197c4d6229e3f2df8cc52daaf` |
 | `badjeff/sdk-nrf`, `v3.1-branch+zmk-fixes` | `9b3d2623fdcd9c0fd0284f860beea924568c9826` |
 | `nrfconnect/sdk-nrfxlib`, `v3.1-branch` | `dfadf17305d8f000eda9aa74a5b9ff1c5647a23e` |
 
@@ -87,6 +107,8 @@ docker run --rm --user 1000:1000 \
 Initial setup uses the same wrapper with `init work/polaris-esb` in place of
 `build-fast ...`. Keep the explicit output-name overrides because worktree git
 metadata may not resolve from within the container.
+
+### Historical upstream-module build (`72801a6`, not the new fork)
 
 Pristine trial build: **2/2 successful**, log directory
 `.zmk-workspace/profiles/polaris-esb-validation/logs/build-parallel-20260827-061826/`.

@@ -45,7 +45,7 @@
         compatible = "zmk,input-listener";
         device = <&anin0>;
         input-processors = <&zip_xy_transform
-                            (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_Y_INVERT)>,
+                            (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_X_INVERT)>,
                            <&scroll_runtime_input_processor_l>;
     };
 

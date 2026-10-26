@@ -31,6 +31,8 @@ permissions:
 
 jobs:
   build:
+    # Recovery branch uses the explicit core bridge preparation workflow.
+    if: github.ref != 'refs/heads/feat/bt-recovery'
     uses: te9no/zmk-workspace/.github/workflows/build-zmk-firmware.yml@main
     permissions:
       contents: write

@@ -8,7 +8,7 @@
 
 ### UF2 のダウンロードと書き込みモード
 
-[1200 bps 対応版の左右 UF2 を ZIP でダウンロード](https://raw.githubusercontent.com/te9no/zmk-config-GeaconPolaris/refs/heads/feat/polaris-zeroshift/firmware/downloads/Polaris-ZeroShift-USB-touch-r01.zip)。展開して、左には `Polaris-ZeroShift-left.uf2`、右には `Polaris-ZeroShift-right.uf2` をコピーします。初回は更新する側のリセットを素早く2回押して、書き込み用ドライブを開きます。
+[Studio USB 接続修正版の左右 UF2 をダウンロード](https://raw.githubusercontent.com/te9no/zmk-config-GeaconPolaris/refs/heads/feat/polaris-zeroshift/firmware/downloads/Polaris-ZeroShift-Studio-USB-r01.zip)。USB-touch-r01 からの更新は左側のみで完了します。左のリセットを素早く2回押し、表示されたドライブに展開済みの `Polaris-ZeroShift-left.uf2` をコピーしてください。
 
 更新後は各側に1つずつ USB シリアルポートがあります。Web UI を切断してから対象側のポートを 1200 bps・DTR オンで開き、約1秒後に DTR をオフにして閉じると、書き込み用ドライブが現れます。左は通常の Studio 接続にも同じポートを使います。
 

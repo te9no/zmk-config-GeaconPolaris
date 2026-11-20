@@ -1,11 +1,11 @@
 {
   "artifact": {
     "name": "Polaris-ZeroShift-right.uf2",
-    "sha256": "f5c73eaa85efa84a02df8bb44b09dc737d810c9f894e585dd98b92fe71971806"
+    "sha256": "c75078400abb9649275c5da29916015b7c823d57053f274fc6e16df177a2f029"
   },
   "generated": {
-    ".config": "005e892e61aeacd3cab8b941050dd4cf530d5be29a50512412fa05ddb4ce1034",
-    "zephyr.dts": "a06930ad2a18889803d650b2206fc840f0b08ca0c9ee18da556d11efe2bb82cb"
+    ".config": "0f5dd00b88d899d3274273881b5d9aed7c5bf4465bb302d1935697a2739cd7d6",
+    "zephyr.dts": "c71d4c3f690586fd9472eca12b35f8d0ae37b31fb28802392ab105075fe4af7e"
   },
   "inputs": {
     "dependencies": {
@@ -491,7 +491,7 @@
       }
     },
     "source": {
-      "commit": "38e95e329c069ac03031772fd88a3c5f95fa87ed",
+      "commit": "4853c47c6d6ceaaba72420f759770a475ca42135",
       "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dirty": false,
       "untracked": {}
@@ -503,7 +503,7 @@
       "untracked": {}
     }
   },
-  "run_id": "44704567013",
+  "run_id": "44760304117",
   "schema": 1,
   "target": {
     "artifact-name": "Polaris-ZeroShift-right",

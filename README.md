@@ -1,6 +1,8 @@
 # Polaris ZeroShift 開発版
 
-左右それぞれに対応する UF2 を一度書き込み、左側を USB または BLE 経由で [ZeroShift Web UI](https://te9no.github.io/zmk-feature-zeroshift/) に接続します。初期状態は左右ともオフです。左は PMW3610、エンコーダ、アナログスティック、Cirque トラックパッド、LPPS（ADS1220）、右は PMW3610、Cirque トラックパッド、IQS9151 を選べます。
+[今回の左右 UF2 を ZIP でダウンロード](firmware/downloads/Polaris-ZeroShift-common-r01.zip)。同じ ZIP の左右を対応する側に書き込み、設定した側を再起動してください。
+
+左右それぞれに対応する UF2 を一度書き込み、左側を USB または BLE 経由で [ZeroShift Web UI](https://te9no.github.io/zmk-feature-zeroshift/) に接続します。初期状態は左右ともオフです。左右とも PMW3610、エンコーダ、PAT9125（R02 I²C）、LPPS（ADS1220）、1u キー、Cirque タッチパッドを選べます。左側はアナログスティック、右側は IQS9151 にも対応します。
 
 1. 左右の電源を入れて「設定する側」を選び、モジュールを選択して保存します。
 2. 設定した側の電源を切ってモジュールを取り付け、再起動します。

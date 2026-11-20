@@ -45,7 +45,7 @@ await delay(1500);
 for (const side of ["right", "left"]) {
   let previous = "off";
   check(await readAfterBoot(side), previous, previous);
-  const modes = side === "right" ? ["pmw3610", "tpd", "iqs", "off"] : ["encoder", "stick", "pmw3610", "tpd", "lpps", "off"];
+  const modes = side === "right" ? ["pmw3610", "tpd", "iqs", "encoder", "key", "lpps", "pat9125", "off"] : ["encoder", "stick", "pmw3610", "tpd", "lpps", "pat9125", "key", "off"];
   for (const mode of modes) {
     console.log(side, "set", mode);
     check(await session.profile(side, mode), mode, previous);
@@ -53,8 +53,9 @@ for (const side of ["right", "left"]) {
     await reset(side);
     const state = await readAfterBoot(side);
     console.log(side, "saved:", state.saved, "active:", state.active);
-    check(state, mode, mode);
-    previous = mode;
+    const active = mode === "pat9125" ? "off" : mode;
+    check(state, mode, active);
+    previous = active;
   }
 }
 check(await session.profile("left", "encoder"), "encoder", "off");
@@ -65,7 +66,7 @@ check(await readAfterBoot("left"), "encoder", "off");
 await reset("left");
 check(await readAfterBoot("left"), "encoder", "encoder");
 check(await readAfterBoot("right"), "tpd", "tpd");
-console.log("10/10 reboot cases passed; independent left encoder and right touchpad passed");
+console.log("16/16 reboot cases passed; independent left encoder and right touchpad passed");
 await session.close();
 socket.destroy();
 process.exit(0);

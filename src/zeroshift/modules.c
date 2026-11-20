@@ -42,17 +42,20 @@ static int start_encoder(const struct device *dev) {
 }
 
 
-/* The R02 optical dial reports X counts. Keep fractional degrees across reports. */
+/* Match the dedicated R02 dial configuration. Only completed steps enter the keymap. */
+#define DIAL_COUNTS_PER_TURN 1892
+#define DIAL_STEPS_PER_TURN 24
 static void dial_event(struct input_event *event, void *unused) {
     static int32_t remainder;
     if (event->type != INPUT_EV_REL || event->code != INPUT_REL_X) return;
-    int64_t scaled = (int64_t)event->value * 360 + remainder;
-    int32_t degrees = scaled / 1892;
-    remainder = scaled % 1892;
-    if (degrees) {
+    int64_t scaled = (int64_t)event->value * DIAL_STEPS_PER_TURN + remainder;
+    int32_t steps = scaled / DIAL_COUNTS_PER_TURN;
+    remainder = scaled % DIAL_COUNTS_PER_TURN;
+    if (steps) {
+        polaris_debug_dial(steps);
         raise_zmk_sensor_event((struct zmk_sensor_event){
             .sensor_index = IS_ENABLED(CONFIG_SHIELD_Polaris_R_Base), .channel_data_size = 1,
-            .channel_data = {{.value = {.val1 = degrees}, .channel = SENSOR_CHAN_ROTATION}},
+            .channel_data = {{.value = {.val1 = 0, .val2 = steps}, .channel = SENSOR_CHAN_ROTATION}},
             .timestamp = k_uptime_get()});
     }
 }

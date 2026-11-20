@@ -13,13 +13,18 @@ static const char *const modes[] = {
 };
 static const char *failed_device = "-";
 static int start_rc;
-static atomic_t moves, wheels, buttons, rotations;
+static atomic_t moves, wheels, buttons, rotations, dial_cw, dial_ccw;
 
 int polaris_debug_init(const struct device *dev) {
     int rc = device_init(dev);
     LOG_DBG("init %s rc=%d", dev->name, rc);
     if (rc) failed_device = dev->name;
     return rc;
+}
+
+void polaris_debug_dial(int32_t steps) {
+    if (steps > 0) atomic_add(&dial_cw, steps);
+    else atomic_add(&dial_ccw, -steps);
 }
 
 void polaris_debug_result(int rc) { start_rc = rc; }
@@ -66,6 +71,10 @@ static void report(struct k_work *work) {
         LOG_INF("%s saved=%s active=%s start_rc=%d failed_device=%s",
                 IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL) ? "left" : "right",
                 mode_name(state.saved[0]), mode_name(state.active[0]), start_rc, failed_device);
+        if (atomic_get(&moves) || atomic_get(&dial_cw) || atomic_get(&dial_ccw)) {
+            LOG_INF("dial steps: positive=%ld negative=%ld", (long)atomic_get(&dial_cw),
+                    (long)atomic_get(&dial_ccw));
+        }
         LOG_INF("local input totals: xy=%ld wheel=%ld button=%ld encoder=%ld",
                 (long)atomic_get(&moves), (long)atomic_get(&wheels),
                 (long)atomic_get(&buttons), (long)atomic_get(&rotations));

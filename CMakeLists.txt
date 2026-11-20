@@ -52,3 +52,8 @@ if(CONFIG_ZMK_STUDIO_TRANSPORT_UART AND CONFIG_UART_INTERRUPT_DRIVEN AND CONFIG_
   endfunction()
   cmake_language(DEFER DIRECTORY "${APPLICATION_SOURCE_DIR}" CALL polaris_patch_studio_uart)
 endif()
+
+if(SNIPPET MATCHES "polaris-module-debug")
+  target_compile_definitions(app PRIVATE POLARIS_MODULE_DEBUG=1)
+  target_sources(app PRIVATE src/zeroshift/module_debug.c)
+endif()

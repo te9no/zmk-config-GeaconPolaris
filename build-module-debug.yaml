@@ -1,0 +1,9 @@
+include:
+  - board: xiao_ble//zmk
+    shield: Polaris_L_Base rgbled_adapter nice_oled
+    snippet: battery-voltage-divider-oversampling polaris-zs-left zmk-usb-logging cdc-debug-boot polaris-module-debug
+    artifact-name: Polaris-ZeroShift-debug-left
+  - board: xiao_ble//zmk
+    shield: Polaris_R_Base rgbled_adapter
+    snippet: polaris-zs-right zmk-usb-logging cdc-debug-boot polaris-module-debug
+    artifact-name: Polaris-ZeroShift-debug-right

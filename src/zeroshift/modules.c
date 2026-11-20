@@ -3,6 +3,7 @@
 #include <zephyr/input/input.h>
 #include <zmk/events/sensor_event.h>
 #include "modules_profile.h"
+#include "module_debug.h"
 #include <zmk/events/position_state_changed.h>
 #include <zmk/matrix_transform.h>
 
@@ -28,6 +29,7 @@ static void rotation(const struct device *dev, const struct sensor_trigger *trig
     struct sensor_value value;
     if (sensor_sample_fetch(dev) || sensor_channel_get(dev, trigger->chan, &value)) return;
     if (!value.val1 && !value.val2) return;
+    polaris_debug_encoder();
     raise_zmk_sensor_event((struct zmk_sensor_event){
         .sensor_index = IS_ENABLED(CONFIG_SHIELD_Polaris_R_Base), .channel_data_size = 1,
         .channel_data = {{.value = value, .channel = trigger->chan}}, .timestamp = k_uptime_get()});
@@ -35,7 +37,7 @@ static void rotation(const struct device *dev, const struct sensor_trigger *trig
 
 static int start_encoder(const struct device *dev) {
     static const struct sensor_trigger trigger = {.type = SENSOR_TRIG_DATA_READY, .chan = SENSOR_CHAN_ROTATION};
-    int err = device_init(dev);
+    int err = polaris_debug_init(dev);
     return err ? err : sensor_trigger_set(dev, &trigger, rotation);
 }
 
@@ -57,8 +59,8 @@ static void dial_event(struct input_event *event, void *unused) {
 INPUT_CALLBACK_DEFINE(DEV(module_dial), dial_event, NULL);
 
 static int start_on_bus(const struct device *bus, const struct device *device) {
-    int err = device_init(bus);
-    return err ? err : device_init(device);
+    int err = polaris_debug_init(bus);
+    return err ? err : polaris_debug_init(device);
 }
 
 uint32_t polaris_mode_mask(bool right) {
@@ -71,19 +73,19 @@ bool zeroshift_mode_supported(size_t slot, uint8_t mode) {
            (polaris_mode_mask(IS_ENABLED(CONFIG_SHIELD_Polaris_R_Base)) & BIT(mode));
 }
 
-int zeroshift_start_mode(size_t slot, uint8_t mode) {
+static int start_mode(size_t slot, uint8_t mode) {
     if (!zeroshift_mode_supported(slot, mode)) return -EINVAL;
     switch (mode) {
-    case KEY: return device_init(DEV(module_key));
+    case KEY: return polaris_debug_init(DEV(module_key));
     case LPPS: {
         int err = start_on_bus(DEV(lpps_spi), DEV(adc_ads1220));
-        return err ? err : device_init(DEV(lpps_axis));
+        return err ? err : polaris_debug_init(DEV(lpps_axis));
     }
     case ENC: return start_encoder(DEV(enc));
 #ifdef CONFIG_ZMK_SPLIT_ROLE_CENTRAL
     case JOY: {
         int err = start_encoder(DEV(joy_enc));
-        return err ? err : device_init(DEV(anin0));
+        return err ? err : polaris_debug_init(DEV(anin0));
     }
     case TB: return start_on_bus(DEV(spi2), DEV(trackball2));
     case TPD: return start_on_bus(DEV(i2c0), DEV(glidepoint_l));
@@ -94,8 +96,14 @@ int zeroshift_start_mode(size_t slot, uint8_t mode) {
 #endif
     case PAT: {
         int ret = start_on_bus(DEV(dial_bus), DEV(module_dial));
-        return ret ? ret : device_init(DEV(module_key));
+        return ret ? ret : polaris_debug_init(DEV(module_key));
     }
     default: return -EINVAL;
     }
+}
+
+int zeroshift_start_mode(size_t slot, uint8_t mode) {
+    int rc = start_mode(slot, mode);
+    polaris_debug_result(rc);
+    return rc;
 }

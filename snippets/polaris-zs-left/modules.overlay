@@ -61,7 +61,7 @@
     left_iqs_listener: left-iqs-listener {
         compatible = "zmk,input-listener";
         device = <&left_iqs>;
-        #include "../../boards/shields/GeaconPolaris/iqs_listener_processors.dtsi"
+        POLARIS_IQS_PROCESSORS
     };
 };
 

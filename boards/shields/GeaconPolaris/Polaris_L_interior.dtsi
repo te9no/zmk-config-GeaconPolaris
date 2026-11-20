@@ -1,3 +1,4 @@
+#include "iqs_listener_processors.dtsi"
 #include <input/processors.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
 #include <dt-bindings/zmk/zip_dynamic_scale.h>
@@ -103,7 +104,7 @@
         compatible = "zmk,input-listener";
         status = "okay";
         device = <&iqs_split>;
-        #include "iqs_listener_processors.dtsi"
+        POLARIS_IQS_PROCESSORS
     };
 
 

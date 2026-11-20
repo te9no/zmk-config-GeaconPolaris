@@ -1,10 +1,10 @@
 {
   "artifact": {
     "name": "Polaris-ZeroShift-left.uf2",
-    "sha256": "bdd251eaa7a730f827934f3a2a8887cead37a74206eb6e4d869607339af60f02"
+    "sha256": "f0ba15cc0639ccb562bff8bd90bee9741b016a8bee505f4d9e463fabe43e4b1e"
   },
   "generated": {
-    ".config": "b18690778778fc1f0c113ce45c5074797944c315b73f1e7e652fa210058b2c9a",
+    ".config": "e93b9d74a54f212ba3b2fe4dd9baa73945729a607e029cb2be6618c25847b7c8",
     "zephyr.dts": "735d36651e55cce0b8cb1279f8fc3a7fee6785911c53a470e743005cc4732c23"
   },
   "inputs": {
@@ -491,7 +491,7 @@
       }
     },
     "source": {
-      "commit": "a9bdff8941018296a4bf87ed78ac24653fa12810",
+      "commit": "dc44b7394db0cf2f290755b85aac9e3f9fa62c55",
       "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dirty": false,
       "untracked": {}
@@ -503,7 +503,7 @@
       "untracked": {}
     }
   },
-  "run_id": "44662599686",
+  "run_id": "44666202957",
   "schema": 1,
   "target": {
     "artifact-name": "Polaris-ZeroShift-left",

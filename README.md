@@ -1,10 +1,16 @@
 # Polaris ZeroShift 開発版
 
-左右それぞれに対応する UF2 を一度書き込み、左側を USB または BLE 経由で [専用ブランチの ZeroShift Web UI](https://github.com/te9no/zmk-feature-zeroshift/tree/feat/polaris-zeroshift/studio-web) に接続します。初期状態は左右ともオフです。左は PMW3610、エンコーダ、アナログスティック、Cirque トラックパッド、LPPS（ADS1220）、右は PMW3610、Cirque トラックパッド、IQS9151 を選べます。
+左右それぞれに対応する UF2 を一度書き込み、左側を USB または BLE 経由で [ZeroShift Web UI](https://te9no.github.io/zmk-feature-zeroshift/) に接続します。初期状態は左右ともオフです。左は PMW3610、エンコーダ、アナログスティック、Cirque トラックパッド、LPPS（ADS1220）、右は PMW3610、Cirque トラックパッド、IQS9151 を選べます。
 
 1. 左右の電源を入れて「設定する側」を選び、モジュールを選択して保存します。
 2. 設定した側の電源を切ってモジュールを取り付け、再起動します。
 3. 左側を再起動した場合は再接続し、右側を再起動した場合は再読込して「起動中」の表示を確認します。
+
+### UF2 のダウンロードと書き込みモード
+
+[1200 bps 対応版の左右 UF2 を ZIP でダウンロード](https://raw.githubusercontent.com/te9no/zmk-config-GeaconPolaris/refs/heads/feat/polaris-zeroshift/firmware/downloads/Polaris-ZeroShift-USB-touch-r01.zip)。展開して、左には `Polaris-ZeroShift-left.uf2`、右には `Polaris-ZeroShift-right.uf2` をコピーします。初回は更新する側のリセットを素早く2回押して、書き込み用ドライブを開きます。
+
+更新後は各側に1つずつ USB シリアルポートがあります。Web UI を切断してから対象側のポートを 1200 bps・DTR オンで開き、約1秒後に DTR をオフにして閉じると、書き込み用ドライブが現れます。左は通常の Studio 接続にも同じポートを使います。
 
 下記は元の機種ドキュメントです。このブランチのビルド対象は `Polaris-ZeroShift-left.uf2` と `Polaris-ZeroShift-right.uf2` です。
 

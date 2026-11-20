@@ -18,3 +18,7 @@ endif()
 if(CONFIG_ZMK_STUDIO_RPC AND SNIPPET MATCHES "polaris-sim-left")
   target_sources(app PRIVATE tests/renode/uart_endpoint.c)
 endif()
+
+if(CONFIG_ZMK_ZEROSHIFT AND (CONFIG_SHIELD_Polaris_L_Base OR CONFIG_SHIELD_Polaris_R_Base) AND NOT CONFIG_ZMK_SETTINGS_RESET_ON_START)
+  zephyr_linker_sources(ROM_START SORT_KEY 0x2volume src/uf2_volume_id.ld)
+endif()

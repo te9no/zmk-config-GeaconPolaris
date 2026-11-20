@@ -1,7 +1,7 @@
 include:
   - board: xiao_ble//zmk
     shield: Polaris_L_Base
-    snippet: polaris-zs-left polaris-sim-left
+    snippet: battery-voltage-divider-oversampling polaris-zs-left polaris-sim-left
     artifact-name: Polaris-ZeroShift-sim-left
   - board: xiao_ble//zmk
     shield: Polaris_R_Base

@@ -46,6 +46,21 @@ COUNT_FROM(module_key);
 COUNT_FROM(module_dial);
 COUNT_FROM(lpps_axis);
 #ifdef CONFIG_ZMK_SPLIT_ROLE_CENTRAL
+static atomic_t iqs_xy, iqs_wheel, iqs_button;
+
+static void count_remote_iqs(struct input_event *evt, void *unused) {
+    if (evt->type == INPUT_EV_KEY) {
+        atomic_inc(&iqs_button);
+    } else if (evt->type == INPUT_EV_REL && evt->value != 0) {
+        if (evt->code == INPUT_REL_X || evt->code == INPUT_REL_Y) {
+            atomic_inc(&iqs_xy);
+        } else if (evt->code == INPUT_REL_WHEEL || evt->code == INPUT_REL_HWHEEL) {
+            atomic_inc(&iqs_wheel);
+        }
+    }
+}
+
+INPUT_CALLBACK_DEFINE_NAMED(DEVICE_DT_GET(DT_NODELABEL(iqs_split)), count_remote_iqs, NULL, diag_remote_iqs);
 COUNT_FROM(trackball2);
 COUNT_FROM(glidepoint_l);
 COUNT_FROM(anin0);
@@ -71,10 +86,14 @@ static void report(struct k_work *work) {
         LOG_INF("%s saved=%s active=%s start_rc=%d failed_device=%s",
                 IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL) ? "left" : "right",
                 mode_name(state.saved[0]), mode_name(state.active[0]), start_rc, failed_device);
-        if (atomic_get(&moves) || atomic_get(&dial_cw) || atomic_get(&dial_ccw)) {
+        if (atomic_get(&dial_cw) || atomic_get(&dial_ccw)) {
             LOG_INF("dial steps: positive=%ld negative=%ld", (long)atomic_get(&dial_cw),
                     (long)atomic_get(&dial_ccw));
         }
+#ifdef CONFIG_ZMK_SPLIT_ROLE_CENTRAL
+        LOG_INF("right IQS received: nonzero_xy=%ld nonzero_wheel=%ld button=%ld",
+                (long)atomic_get(&iqs_xy), (long)atomic_get(&iqs_wheel), (long)atomic_get(&iqs_button));
+#endif
         LOG_INF("local input totals: xy=%ld wheel=%ld button=%ld encoder=%ld",
                 (long)atomic_get(&moves), (long)atomic_get(&wheels),
                 (long)atomic_get(&buttons), (long)atomic_get(&rotations));

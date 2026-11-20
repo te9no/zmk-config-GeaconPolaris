@@ -1,0 +1,16 @@
+#include "../TB_R/TB_R.overlay"
+&pmw3610_spi { zephyr,deferred-init; };
+&trackball { zephyr,deferred-init; };
+#include "../TPD_R/TPD_R.overlay"
+&i2c0 { zephyr,deferred-init; };
+&glidepoint_R { zephyr,deferred-init; };
+/* IQS has different SCL/SDA pins from the Cirque pad. */
+#define i2c0 i2c1
+#define i2c0_default iqs_default
+#define i2c0_sleep iqs_sleep
+#include "../IQS/IQS.overlay"
+#undef i2c0_sleep
+#undef i2c0_default
+#undef i2c0
+&i2c1 { zephyr,deferred-init; };
+&iqs9151 { zephyr,deferred-init; };

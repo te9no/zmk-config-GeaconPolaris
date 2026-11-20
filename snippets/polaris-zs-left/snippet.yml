@@ -1,0 +1,4 @@
+name: polaris-zs-left
+append:
+  EXTRA_DTC_OVERLAY_FILE: modules.overlay
+  EXTRA_CONF_FILE: modules.conf

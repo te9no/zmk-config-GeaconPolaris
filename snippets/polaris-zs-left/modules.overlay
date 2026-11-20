@@ -1,0 +1,34 @@
+/ {
+    enc: module-encoder { compatible = "polaris,deferred-ec11", "alps,ec11"; zephyr,deferred-init; };
+    joy_enc: joystick-encoder { compatible = "polaris,deferred-ec11", "alps,ec11"; zephyr,deferred-init; };
+};
+#define left_encoder enc
+#include "../ENC/ENC.overlay"
+#undef left_encoder
+#define left_encoder joy_enc
+#define scroll_runtime_input_processor_l joystick_scroll
+#include "../JOY/JOY.overlay"
+#undef scroll_runtime_input_processor_l
+#undef left_encoder
+/* Preserve three encoder edges per JOY trigger with the common 10 triggers/revolution. */
+&joy_enc { steps = <30>; };
+&sensors { triggers-per-rotation = <10>; };
+&joystick_scroll { processor-label = "JoyScr"; };
+&anin0 { zephyr,deferred-init; };
+
+#define spi0 spi2
+#include "../TB_L/TB_L.overlay"
+#undef spi0
+&spi2 { zephyr,deferred-init; };
+&trackball2 { zephyr,deferred-init; };
+#define scroll_runtime_input_processor_l touchpad_scroll
+#include "../TPD_L/TPD_L.overlay"
+#undef scroll_runtime_input_processor_l
+&touchpad_scroll { processor-label = "TpdScr"; };
+&i2c0 { zephyr,deferred-init; };
+&glidepoint_L { zephyr,deferred-init; };
+
+#include "../LPPS/LPPS.overlay"
+&lpps_spi { zephyr,deferred-init; };
+&adc_ads1220 { zephyr,deferred-init; };
+&lpps_axis { zephyr,deferred-init; };

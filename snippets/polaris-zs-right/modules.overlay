@@ -14,3 +14,17 @@
 #undef i2c0
 &i2c1 { zephyr,deferred-init; };
 &iqs9151 { zephyr,deferred-init; };
+
+#include "../../boards/shields/GeaconPolaris/zeroshift_dial.dtsi"
+
+/ { enc: module-encoder { compatible = "polaris,deferred-ec11", "alps,ec11"; zephyr,deferred-init; }; };
+#define left_encoder enc
+#include "../ENC/ENC.overlay"
+#undef left_encoder
+#include "../LPPS/LPPS.overlay"
+&lpps_spi { zephyr,deferred-init; };
+&adc_ads1220 { zephyr,deferred-init; };
+&lpps_axis { zephyr,deferred-init; };
+&lpps_input { status = "disabled"; };
+/ { split_inputs { remote_lpps: lpps@5 { compatible = "zmk,input-split"; reg = <5>; }; }; };
+&remote_lpps { device = <&lpps_axis>; };

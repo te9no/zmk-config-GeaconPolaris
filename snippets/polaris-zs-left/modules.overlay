@@ -32,3 +32,7 @@
 &lpps_spi { zephyr,deferred-init; };
 &adc_ads1220 { zephyr,deferred-init; };
 &lpps_axis { zephyr,deferred-init; };
+
+#include "../../boards/shields/GeaconPolaris/zeroshift_dial.dtsi"
+/ { split_inputs { remote_lpps: lpps@5 { compatible = "zmk,input-split"; reg = <5>; }; }; };
+/ { remote_lpps_listener { compatible = "zmk,input-listener"; device = <&remote_lpps>; }; };

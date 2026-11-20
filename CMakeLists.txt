@@ -83,6 +83,20 @@ if(CONFIG_ZMK_ZEROSHIFT AND CONFIG_ZMK_SPLIT_ROLE_CENTRAL AND CONFIG_ZMK_INPUT_S
     replace_split_fragment("input_slot->reg = cpf->description;" "input_slot->reg = cpf->description;\n                input_slot->reg_known = true;")
     replace_split_fragment("zmk_input_split_peripheral_disconnected(peripheral_input_slots[i].reg);"
                            "if (peripheral_input_slots[i].reg_known) {\n                zmk_input_split_peripheral_disconnected(peripheral_input_slots[i].reg);\n            }")
+    # One ATT reply can hold several attributes. When switching queries, stop
+    # parsing the old reply before its next attribute reaches the new handler.
+    replace_split_fragment("switch (params->type) {"
+                           "const uint8_t original_type = params->type;\n    const struct bt_uuid *original_uuid = params->uuid;\n    switch (params->type) {")
+    replace_split_fragment("    bool subscribed = slot->run_behavior_handle"
+[=[    if (params->type != original_type || params->uuid != original_uuid) {
+        int err = bt_gatt_discover(conn, params);
+        if (err) {
+            LOG_ERR("Failed to continue split discovery: %d", err);
+        }
+        return BT_GATT_ITER_STOP;
+    }
+
+    bool subscribed = slot->run_behavior_handle]=])
     file(WRITE "${patched}" "${code}")
     list(REMOVE_AT sources ${index})
     list(APPEND sources "${patched}")

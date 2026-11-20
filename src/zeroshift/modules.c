@@ -42,17 +42,39 @@ static int start_encoder(const struct device *dev) {
 }
 
 
-/* Match the dedicated R02 dial configuration. Only completed steps enter the keymap. */
+/* Preserve fractional steps between optical samples and direction changes. */
 #define DIAL_COUNTS_PER_TURN 1892
 #define DIAL_STEPS_PER_TURN 24
-static void dial_event(struct input_event *event, void *unused) {
+static int32_t dial_steps(int32_t delta) {
     static int32_t remainder;
-    if (event->type != INPUT_EV_REL || event->code != INPUT_REL_X) return;
-    int64_t scaled = (int64_t)event->value * DIAL_STEPS_PER_TURN + remainder;
+    int64_t scaled = (int64_t)delta * DIAL_STEPS_PER_TURN + remainder;
     int32_t steps = scaled / DIAL_COUNTS_PER_TURN;
     remainder = scaled % DIAL_COUNTS_PER_TURN;
+    if (steps) polaris_debug_dial(steps);
+    return steps;
+}
+
+#if DT_NODE_HAS_STATUS(DT_NODELABEL(dial_scroll), okay)
+#include <drivers/input_processor.h>
+
+static int dial_scroll_event(const struct device *dev, struct input_event *event, uint32_t param1,
+                             uint32_t param2, struct zmk_input_processor_state *state) {
+    if (event->type != INPUT_EV_REL || event->code != INPUT_REL_X) return ZMK_INPUT_PROC_STOP;
+    int32_t steps = dial_steps(event->value);
+    if (!steps) return ZMK_INPUT_PROC_STOP;
+    event->code = INPUT_REL_WHEEL;
+    event->value = -steps;
+    return ZMK_INPUT_PROC_CONTINUE;
+}
+
+static const struct zmk_input_processor_driver_api dial_scroll_api = {.handle_event = dial_scroll_event};
+DEVICE_DT_DEFINE(DT_NODELABEL(dial_scroll), NULL, NULL, NULL, NULL, POST_KERNEL,
+                 CONFIG_KERNEL_INIT_PRIORITY_DEFAULT, &dial_scroll_api);
+#else
+static void dial_event(struct input_event *event, void *unused) {
+    if (event->type != INPUT_EV_REL || event->code != INPUT_REL_X) return;
+    int32_t steps = dial_steps(event->value);
     if (steps) {
-        polaris_debug_dial(steps);
         raise_zmk_sensor_event((struct zmk_sensor_event){
             .sensor_index = IS_ENABLED(CONFIG_SHIELD_Polaris_R_Base), .channel_data_size = 1,
             .channel_data = {{.value = {.val1 = 0, .val2 = steps}, .channel = SENSOR_CHAN_ROTATION}},
@@ -60,6 +82,7 @@ static void dial_event(struct input_event *event, void *unused) {
     }
 }
 INPUT_CALLBACK_DEFINE(DEV(module_dial), dial_event, NULL);
+#endif
 
 static int start_on_bus(const struct device *bus, const struct device *device) {
     int err = polaris_debug_init(bus);

@@ -51,3 +51,40 @@
         device = <&remote_dial>;
     };
 };
+
+/ {
+    zephyr,user {
+        iqs-default = <&left_iqs_default>;
+        iqs-sleep = <&left_iqs_sleep>;
+    };
+
+    left_iqs_listener: left-iqs-listener {
+        compatible = "zmk,input-listener";
+        device = <&left_iqs>;
+        #include "../../boards/shields/GeaconPolaris/iqs_listener_processors.dtsi"
+    };
+};
+
+&pinctrl {
+    left_iqs_default: left-iqs-default {
+        group1 {
+            psels = <IQS_I2C0_SDA>, <IQS_I2C0_SCL>;
+            bias-pull-up;
+        };
+    };
+    left_iqs_sleep: left-iqs-sleep {
+        group1 {
+            psels = <IQS_I2C0_SDA>, <IQS_I2C0_SCL>;
+            low-power-enable;
+        };
+    };
+};
+
+&i2c0 {
+    left_iqs: iqs9151@56 {
+        compatible = "azoteq,iqs9151";
+        reg = <0x56>;
+        irq-gpios = IQS_IRQ_GPIOS;
+        zephyr,deferred-init;
+    };
+};

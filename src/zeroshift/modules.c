@@ -76,9 +76,30 @@ static int start_on_bus(const struct device *bus, const struct device *device) {
     return err ? err : polaris_debug_init(device);
 }
 
+#ifdef CONFIG_ZMK_SPLIT_ROLE_CENTRAL
+#include <zephyr/drivers/pinctrl.h>
+PINCTRL_DT_DEV_CONFIG_DECLARE(DT_NODELABEL(i2c0));
+PINCTRL_DT_STATE_PINS_DEFINE(DT_PATH(zephyr_user), iqs_default);
+#ifndef PINCTRL_SKIP_SLEEP
+PINCTRL_DT_STATE_PINS_DEFINE(DT_PATH(zephyr_user), iqs_sleep);
+#endif
+static const struct pinctrl_state left_iqs_states[] = {
+    PINCTRL_DT_STATE_INIT(iqs_default, PINCTRL_STATE_DEFAULT),
+#ifndef PINCTRL_SKIP_SLEEP
+    PINCTRL_DT_STATE_INIT(iqs_sleep, PINCTRL_STATE_SLEEP),
+#endif
+};
+
+static int start_left_iqs(void) {
+    int rc = pinctrl_update_states(PINCTRL_DT_DEV_CONFIG_GET(DT_NODELABEL(i2c0)),
+                                   left_iqs_states, ARRAY_SIZE(left_iqs_states));
+    return rc ? rc : start_on_bus(DEV(i2c0), DEV(left_iqs));
+}
+#endif
+
 uint32_t polaris_mode_mask(bool right) {
-    uint32_t common = BIT(OFF) | BIT(TB) | BIT(ENC) | BIT(TPD) | BIT(LPPS) | BIT(KEY) | BIT(PAT);
-    return common | (right ? BIT(IQS) : BIT(JOY));
+    uint32_t common = BIT(OFF) | BIT(TB) | BIT(ENC) | BIT(TPD) | BIT(LPPS) | BIT(KEY) | BIT(PAT) | BIT(IQS);
+    return common | (right ? 0 : BIT(JOY));
 }
 
 bool zeroshift_mode_supported(size_t slot, uint8_t mode) {
@@ -96,6 +117,7 @@ static int start_mode(size_t slot, uint8_t mode) {
     }
     case ENC: return start_encoder(DEV(enc));
 #ifdef CONFIG_ZMK_SPLIT_ROLE_CENTRAL
+    case IQS: return start_left_iqs();
     case JOY: {
         int err = start_encoder(DEV(joy_enc));
         return err ? err : polaris_debug_init(DEV(anin0));

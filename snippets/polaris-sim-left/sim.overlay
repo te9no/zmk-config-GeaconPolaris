@@ -2,3 +2,4 @@
 #include "../../tests/renode/wired.dtsi"
 / { chosen { zmk,studio-rpc-uart = &uart0; }; };
 &oled { status = "disabled"; };
+&left_iqs { irq-gpios = <&gpio1 12 GPIO_ACTIVE_LOW>; };

@@ -61,6 +61,7 @@ static void count_remote_iqs(struct input_event *evt, void *unused) {
 }
 
 INPUT_CALLBACK_DEFINE_NAMED(DEVICE_DT_GET(DT_NODELABEL(iqs_split)), count_remote_iqs, NULL, diag_remote_iqs);
+COUNT_FROM(left_iqs);
 COUNT_FROM(trackball2);
 COUNT_FROM(glidepoint_l);
 COUNT_FROM(anin0);

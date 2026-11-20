@@ -49,6 +49,7 @@ uicr: Memory.MappedMemory @ sysbus 0x10001000
     size: 0x1000
 saadc: Mocks.NRF52840_StickAdc @ sysbus 0x40007000
     IRQ -> nvic@7
+leftIqs: Mocks.PolarisIQS @ twi0 0x56
 iqs: Mocks.PolarisIQS @ twi1 0x56
 pinnacle: Mocks.PolarisPinnacle @ twi0 0x2a
 """

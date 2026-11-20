@@ -1,4 +1,6 @@
 name: polaris-zs-right
 append:
   EXTRA_DTC_OVERLAY_FILE: modules.overlay
-  EXTRA_CONF_FILE: modules.conf
+  EXTRA_CONF_FILE:
+    - modules.conf
+    - ../IQS/zeroshift-driver.conf

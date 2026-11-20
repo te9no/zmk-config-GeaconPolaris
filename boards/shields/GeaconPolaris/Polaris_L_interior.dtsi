@@ -103,22 +103,7 @@
         compatible = "zmk,input-listener";
         status = "okay";
         device = <&iqs_split>;
-        input-processors = <&zip_xy_transform
-                            (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
-                           <&zip_xy_scaler 1 12>,
-                           <&zip_scroll_scaler 1 40>,
-                           <&iqs_dynamic_xy_scaler>,
-                           <&iqs_dynamic_scroll_scaler>;
-
-        lowspeedmode {
-            layers = <1>, <2>;
-            input-processors = <&zip_xy_transform
-                                (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
-                               <&zip_xy_scaler 1 24>,
-                               <&zip_scroll_scaler 1 60>,
-                               <&iqs_dynamic_xy_scaler>,
-                               <&iqs_dynamic_scroll_scaler>;
-        };
+        #include "iqs_listener_processors.dtsi"
     };
 
 

@@ -28,3 +28,8 @@
 &lpps_input { status = "disabled"; };
 / { split_inputs { remote_lpps: lpps@5 { compatible = "zmk,input-split"; reg = <5>; }; }; };
 &remote_lpps { device = <&lpps_axis>; };
+
+&remote_dial {
+    device = <&module_dial>;
+    input-processors = <&dial_scroll>;
+};

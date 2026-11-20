@@ -31,3 +31,17 @@
     right_encoder: right-encoder { compatible = "alps,ec11"; status = "disabled"; };
 };
 &sensors { sensors = <&left_encoder &right_encoder>; triggers-per-rotation = <10>; };
+
+/ {
+    dial_scroll: dial-scroll {
+        compatible = "polaris,dial-scroll";
+        #input-processor-cells = <0>;
+    };
+
+    split_inputs {
+        remote_dial: dial@6 {
+            compatible = "zmk,input-split";
+            reg = <6>;
+        };
+    };
+};

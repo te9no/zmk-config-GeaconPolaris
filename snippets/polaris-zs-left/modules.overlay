@@ -38,14 +38,16 @@
 / { remote_lpps_listener { compatible = "zmk,input-listener"; device = <&remote_lpps>; }; };
 
 / {
-    dial_scroll: dial-scroll {
-        compatible = "polaris,dial-scroll";
-        #input-processor-cells = <0>;
-    };
-
     dial_listener: optical-dial-listener {
         compatible = "zmk,input-listener";
         device = <&module_dial>;
         input-processors = <&dial_scroll>;
+    };
+};
+
+/ {
+    remote_dial_listener {
+        compatible = "zmk,input-listener";
+        device = <&remote_dial>;
     };
 };

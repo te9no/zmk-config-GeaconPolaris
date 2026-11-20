@@ -17,7 +17,7 @@ static atomic_t moves, wheels, buttons, rotations, dial_cw, dial_ccw;
 
 int polaris_debug_init(const struct device *dev) {
     int rc = device_init(dev);
-    LOG_DBG("init %s rc=%d", dev->name, rc);
+    LOG_INF("init %s rc=%d", dev->name, rc);
     if (rc) failed_device = dev->name;
     return rc;
 }

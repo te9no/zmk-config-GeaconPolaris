@@ -5,5 +5,5 @@ include:
     artifact-name: Polaris-ZeroShift-left
   - board: xiao_ble//zmk
     shield: Polaris_R_Base rgbled_adapter
-    snippet: polaris-zs-right
+    snippet: polaris-zs-right zmk-usb-logging cdc-debug-boot
     artifact-name: Polaris-ZeroShift-right

@@ -4,3 +4,6 @@
         cdc-port = <&snippet_studio_rpc_usb_uart>;
     };
 };
+
+/* Studio and the bootloader touch share the single exposed CDC port. */
+&board_cdc_acm_uart { status = "disabled"; };

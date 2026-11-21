@@ -1,4 +1,0 @@
-#include "../../tests/renode/uart.overlay"
-#include "../../tests/renode/wired.dtsi"
-/* The simulated IQS is continuously ready (active-low RDY). */
-&iqs9151 { irq-gpios = <&gpio1 12 GPIO_ACTIVE_LOW>; };

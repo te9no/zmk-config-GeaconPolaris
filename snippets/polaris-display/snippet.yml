@@ -1,4 +1,0 @@
-name: polaris-display
-append:
-  EXTRA_DTC_OVERLAY_FILE: display.overlay
-  EXTRA_CONF_FILE: display.conf

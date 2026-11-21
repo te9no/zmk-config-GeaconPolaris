@@ -1,8 +1,10 @@
 # Polaris ZeroShift
 
-[今回の左右 UF2 を ZIP でダウンロード](firmware/downloads/Polaris-ZeroShift-main-r01.zip)。同じ ZIP の左右を対応する側に書き込み、設定した側を再起動してください。
+[今回の左右 UF2 を ZIP でダウンロード](firmware/downloads/Polaris-ZeroShift-descriptor-r01.zip)。同じ ZIP の左右を対応する側に書き込み、設定した側を再起動してください。
 
 左右それぞれに対応する UF2 を一度書き込み、左側を USB または BLE 経由で [ZeroShift Web UI](https://te9no.github.io/zmk-feature-zeroshift/) に接続します。初期状態は左右ともオフです。左右とも PMW3610、エンコーダ、PAT9125（R02 I²C）、LPPS（ADS1220）、1u キー、Cirque タッチパッドを選べます。左側はアナログスティックにも対応します。IQS9151 は右側に加え、実機検証用に左側でも選べます。
+
+機種名、親機の側、左右ごとの選択肢・表示名は [config/zeroshift.json](config/zeroshift.json) にあります。接続すると左手のファームウェアがこの定義を Web UI に渡します。入力モジュールと表示設定は従来と同じ形式で保存されます。
 
 1. 左右の電源を入れて「設定する側」を選び、モジュールを選択して保存します。
 2. 設定した側の電源を切ってモジュールを取り付け、再起動します。
@@ -10,7 +12,7 @@
 
 ### OLED と四連 LED の交換
 
-左手の「左手の表示モジュール」で OLED または四連 LED を選び、「設定を保存」を押します。左手の USB と電池電源を切ってから基板を交換し、再起動して Web UI に再接続してください。以前の設定を引き継いだ場合は OLED が選ばれます。
+左手の「左手の表示モジュール」で 「標準（OLED／停止中）」または「四連 LED」を選び、「設定を保存」を押します。左手の USB と電池電源を切ってから基板を交換し、再起動して Web UI に再接続してください。以前の設定を引き継いだ場合は OLED が選ばれます。
 
 四連 LED は起動時に虹色、続いて左右の接続状態、その後は左2灯で左手、右2灯で右手の電池残量を表示します。左 Cirque は表示ソケットの P1.14 を使用するため、四連 LED と同時には選べません。左 Cirque の使用時は OLED も停止します。
 
@@ -57,7 +59,7 @@ experiments become maintainable firmware.
 - Seven layers: `DEF`, `FUNC`, `NUM`, `SNIPE`, `BT`, `SCROLL`, and `SSNIPE`.
 - Runtime combo and macro support for DYA Studio.
 - Device information, watchdog, key-switch, PMW3610, and stack-usage diagnostics.
-- Portrait OLED with both battery levels, layer, Bluetooth profile and status.
+- Portrait OLED with both battery levels, layer, BLE profile and status.
 - Local and GitHub Actions builds driven by the same `build.yaml`.
 
 ## Modular Input System
@@ -109,7 +111,7 @@ The source of truth is [`config/Polaris.keymap`](config/Polaris.keymap).
 | `FUNC` | `function_layer` | Function keys, navigation, and layout shift |
 | `NUM` | `num_layer` | Numbers, symbols, and editing/navigation keys |
 | `SNIPE` | `snipe_layer` | Precision-oriented pointer controls |
-| `BT` | `bt_layer` | Bluetooth profile selection and clearing |
+| `BT` | `bt_layer` | BLE profile selection and clearing |
 | `SCROLL` | `scroll_layer` | Scroll-oriented sensor bindings |
 | `SSNIPE` | `SSNIPE_layer` | Precision scroll/sensor bindings |
 
@@ -141,7 +143,7 @@ The left-side SSD1306 is physically mounted in portrait orientation. The
 - central battery level;
 - peripheral battery level;
 - active layer;
-- Bluetooth profile number and connection-state icon;
+- BLE profile number and connection-state icon;
 - a small animated cat in the remaining area.
 
 ## Build
@@ -251,7 +253,7 @@ Polaris は Geacon 系譜の北極星です。実用できるキーボードで�
 - 右側はトラックボール、タッチパッド、IQS9151 に対応。
 - `DEF`, `FUNC`, `NUM`, `SNIPE`, `BT`, `SCROLL`, `SSNIPE` の 7 レイヤー。
 - DYA Studio の runtime combo / macro と各種診断機能に対応。
-- 左側の縦置き OLED に左右バッテリー、レイヤー、Bluetooth profile と
+- 左側の縦置き OLED に左右バッテリー、レイヤー、BLE profile と
   接続状態、アニメーションを表示。
 
 ## モジュール構成
@@ -294,7 +296,7 @@ Polaris は Geacon 系譜の北極星です。実用できるキーボードで�
 | `FUNC` | `function_layer` | Function key、navigation、layout shift |
 | `NUM` | `num_layer` | 数字、記号、編集・移動キー |
 | `SNIPE` | `snipe_layer` | 精密なポインター操作 |
-| `BT` | `bt_layer` | Bluetooth profile の選択・消去 |
+| `BT` | `bt_layer` | BLE profile の選択・消去 |
 | `SCROLL` | `scroll_layer` | スクロール用 sensor binding |
 | `SSNIPE` | `SSNIPE_layer` | 精密スクロール用 sensor binding |
 
@@ -321,7 +323,7 @@ IQS の詳細 serial log だけは負荷を分離するため `_DEBUG` artifact 
 
 - Central と Peripheral のバッテリー残量。
 - 現在のレイヤー。
-- Bluetooth profile 番号と接続状態アイコン。
+- BLE profile 番号と接続状態アイコン。
 - 空き領域の小さな猫アニメーション。
 
 ## ビルド

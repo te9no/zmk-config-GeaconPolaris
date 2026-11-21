@@ -3,7 +3,7 @@
 #include <zephyr/input/input.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
-#include <zeroshift/profile.h>
+#include "modules_profile.h"
 #include "module_debug.h"
 
 LOG_MODULE_REGISTER(polaris_module, LOG_LEVEL_DBG);
@@ -72,6 +72,7 @@ COUNT_FROM(iqs9151);
 #endif
 
 static const char *mode_name(uint8_t mode) {
+    mode &= ~POLARIS_LED4_FLAG;
     return mode < ARRAY_SIZE(modes) ? modes[mode] : "unknown";
 }
 

@@ -103,12 +103,22 @@ uint32_t polaris_mode_mask(bool right) {
 }
 
 bool zeroshift_mode_supported(size_t slot, uint8_t mode) {
+#ifdef POLARIS_SELECTABLE_DISPLAY
+    if (mode & POLARIS_LED4_FLAG) {
+        mode &= ~POLARIS_LED4_FLAG;
+        if (mode == TPD) return false;
+    }
+#endif
     return slot == 0 && mode <= PAT &&
            (polaris_mode_mask(IS_ENABLED(CONFIG_SHIELD_Polaris_R_Base)) & BIT(mode));
 }
 
 static int start_mode(size_t slot, uint8_t mode) {
     if (!zeroshift_mode_supported(slot, mode)) return -EINVAL;
+#ifdef POLARIS_SELECTABLE_DISPLAY
+    mode &= ~POLARIS_LED4_FLAG;
+    if (mode == OFF) return 0;
+#endif
     switch (mode) {
     case KEY: return polaris_debug_init(DEV(module_key));
     case LPPS: {

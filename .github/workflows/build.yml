@@ -21,7 +21,6 @@ on:
       - "boards/**"
       - "snippets/**"
       - "src/**"
-      - "proto/**"
       - "dts/**"
       - "CMakeLists.txt"
       - "build.yaml"

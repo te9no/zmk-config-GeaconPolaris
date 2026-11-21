@@ -3,3 +3,15 @@
 / { chosen { zmk,studio-rpc-uart = &uart0; }; };
 &oled { status = "disabled"; };
 &left_iqs { irq-gpios = <&gpio1 12 GPIO_ACTIVE_LOW>; };
+
+/* The Renode platform has no charlieplex matrix wired to its GPIOs. */
+&kscan1 { status = "disabled"; };
+/ {
+    sim_matrix: sim-matrix {
+        compatible = "zmk,kscan-mock";
+        events = <>;
+    };
+};
+&kscan0 {
+    matrix { kscan = <&sim_matrix>; };
+};

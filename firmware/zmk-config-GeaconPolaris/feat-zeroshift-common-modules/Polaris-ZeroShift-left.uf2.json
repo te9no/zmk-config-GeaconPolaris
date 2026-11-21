@@ -1,11 +1,11 @@
 {
   "artifact": {
     "name": "Polaris-ZeroShift-left.uf2",
-    "sha256": "1b54b121104d0d76a09d7734708efc60e490b944c189fe94a4b9be66e8ab2b59"
+    "sha256": "4c225c598dc7c03826b20bcd0079983967f362f38850a140ac2b8534e198c050"
   },
   "generated": {
-    ".config": "f4e8d75097c27f324b33acf88b07b76994ad26b47649a6e68669ee4656f4ee69",
-    "zephyr.dts": "9f9113fbc9987b0303028885d04bbf84e11a9ee78e1aae0fd0f1313991f025e1"
+    ".config": "843b7cced4baa942ced5e88c87ea3998e8635696885b87815e646716891af325",
+    "zephyr.dts": "550f277b146f0d0828c484340654a73359ea9ce63a81631bbed5a4b73a7d9723"
   },
   "inputs": {
     "dependencies": {
@@ -491,7 +491,7 @@
       }
     },
     "source": {
-      "commit": "ca3f2bc82185642470253e10c450e2f1c5b29d3e",
+      "commit": "bc029a4336c20e2ca1547f91e46f9bd5988e634c",
       "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dirty": false,
       "untracked": {}
@@ -503,12 +503,12 @@
       "untracked": {}
     }
   },
-  "run_id": "44834896909",
+  "run_id": "44867308027",
   "schema": 1,
   "target": {
     "artifact-name": "Polaris-ZeroShift-left",
     "board": "xiao_ble//zmk",
     "shield": "Polaris_L_Base rgbled_adapter nice_oled",
-    "snippet": "battery-voltage-divider-oversampling polaris-zs-left studio-rpc-usb-uart cdc-boot"
+    "snippet": "battery-voltage-divider-oversampling polaris-zs-left polaris-display studio-rpc-usb-uart cdc-boot"
   }
 }

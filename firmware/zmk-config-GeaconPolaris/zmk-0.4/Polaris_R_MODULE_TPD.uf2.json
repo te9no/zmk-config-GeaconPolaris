@@ -4,7 +4,7 @@
     "sha256": "4d9882a98fc42eda57a3aa118991efb0d4de393cd225424bddbe5cf0419aff95"
   },
   "generated": {
-    ".config": "3185bdbbd73d6c38c482556e9dfe72be04c898d1fffe72c845021077dff19e9c",
+    ".config": "d8498cb7c2c856b3aff0df8f04b6842fd22c7c219577c273d18cfc7fb9a4b9c6",
     "zephyr.dts": "df4ba5843c8b3266d1c4a108fd9a5e28c8fa3bb7ff8384979617e76fab4fd73f"
   },
   "inputs": {
@@ -441,6 +441,12 @@
         "dirty": false,
         "untracked": {}
       },
+      "zmk-module-bt-recovery": {
+        "commit": "7e76381d90856a42e739cebf66752afebbe78748",
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "dirty": false,
+        "untracked": {}
+      },
       "zmk-module-devtool": {
         "commit": "9938a2c73c06d6e65ba2c0b68c9aa044a467eafc",
         "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -485,7 +491,7 @@
       }
     },
     "source": {
-      "commit": "35d64dc8b7c867eaf99dfe006006f393f8b536d0",
+      "commit": "0255816bfe32722b78299be6cdc1ae4d88f1c3db",
       "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dirty": false,
       "untracked": {}
@@ -497,7 +503,7 @@
       "untracked": {}
     }
   },
-  "run_id": "37582161036",
+  "run_id": "44903063088",
   "schema": 1,
   "target": {
     "artifact-name": "Polaris_R_MODULE_TPD",

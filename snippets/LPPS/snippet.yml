@@ -1,4 +1,0 @@
-name: LPPS
-append:
-  EXTRA_DTC_OVERLAY_FILE: LPPS.overlay
-  EXTRA_CONF_FILE: LPPS.conf

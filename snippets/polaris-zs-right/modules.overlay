@@ -1,14 +1,14 @@
-#include "../TB_R/TB_R.overlay"
+#include "../../boards/shields/GeaconPolaris/modules/trackball_right.dtsi"
 &pmw3610_spi { zephyr,deferred-init; };
 &trackball { zephyr,deferred-init; };
-#include "../TPD_R/TPD_R.overlay"
+#include "../../boards/shields/GeaconPolaris/modules/cirque_right.dtsi"
 &i2c0 { zephyr,deferred-init; };
 &glidepoint_R { zephyr,deferred-init; };
 /* IQS has different SCL/SDA pins from the Cirque pad. */
 #define i2c0 i2c1
 #define i2c0_default iqs_default
 #define i2c0_sleep iqs_sleep
-#include "../IQS/IQS.overlay"
+#include "../../boards/shields/GeaconPolaris/modules/iqs9151.dtsi"
 #undef i2c0_sleep
 #undef i2c0_default
 #undef i2c0
@@ -19,9 +19,9 @@
 
 / { enc: module-encoder { compatible = "polaris,deferred-ec11", "alps,ec11"; zephyr,deferred-init; }; };
 #define left_encoder enc
-#include "../ENC/ENC.overlay"
+#include "../../boards/shields/GeaconPolaris/modules/encoder.dtsi"
 #undef left_encoder
-#include "../LPPS/LPPS.overlay"
+#include "../../boards/shields/GeaconPolaris/modules/lpps.dtsi"
 &lpps_spi { zephyr,deferred-init; };
 &adc_ads1220 { zephyr,deferred-init; };
 &lpps_axis { zephyr,deferred-init; };

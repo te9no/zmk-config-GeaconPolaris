@@ -3,11 +3,11 @@
     joy_enc: joystick-encoder { compatible = "polaris,deferred-ec11", "alps,ec11"; zephyr,deferred-init; };
 };
 #define left_encoder enc
-#include "../ENC/ENC.overlay"
+#include "../../boards/shields/GeaconPolaris/modules/encoder.dtsi"
 #undef left_encoder
 #define left_encoder joy_enc
 #define scroll_runtime_input_processor_l joystick_scroll
-#include "../JOY/JOY.overlay"
+#include "../../boards/shields/GeaconPolaris/modules/stick.dtsi"
 #undef scroll_runtime_input_processor_l
 #undef left_encoder
 /* Preserve three encoder edges per JOY trigger with the common 10 triggers/revolution. */
@@ -17,18 +17,18 @@
 &anin0 { zephyr,deferred-init; };
 
 #define spi0 spi2
-#include "../TB_L/TB_L.overlay"
+#include "../../boards/shields/GeaconPolaris/modules/trackball_left.dtsi"
 #undef spi0
 &spi2 { zephyr,deferred-init; };
 &trackball2 { zephyr,deferred-init; };
 #define scroll_runtime_input_processor_l touchpad_scroll
-#include "../TPD_L/TPD_L.overlay"
+#include "../../boards/shields/GeaconPolaris/modules/cirque_left.dtsi"
 #undef scroll_runtime_input_processor_l
 &touchpad_scroll { processor-label = "TpdScr"; };
 &i2c0 { zephyr,deferred-init; };
 &glidepoint_L { zephyr,deferred-init; };
 
-#include "../LPPS/LPPS.overlay"
+#include "../../boards/shields/GeaconPolaris/modules/lpps.dtsi"
 &lpps_spi { zephyr,deferred-init; };
 &adc_ads1220 { zephyr,deferred-init; };
 &lpps_axis { zephyr,deferred-init; };

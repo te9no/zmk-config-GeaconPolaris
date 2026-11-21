@@ -34,3 +34,6 @@ if SHIELD_Polaris_L_Base
         endchoice
     endif # LVGL
 endif
+
+config ZMK_BT_RECOVERY
+    default y if ZMK_ZEROSHIFT && ZMK_SPLIT_BLE && !ZMK_SETTINGS_RESET_ON_START

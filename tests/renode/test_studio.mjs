@@ -12,13 +12,15 @@ const socket = net.connect(Number(process.argv[2]), "127.0.0.1");
 await once(socket, "connect");
 const transport = {...Duplex.toWeb(socket), abortController: new AbortController()};
 const client = moduleSession(transport);
+const names = ["off", "pmw3610", "stick", "encoder", "tpd", "lpps", "iqs", "key", "pat9125"];
 const session = {
   close: () => client.close(),
   async profile(side, mode) {
-    const state = await client.profile(side, mode === undefined ? undefined : [mode]);
+    const state = await client.profile(side, mode === undefined ? undefined : [names.indexOf(mode)]);
     assert.equal(state.model, "Polaris");
-    assert.equal(state.innerEnabled, false);
-    return {saved: state.lower, active: state.activeLower};
+    assert.equal(state.slots.length, 1);
+    assert.deepEqual(state.slots[0].modes.map(([id]) => id), side === "right" ? [0,1,3,4,5,6,7,8] : [0,1,2,3,4,5,6,7,8]);
+    return {saved: names[state.slots[0].saved], active: names[state.slots[0].active]};
   },
 };
 const monitor = createInterface({input: process.stdin, output: process.stdout});

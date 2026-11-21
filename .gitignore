@@ -2,8 +2,18 @@
 /modules
 /zmk
 /build
+/.build
 result
 .vscode/c_cpp_properties.json
 .vscode/launch.json
 .vscode/settings.json
+
+# Local diagnostics and scratch files
+*.log
+*.trace
+logs/
+tmp/
+work/
+.DS_Store
+Thumbs.db
 /badges/build-health/

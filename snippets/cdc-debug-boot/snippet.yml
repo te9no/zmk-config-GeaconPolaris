@@ -1,0 +1,4 @@
+name: cdc-debug-boot
+append:
+  EXTRA_DTC_OVERLAY_FILE: cdc-debug-boot.overlay
+  EXTRA_CONF_FILE: cdc-debug-boot.conf

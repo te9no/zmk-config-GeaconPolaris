@@ -1,0 +1,3 @@
+name: polaris-module-debug
+append:
+  EXTRA_CONF_FILE: module-debug.conf

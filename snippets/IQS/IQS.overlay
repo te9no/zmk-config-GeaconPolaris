@@ -4,7 +4,7 @@
     pinctrl-0 = <&i2c0_default>;
     pinctrl-1 = <&i2c0_sleep>;
     pinctrl-names = "default", "sleep";
-    clock-frequency = <100000>;
+    clock-frequency = <400000>;
 
     iqs9151: iqs9151@56 {
         compatible = "azoteq,iqs9151";

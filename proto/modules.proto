@@ -1,8 +1,0 @@
-syntax = "proto3";
-package polaris;
-message Request {
-  bool right = 1;
-  uint32 display = 4;
-  oneof operation { bool get = 2; uint32 set = 3; }
-}
-message Response { sint32 error = 1; uint32 saved = 2; uint32 active = 3; uint32 supported = 4; uint32 saved_display = 5; uint32 active_display = 6; }

@@ -1,6 +1,6 @@
 # Polaris ZeroShift
 
-[今回の左右 UF2 を ZIP でダウンロード](firmware/downloads/Polaris-ZeroShift-descriptor-r01.zip)。同じ ZIP の左右を対応する側に書き込み、設定した側を再起動してください。
+[今回の左右 UF2 を ZIP でダウンロード](firmware/downloads/Polaris-ZeroShift-descriptor-only-r01.zip)。同じ ZIP の左右を対応する側に書き込み、設定した側を再起動してください。
 
 左右それぞれに対応する UF2 を一度書き込み、左側を USB または BLE 経由で [ZeroShift Web UI](https://te9no.github.io/zmk-feature-zeroshift/) に接続します。初期状態は左右ともオフです。左右とも PMW3610、エンコーダ、PAT9125（R02 I²C）、LPPS（ADS1220）、1u キー、Cirque タッチパッドを選べます。左側はアナログスティックにも対応します。IQS9151 は右側に加え、実機検証用に左側でも選べます。
 
@@ -18,7 +18,7 @@
 
 ### UF2 のダウンロードと書き込みモード
 
-[Studio USB 接続修正版の左右 UF2 をダウンロード](https://raw.githubusercontent.com/te9no/zmk-config-GeaconPolaris/refs/heads/feat/polaris-zeroshift/firmware/downloads/Polaris-ZeroShift-Studio-USB-r01.zip)。USB-touch-r01 からの更新は左側のみで完了します。左のリセットを素早く2回押し、表示されたドライブに展開済みの `Polaris-ZeroShift-left.uf2` をコピーしてください。
+左右それぞれのリセットを素早く2回押し、表示されたドライブに、その側に対応する UF2 をコピーしてください。共通 Web UI は本体の `zeroshift__v1` から設定を読み取ります。旧専用通信のみの Polaris を使っている場合は、先にページ上部の左右 UF2 に更新してください。
 
 更新後は各側に1つずつ USB シリアルポートがあります。Web UI を切断してから対象側のポートを 1200 bps・DTR オンで開き、約1秒後に DTR をオフにして閉じると、書き込み用ドライブが現れます。左は通常の Studio 接続にも同じポートを使います。
 

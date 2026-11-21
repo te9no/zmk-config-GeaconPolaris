@@ -1,0 +1,55 @@
+name: Polaris Bluetooth recovery validation
+on:
+  workflow_dispatch:
+  push:
+    branches: [feat/bt-recovery]
+    paths:
+      - config/west.yml
+      - boards/**
+      - config/**
+      - snippets/**
+      - build.yaml
+      - patches/**
+      - scripts/*bt-recovery.py
+      - snippets/bt-recovery/**
+      - .github/workflows/bt-recovery.yml
+permissions:
+  contents: read
+jobs:
+  firmware:
+    runs-on: ubuntu-latest
+    container: zmkfirmware/zmk-build-arm:4.1
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [Polaris_L_MODULE_LPPS, Polaris_L_MODULE_TB, Polaris_L_MODULE_JOY, Polaris_L_MODULE_ENC, Polaris_L_MODULE_TPD, Polaris_R_MODULE_TB, Polaris_R_MODULE_TPD, Polaris_R_MODULE_IQS]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: config-repo
+      - name: Prepare isolated pinned dependencies
+        run: |
+          mkdir -p west-workspace/manifest
+          cp config-repo/config/west.yml west-workspace/manifest/west.yml
+          cd west-workspace
+          west init -l manifest
+          west update --narrow
+          west zephyr-export
+      - name: Test pinned recovery policy and owner bridge
+        if: matrix.target == 'Polaris_L_MODULE_LPPS'
+        working-directory: west-workspace
+        run: |
+          python3 ../config-repo/scripts/apply-bt-recovery.py zmk
+          sh modules/zmk-module-bt-recovery/tests/run.sh
+          python3 modules/zmk-module-bt-recovery/tests/test_bridge.py zmk
+      - name: Build with recovery enabled
+        working-directory: west-workspace
+        run: python3 ../config-repo/scripts/build-bt-recovery.py ${{ matrix.target }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bt-recovery-${{ matrix.target }}
+          path: |
+            west-workspace/build-bt-recovery/${{ matrix.target }}/zephyr/zmk.uf2
+            west-workspace/build-bt-recovery/${{ matrix.target }}/zephyr/.config
+          include-hidden-files: true
+          if-no-files-found: error
